@@ -7,15 +7,15 @@ import Header from './Components/Header';
 const App = () =>{
   return (
       <>
-      <div className="App">
-        <Header />
+      <div >
         <Router>
-          <Routes>
-            <Route exact path="/" element={<Login />} />
-            <Route exact path="/Login" element={<Login />} />
-            <Route exact path="/SignUp" element={<SignUp />} />
-          </Routes>
-        </Router>
+            <Header />
+            <Routes>
+              <Route exact path="/" element={<Login />} />
+              <Route exact path="/Login" element={<Login />} />
+              <Route exact path="/SignUp" element={<SignUp />} />
+            </Routes>
+          </Router>
       </div>
       </>
     )

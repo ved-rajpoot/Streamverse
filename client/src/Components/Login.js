@@ -9,7 +9,7 @@ const Login = () => {
 
     return (
         <>
-            <div>
+            <div className="text-center">
                 <h1>login Page</h1>
                 <h1>email : {user.email}</h1>
                 <h1>password : {user.password}</h1>
