@@ -5,7 +5,7 @@ const Header = () => {
         { name: "HOME", link: "/" },
         { name: "CONTACT", link: "/" },
     ];
-    
+
     const [open, setOpen] = useState(false);
     return (
         <div>
@@ -37,7 +37,7 @@ const Header = () => {
                 </div>
             </div>
         </div>
-        
+
     )
 }
 
