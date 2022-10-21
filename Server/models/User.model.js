@@ -8,7 +8,11 @@ const userSchema = new mongoose.Schema({
         unique: true,
         match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    videos: [{
+        avatar: { type: String, required: true },
+        cloudinary_id: { type: String, required: true }
+    }]
 })
 const User = new mongoose.model("User", userSchema);
 module.exports = User
