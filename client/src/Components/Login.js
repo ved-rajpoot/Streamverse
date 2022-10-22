@@ -1,13 +1,16 @@
 import { useState } from "react"
 import axios from "axios"
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 
 
 const Login = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const [user, setUser] = useState({
         email: "",
-        password: ""
+        password: "",
+        token: "",
+        redirect: localStorage.getItem('userTokenTime') ? true : false
     })
 
     const [passwordType, setPasswordType] = useState("password");
@@ -20,16 +23,35 @@ const Login = () => {
     }
 
     const log = () => {
-        if (user.email && user.password) {
+        // eslint-disable-next-line 
+        if ((user.email && user.password) && (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(user.email))) {
             axios.post("http://localhost:9002/login", user)
                 .then((res) => {
-                    console.log(res)
-                    navigate("/homepage")
+                    setUser({
+                        ...user,
+                        token:res.data.token
+                    })
+                    const data = {
+                        token: user.token,
+                        time: new Date().getTime()
+                    }
+                    localStorage.setItem('userTokenTime', JSON.stringify(data));
+                    setUser({
+                        ...user,
+                        redirect: true
+                    })
                 })
+                .catch((err) => {
+                    console.log(err)
+                })
+        } else {
+            alert('Please enter valid details');
         }
     }
 
     const register = () => navigate("/signup")
+
+    if (user.redirect) return <Navigate to="/homepage" />
 
     return (
         <>
