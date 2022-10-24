@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Progress } from 'reactstrap';
 // import { ToastContainer, toast } from 'react-toastify';
@@ -8,34 +8,27 @@ import { Progress } from 'reactstrap';
 const HomePage = () => {
     
     const [redirectStatus, setRedirectStatus] = useState(false)
-    if (localStorage.getItem('userTokenTime')) {
-        // Check if user holds token which is valid in accordance to time
-        const data = JSON.parse(localStorage.getItem('userTokenTime'));
-        if (new Date().getTime() - data.time > (1 * 60 * 60 * 1000)) {
-            // It's been more than hour since you have visited dashboard
-            localStorage.removeItem('userTokenTime');
+    useEffect(() => {
+        if (localStorage.getItem('userTokenTime')) {
+            // Check if user holds token which is valid in accordance to time
+            const data = JSON.parse(localStorage.getItem('userTokenTime'));
+            if (new Date().getTime() - data.time > (1 * 60 * 60 * 1000)) {
+                // It's been more than hour since you have visited dashboard
+                localStorage.removeItem('userTokenTime');
+                setRedirectStatus(true);
+            }
+        } else {
             setRedirectStatus(true);
         }
-    } else {
-        setRedirectStatus(true);
-    }
+    },[])
+    
+    
     const [selectedFile, setSelectedFile] = useState({
         file: null,
         loaded: 0
     });
     const [isFilePicked, setIsFilePicked] = useState(false);
-    const config = {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-        },
-        onUploadProgress: ProgressEvent => {
-            setSelectedFile({
-                ...selectedFile,
-                loaded: (ProgressEvent.loaded / ProgressEvent.total * 100)
-            });
-        }
-    }
+    
     const changeHandler = (event) => {
         setSelectedFile({ ...selectedFile, file: event.target.files[0] });
         setIsFilePicked(true);
@@ -45,7 +38,18 @@ const HomePage = () => {
         const data = new FormData();
         data.append("avatar", selectedFile.file);
 
-        axios.post("http://localhost:9002/upload", data, config)
+        axios.post("http://localhost:9002/upload", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
+            },
+            onUploadProgress: ProgressEvent => {
+                setSelectedFile({
+                    ...selectedFile,
+                    loaded: (ProgressEvent.loaded / ProgressEvent.total * 100)
+                });
+            }
+        })
             .then((res) => {
                 console.log(res)
             })
@@ -54,7 +58,8 @@ const HomePage = () => {
             })
 
     }
-    if (redirectStatus) return <Navigate to="/signIn" />
+    // console.log(redirectStatus)
+    if (redirectStatus === true) return <Navigate to="/Login" /> 
     return (
         <>
             <div className="flex flex-col grid h-screen place-items-center h-1/2">
