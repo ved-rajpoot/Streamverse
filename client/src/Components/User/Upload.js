@@ -5,7 +5,7 @@ import { Progress } from 'reactstrap';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
-const HomePage = () => {
+const Upload = () => {
     
     const [redirectStatus, setRedirectStatus] = useState(false)
     useEffect(() => {
@@ -86,4 +86,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default Upload;

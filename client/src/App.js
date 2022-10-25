@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Components/Login"
 import SignUp from './Components/SignUp';
 import Header from './Components/Header';
-import HomePage from './Components/User/Homepage';
+import Upload from './Components/User/Upload';
 import Dashboard from './Components/User/Dashboard';
 
 const App = () =>{
@@ -17,7 +17,7 @@ const App = () =>{
               <Route exact path="/Login" element={<Login />} />
               <Route exact path="/SignUp" element={<SignUp />} />
               <Route exact path="/dashboard" element={<Dashboard />} />
-              <Route exact path="/homepage" element={<HomePage />} />
+              <Route exact path="/upload" element={<Upload />} />
             </Routes>
           </Router>
       </div>
