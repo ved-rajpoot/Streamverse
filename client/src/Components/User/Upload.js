@@ -27,17 +27,39 @@ const Upload = () => {
         file: null,
         loaded: 0
     });
+    const [seletcedThumbnail, setSelectedThumbnail] = useState({file:null});
     const [isFilePicked, setIsFilePicked] = useState(false);
-    
+    const [isThumbnailPicked, setIsThumbnailPicked] = useState(false);
+    const [title,setTitle] = useState();
+    const [description, setDescription] = useState();
+
     const changeHandler = (event) => {
-        setSelectedFile({ ...selectedFile, file: event.target.files[0] });
-        setIsFilePicked(true);
+        if(event.target.name==='title') {
+            return setTitle(event.target.value);
+        }
+        if(event.target.name==='description') {
+            return setDescription(event.target.value);
+        }
+        if(event.target.name==='avatar') {
+            setSelectedFile({ ...selectedFile, file: event.target.files[0] });
+            setIsFilePicked(true);
+            return;
+        }
+        if(event.target.name==='thumbnail') {
+            setSelectedThumbnail({...seletcedThumbnail,file: event.target.files[0]});
+            setIsThumbnailPicked(true);
+            return;
+        }
     }
     const upload = async (e) => {
 
         const data = new FormData();
         data.append("avatar", selectedFile.file);
-
+        data.append("thumbnail", seletcedThumbnail.file);
+        data.append("title", title);
+        data.append("description", description);
+        
+        console.log(data);
         axios.post("http://localhost:9002/upload", data, {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -63,6 +85,8 @@ const Upload = () => {
     return (
         <>
             <div className="flex flex-col grid h-screen place-items-center h-1/2">
+                <input type="text" placeholder="Title" onChange={changeHandler} name="title" value={title}/>
+                <input type="text" placeholder="Description" onChange={changeHandler} name="description" value={description}/>
                 <input type="file" name="avatar" onChange={changeHandler} />
                 {isFilePicked ? (
                     <div>
@@ -77,6 +101,15 @@ const Upload = () => {
                 ) : (
                     <p>Select a file to show details</p>
                 )}
+                <input type="file" name="thumbnail" onChange={changeHandler} />
+                {isThumbnailPicked ? (
+                    <div>
+                        <p>Filename: {selectedFile.file.name}</p>
+                    </div>
+                ) : (
+                  <></>
+                )}
+
                 <Progress max="100" color="success" value={selectedFile.loaded} className="mt-4 mb-1">
                     {isNaN(Math.round(selectedFile.loaded, 2)) ? 0 : Math.round(selectedFile.loaded, 2)}%
                 </Progress>
