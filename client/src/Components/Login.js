@@ -20,22 +20,28 @@ const Login = () => {
             [name]: value
         })
     }
-    useEffect(()=>{},[redirect])
+    useEffect(()=>{console.log('x');},[redirect])
     const log = () => {
         // eslint-disable-next-line 
         if ((user.email && user.password) && (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(user.email))) {
             axios.post("http://localhost:9002/login", user)
-                .then((res) => {
-                    const data = {
-                        token: res.data.token,
-                        time: new Date().getTime()
+            .then((res) => {
+                const data = {
+                    token: res.data.token,
+                    time: new Date().getTime()
                     }
                     console.log(data);
                     localStorage.setItem('userTokenTime', JSON.stringify(data));
                     setRedirect(true)
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err);
+                    if(err.response.status===500) {
+                        alert('Internal server error');
+                    }
+                    else if(err.response.status===401) {
+                        alert('Auth failed');
+                    }
                 })
         } else {
             alert('Please enter valid details');
@@ -44,7 +50,7 @@ const Login = () => {
 
     const register = () => navigate("/signup")
 
-    if (redirect) return <Navigate to="/homepage" />
+    if (redirect) return <Navigate to="/upload" />
 
     return (
         <>
