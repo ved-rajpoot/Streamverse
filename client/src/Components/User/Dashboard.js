@@ -1,58 +1,21 @@
-import axios from "axios";
-import { useEffect, useState } from "react"
-import "react-html5video/dist/styles.css"
-import { useNavigate } from "react-router-dom";
-import VideoCard from "../VideoCard";
-
+import VideoDashboard from "./VideoDashboard"
+import AudioDashboard from "./AudioDashBoard"
+import { useState } from "react"
 const Dashboard = () => {
-    const navigate = useNavigate();
-    const [videoList, setVideoList] = useState();
-    const [status, setStatus] = useState(false);
-    useEffect(() => {
-        setTimeout(() => {
-            axios.post("http://localhost:9002/videolist")
-                .then((res) => {
-                    console.log(res.data);
-                    setVideoList(res.data)
-                }).then(() => {
-                    setStatus(true)
-                })
-        })
-        
-    }, [])
+    
+    const notSelected = "py-4 px-2 font-semibold text-gray-500  hover:text-green-500 transition duration-300"
+    const selected = "py-4 px-2 font-semibold text-green-500 border-b-4 border-green-500"
 
-    useEffect(()=>{
-        console.log('videoList: ',videoList);
-    },videoList)
-    if (!status) return (
-        <>
-            <div  className="flex item-center">
-                Loading..
-            </div>
-        </>
-    )
+    const [status, setStatus] = useState(1);
+    
     return (
         <>
-            <div className=" flex h-screen" >
-                {/* <div>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 " onClick={()=>navigate('/upload')}>Upload</button>
-                </div> */}
-                <div className="flex flex-wrap">
-                    {
-                        Array.isArray(videoList)?
-                        videoList.map((val, index) => {
-                            return (
-                                <>
-                                    <VideoCard avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id}/>
-                                </>
-                            )
-                        })
-                        : null
-                    }
-                </div>
-
+            <div className="flex items-center space-x-6 mx-8">
+                <button id="video" type="button" className= {(status === 1) ? selected : notSelected} onClick={() => setStatus(1)} >Videos</button> 
+                <button id="audio" type="button" className= {(status === 2) ? selected : notSelected} onClick={() => setStatus(2)} >Audios</button> 
             </div>
-
+            <div className={(status === 2) ? "hidden" : "relative top-5"} ><VideoDashboard /></div>
+            <div className={(status === 1) ? "hidden" : "relative top-5"} ><AudioDashboard /></div>
         </>
     ) 
     

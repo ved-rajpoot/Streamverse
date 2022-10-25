@@ -1,10 +1,4 @@
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Typography,
-  } from "@material-tailwind/react";
+import { Card, CardHeader, CardBody, CardFooter, Typography,} from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 
   export default function VideoCard(props) {
