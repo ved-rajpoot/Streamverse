@@ -50,7 +50,7 @@ const Login = () => {
 
     const register = () => navigate("/signup")
 
-    if (redirect) return <Navigate to="/upload" />
+    if (redirect) return <Navigate to="/dashboard" />
 
     return (
         <>

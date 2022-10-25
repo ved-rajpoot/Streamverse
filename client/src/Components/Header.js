@@ -8,8 +8,8 @@ const Header = () => {
 
     const [open, setOpen] = useState(false);
     return (
-        <div>
-            <div className='shadow-md w-full sticky top-0 left-0'>
+        // <div>
+            <div className='shadow-md w-full sticky top-0 left-0 z-10'>
                 <div className='md:flex items-center justify-between bg-white py-1 md:px-7 px-7'>
                     <div className='font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-gray-800'>
                         <span className=' text-indigo-600 mr- pt-1'>
@@ -36,7 +36,7 @@ const Header = () => {
                     </ul>
                 </div>
             </div>
-        </div>
+        // </div>
 
     )
 }
