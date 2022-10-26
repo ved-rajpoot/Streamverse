@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import AudioDashboard from '../Dashboard/AudioDashBoard';
+import VideoDashboard from '../Dashboard/VideoDashboard';
+import { Avatar } from '@mui/material';
 
 const Profile = ({user}) => {
     const [status,setStatus] = useState(1);
@@ -8,7 +11,14 @@ const Profile = ({user}) => {
     
     return (
         <div>
-            {user.userName}
+            <div className='flex border-b-4 border-gray-200 my-4 ml-4'>
+                <Avatar/>
+                <div>
+                    <h1 className='font-semibold text-black text-3xl'>Ved pratap singh rajpoot</h1>
+                    <h3 className='font-semibold text-black text-md'>Hii guys, welcome to my youtube channel</h3>
+                </div>
+            </div>
+            
             <div className="flex items-center space-x-6 mx-8">
                 <button id="video" type="button" className= {(status === 1) ? selected : notSelected} onClick={() => setStatus(1)} >Videos</button> 
                 <button id="audio" type="button" className= {(status === 2) ? selected : notSelected} onClick={() => setStatus(2)} >Audios</button> 
@@ -17,8 +27,8 @@ const Profile = ({user}) => {
                 <button id="audio" type="button" className= {(status === 5) ? selected : notSelected} onClick={() => setStatus(5)} >Favorites</button>  
                 <button id="audio" type="button" className= {(status === 6) ? selected : notSelected} onClick={() => setStatus(6)} >About</button>  
             </div>
-            {/* <div className={(status === 2) ? "hidden" : "relative top-5"} ><VideoDashboard /></div> */}
-            {/* <div className={(status === 1) ? "hidden" : "relative top-5"} ><AudioDashboard /></div> */}
+            <div className={(status === 1) ? "hidden" : "relative top-5"} ><AudioDashboard/></div>
+            <div className={(status === 2) ? "hidden" : "relative top-5"} ><VideoDashboard/></div>
         </div>
   )
 }
