@@ -1,7 +1,7 @@
 const express = require("express");
 const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
-const publicVideo = require("../models/publicVideos.model")
+const publicVideo = require("../models/Video.model")
 
 router.post("/", (req, res) => {
     publicVideo.find()

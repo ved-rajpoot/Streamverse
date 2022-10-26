@@ -25,6 +25,7 @@ app.use('/signUp', require('./routes/SignUp.route'));
 app.use('/login', require('./routes/Login.route'));
 app.use('/upload', checkAuth, require('./routes/Upload.route'));
 app.use('/videolist', require('./routes/VideoList.route'));
+app.use('/getuservideos', require('./routes/GetUserVideos.route'));
 
 app.listen(9002, () => {
     console.log("BE started at port 9002")
