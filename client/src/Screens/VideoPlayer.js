@@ -14,7 +14,7 @@ const VideoPlayer = () => {
     <div>
         <div>
             <Video className="h-[40rem]">
-                <source src={location.state.avatar} type="video/webm"/>
+                <source src={location.state.props.avatar} type="video/webm"/>
                 <track label="English" kind="subtitles" srcLang="en" src="/react-html5video/3f581f9610d039656ad3830864753a94.vtt" default />
                 <track label="Español" kind="subtitles" srcLang="es" src="/react-html5video/691c220d6cfe7ead7ad17fc2bd972543.vtt" />
             </Video>
