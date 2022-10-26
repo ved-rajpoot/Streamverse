@@ -8,22 +8,6 @@ import { Progress } from 'reactstrap';
 
 const UploadVideo = () => {
 
-    const [redirectStatus, setRedirectStatus] = useState(false)
-    useEffect(() => {
-        if (localStorage.getItem('userTokenTime')) {
-            // Check if user holds token which is valid in accordance to time
-            const data = JSON.parse(localStorage.getItem('userTokenTime'));
-            if (new Date().getTime() - data.time > (1 * 60 * 60 * 1000)) {
-                // It's been more than hour since you have visited dashboard
-                localStorage.removeItem('userTokenTime');
-                setRedirectStatus(true);
-            }
-        } else {
-            setRedirectStatus(true);
-        }
-    }, [])
-
-
     const [selectedFile, setSelectedFile] = useState({
         file: null,
         loaded: 0
@@ -128,7 +112,6 @@ const UploadVideo = () => {
         newTodos.splice(index, 1);
         setTodos(newTodos);
     };
-    if (redirectStatus) return <Navigate to="/signIn" />
     return (
         <>
             <p className="text-4xl m-5">Video Upload</p>
