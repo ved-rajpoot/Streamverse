@@ -23,7 +23,7 @@ const VideoDashboard = () => {
 
     useEffect(() => {
         console.log('videoList: ', videoList);
-    }, videoList)
+    }, [videoList])
     if (!status) return (
         <>
             <div className="flex item-center">
@@ -34,9 +34,6 @@ const VideoDashboard = () => {
     return (
         <>
             <div className="flex" >
-                {/* <div>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 " onClick={()=>navigate('/upload')}>Upload</button>
-                </div> */}
                 <div className="flex flex-wrap">
                     {
                         Array.isArray(videoList) ?
