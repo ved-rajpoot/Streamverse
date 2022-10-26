@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Components/Login"
 import SignUp from './Components/SignUp';
 import Header from './Components/Header';
-import Upload from './Screens/Upload';
+import Upload from './Screens/Upload/Upload';
 import Dashboard from './Screens/Dashboard/Dashboard';
 import VideoPlayer from './Screens/VideoPlayer';
 import Profile from './Screens/Profile/Profile';
