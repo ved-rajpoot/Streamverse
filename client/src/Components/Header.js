@@ -88,9 +88,9 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <button className='mr-1'>
+          <Link to='/' className='mr-1'>
             <Logo/>
-          </button>
+          </Link>
           <Typography
             variant="h6"
             noWrap
