@@ -1,5 +1,6 @@
 import axios from "axios"
-import { useEffect, useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Progress } from 'reactstrap';
 // import { ToastContainer, toast } from 'react-toastify';
@@ -80,14 +81,77 @@ const Upload = () => {
             })
 
     }
-    // console.log(redirectStatus)
-    if (redirectStatus === true) return <Navigate to="/Login" /> 
+
+    function Todo({ todo, index, removeTodo }) {
+        return (
+            <>
+                {todo.text}
+                <div>
+                    <button onClick={() => removeTodo(index)} className="text-slate text-base">x</button>
+                </div>
+            </>
+        );
+      }
+
+      function TodoForm({ addTodo }) {
+        const [value, setValue] = React.useState("");
+      
+        const handleSubmit = e => {
+          e.preventDefault();
+          if (!value) return;
+          addTodo(value);
+          setValue("");
+        };
+      
+        return (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="input"
+              value={value}
+              onChange={e => setValue(e.target.value)}
+            />
+          </form>
+        );
+      }
+
+      const [todos, setTodos] = React.useState([
+      ]);
+    
+      const addTodo = text => {
+        const newTodos = [...todos, { text }];
+        setTodos(newTodos);
+      };
+    
+      const removeTodo = index => {
+        const newTodos = [...todos];
+        newTodos.splice(index, 1);
+        setTodos(newTodos);
+      };
+    if (redirectStatus) return <Navigate to="/signIn" />
     return (
         <>
-            <div className="flex flex-col grid h-screen place-items-center h-1/2">
-                <input type="text" placeholder="Title" onChange={changeHandler} name="title" value={title}/>
-                <input type="text" placeholder="Description" onChange={changeHandler} name="description" value={description}/>
-                <input type="file" name="avatar" onChange={changeHandler} />
+            <p className="text-4xl m-5">Audio/Video Upload</p>
+            <div className="flex flex-col m-5 shadow-2xl bg-slate-100">
+                <div className="text-2xl m-5">
+                    Enter title: <br/> 
+                    <input type="text" placeholder="Title" onChange={changeHandler} name="title" value={title}/>
+                </div>
+                
+                <div className="m-5">
+                    <p className="text-2xl"> Upload thumbnail: </p>
+                    <input type="file" name="thumbnail" onChange={changeHandler} />
+                </div>
+
+                <div className="m-5">
+                    <p className="text-2xl">Upload file: </p>
+                    <input type="file" name="avatar" onChange={changeHandler} />
+                </div>
+
+                <div className="text-2xl m-5">
+                    Add Description: <br/>
+                    <input type="text" placeholder="Description" onChange={changeHandler} name="description" value={description}/>
+                </div>
                 {isFilePicked ? (
                     <div>
                         <p>Filename: {selectedFile.file.name}</p>
@@ -99,24 +163,33 @@ const Upload = () => {
                         </p>
                     </div>
                 ) : (
-                    <p>Select a file to show details</p>
+                    <p className="ml-5">Select a file to show details</p>
                 )}
-                <input type="file" name="thumbnail" onChange={changeHandler} />
-                {isThumbnailPicked ? (
-                    <div>
-                        <p>Filename: {selectedFile.file.name}</p>
-                    </div>
-                ) : (
-                  <></>
-                )}
-
-                <Progress max="100" color="success" value={selectedFile.loaded} className="mt-4 mb-1">
+                <Progress max="100" color="success" value={selectedFile.loaded} className="m-5 mb-1">
                     {isNaN(Math.round(selectedFile.loaded, 2)) ? 0 : Math.round(selectedFile.loaded, 2)}%
                 </Progress>
-                <button className="bg-[#002D74]  rounded-xl text-white py-2 hover:scale-105 duration-300 w-[10%]" onClick={upload} >upload</button>
+
+                <div className="text-2xl m-5">
+                    Add tags:
+                    <div className="app ml-5 text-lg">
+                        <div className="todo-list">
+                            {todos.map((todo, index) => (
+                            <Todo
+                                key={index}
+                                index={index}
+                                todo={todo}
+                                removeTodo={removeTodo}
+                            />
+                            ))}
+                            <TodoForm addTodo={addTodo} />
+                        </div>
+                    </div>
+                </div>
+
+                <button className="bg-[#002D74]  rounded-xl text-white py-2 hover:scale-105 duration-300 w-[10%] m-5 text-2xl" onClick={upload} >upload</button>
             </div>
         </>
     )
 }
 
-export default Upload;
+export default Upload
