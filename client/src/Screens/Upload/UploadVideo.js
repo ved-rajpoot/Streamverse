@@ -61,7 +61,7 @@ const UploadVideo = () => {
         data.append("description", description);
 
         console.log(data);
-        axios.post("http://localhost:9002/upload", data, {
+        axios.post("http://localhost:9002/uploadvideo", data, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
