@@ -18,8 +18,6 @@ const Dashboard = () => {
             <div className={(status === 1) ? "hidden" : "relative top-5"} ><AudioDashboard /></div>
         </>
     ) 
-    
-    
 }
 
 
