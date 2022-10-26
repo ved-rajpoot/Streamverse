@@ -8,13 +8,13 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const VideoPlayer = () => {
-    const location = useLocation();
+  const location = useLocation();
     
   return (
     <div>
         <div>
-            <Video className="h-[40rem]">
-                <source src={location.state.props.avatar} type="video/webm"/>
+            <Video className="h-[40rem]" preload = "auto">
+                <source src={location.state.avatar} type="video/webm"/>
                 <track label="English" kind="subtitles" srcLang="en" src="/react-html5video/3f581f9610d039656ad3830864753a94.vtt" default />
                 <track label="Español" kind="subtitles" srcLang="es" src="/react-html5video/691c220d6cfe7ead7ad17fc2bd972543.vtt" />
             </Video>
@@ -44,11 +44,11 @@ const VideoPlayer = () => {
         </div>
 
         <div className='m-3 text-2xl font-bold'>
-          {location.state.props.title}
+          {location.state.title}
         </div>
         
         <div className='m-3 text-sm'>
-          {location.state.props.description}
+          {location.state.description}
         </div>
     </div>
   )
