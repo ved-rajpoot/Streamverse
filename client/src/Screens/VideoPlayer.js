@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { DefaultPlayer as Video } from "react-html5video"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -33,6 +33,25 @@ const VideoPlayer = () => {
     window.location.href = link
   }
 
+  const getVideoData = async ()=>{
+    const res = await axios.post("http://localhost:9002/getvideodata", { id: location.state.props.id }, {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
+      }
+    })
+    console.log(res);
+    if(res.status===200) {
+      setIsLiked(res.data.isLiked);
+      setIsDisliked(res.data.isDisliked);
+      setIsFavorite(res.data.isFavorite);
+    }
+  }
+
+  useEffect(()=>{
+    getVideoData();
+  },[])
+  
   const addToPlaylist = () => {
     console.log(location.state.props.id)
     axios.post("http://localhost:9002/playlist/add", { id: location.state.props.id }, {
@@ -82,6 +101,7 @@ const VideoPlayer = () => {
   }
 
   const addToFavorites = () => {
+    // console.log(location.state.props.id);
     axios.post("http://localhost:9002/addfavorite", { id: location.state.props.id }, {
       headers: {
         "Content-Type": "application/json",
