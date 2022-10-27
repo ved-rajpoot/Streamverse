@@ -12,6 +12,7 @@ const VideoDashboard = () => {
             axios.post("http://localhost:9002/videolist")
             .then((res) => {
                 console.log('video found');
+                console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {
                 setStatus(true)
@@ -36,7 +37,7 @@ const VideoDashboard = () => {
                             videoList.map((val, index) => {
                                 return (
                                     <>
-                                        <VideoCard avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
+                                        <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
                                     </>
                                 )
                             })
