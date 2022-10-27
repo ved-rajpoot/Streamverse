@@ -16,6 +16,8 @@ const VideoPlayer = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [likes,setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
 
   const download = () => {
     var url = location.state.props.avatar
@@ -45,6 +47,8 @@ const VideoPlayer = () => {
       setIsLiked(res.data.isLiked);
       setIsDisliked(res.data.isDisliked);
       setIsFavorite(res.data.isFavorite);
+      setLikes(res.data.totalLikes);
+      setDislikes(res.data.totalDislikes);
     }
   }
 

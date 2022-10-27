@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
     const navigate = useNavigate();
     const {id, avatar,thumbnail_avatar,title,description, cloudinary_id, userName} = props;
     return (
-      <Card className="w-96 mx-10 my-10" onClick={()=>{console.log('clickked'); navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
+      <Card className="w-96 mx-10 my-10 border-gray-300 border-b-4 hover:bg-gray-100 duration-100 cursor-pointer" onClick={()=>{console.log('clickked'); navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
         <CardHeader color="blue" className="relative h-56">
           <img
             src={thumbnail_avatar}
@@ -14,23 +14,23 @@ import { useNavigate } from "react-router-dom";
             className="h-full w-full"
           />
         </CardHeader>
-        <CardBody className="text-center">
-          <Typography variant="h5" className="mb-2">
+        <CardBody className="ml-4">
+          <Typography variant="h5" className="mt-2 text-3xl">
             {title}
           </Typography>
-          <Typography>
+          <Typography variant="small" className="text-md">{userName}</Typography>
+          {/* <Typography>
             The place is close to Barceloneta Beach and bus stop just 2 min by
             walk and near to "Naviglio" where you can enjoy the main night life in
             Barcelona.
-          </Typography>
+          </Typography> */}
         </CardBody>
 
         <CardFooter divider className="flex items-center justify-between py-3">
-          <Typography variant="small">{userName}</Typography>
-          <Typography variant="small" color="gray" className="flex gap-1">
+          {/* <Typography variant="small" color="gray" className="flex gap-1">
             <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
             {userName}
-          </Typography>
+          </Typography> */}
         </CardFooter>
       </Card>
     );
