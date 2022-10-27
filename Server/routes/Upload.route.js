@@ -3,7 +3,7 @@ const router = require("express").Router();
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer")
 const User = require("../models/User.model");
-const publicVideo = require("../models/Video.model")
+const Video = require("../models/Video.model")
 
 
 router.post("/", upload.fields([{name:'avatar',maxCount:1},{name:"thumbnail",maxCount:1}]), async (req, res) => {
@@ -14,7 +14,7 @@ router.post("/", upload.fields([{name:'avatar',maxCount:1},{name:"thumbnail",max
         const result2 = await cloudinary.uploader.upload(req.files.thumbnail[0].path, { "resource_type": "auto" });
         
         console.log(result)
-        const video = new publicVideo({
+        const video = new Video({
             avatar: result.secure_url,
             cloudinary_id: result.public_id,
             videoName: result.original_filename,
