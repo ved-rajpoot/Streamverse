@@ -24,7 +24,7 @@ const Audios = () => {
             {
                 Array.isArray(userAudios) ?
                     userAudios.map((val, index) => {
-                        console.log(index);
+                        {/* console.log(index); */}
                         return (
                             <>
                                 <VideoCard avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
