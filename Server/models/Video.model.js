@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const publicVideoSchema = new mongoose.Schema({
+const videoSchema = new mongoose.Schema({
         avatar: { type: String, required: true },
         cloudinary_id: { type: String, required: true },
         videoName: { type: String, required: true },
@@ -15,5 +15,5 @@ const publicVideoSchema = new mongoose.Schema({
         tags: [{ type: String,default:[] }],
         isPrivate: {type:Boolean, default:true}
 })
-const publicVideo = new mongoose.model("publicVideo", publicVideoSchema);
-module.exports = publicVideo
+const Video = new mongoose.model("video", videoSchema);
+module.exports = Video;

@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { Progress } from 'reactstrap';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
+import { Switch } from "@mui/material";
 
 const UploadVideo = () => {
 
@@ -17,6 +18,7 @@ const UploadVideo = () => {
     const [isThumbnailPicked, setIsThumbnailPicked] = useState(false);
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
+    const [isPrivate,setIsprivate] = useState(false);
 
     const changeHandler = (event) => {
         if (event.target.name === 'title') {
@@ -43,6 +45,7 @@ const UploadVideo = () => {
         data.append("thumbnail", seletcedThumbnail.file);
         data.append("title", title);
         data.append("description", description);
+        data.append("isPrivate", isPrivate);
 
         console.log(data);
         axios.post("http://localhost:9002/uploadvideo", data, {
@@ -112,6 +115,7 @@ const UploadVideo = () => {
         newTodos.splice(index, 1);
         setTodos(newTodos);
     };
+
     return (
         <>
             <p className="text-4xl m-5">Video Upload</p>
@@ -151,7 +155,9 @@ const UploadVideo = () => {
                 <Progress max="100" color="success" value={selectedFile.loaded} className="m-5 mb-1">
                     {isNaN(Math.round(selectedFile.loaded, 2)) ? 0 : Math.round(selectedFile.loaded, 2)}%
                 </Progress>
-
+                <div className="text-2xl m-5">
+                    <Switch checked={isPrivate} onChange={()=>{setIsprivate(!isPrivate)}}/> <span>Private</span>
+                </div>
                 <div className="text-2xl m-5">
                     Add tags:
                     <div className="app ml-5 text-lg">
