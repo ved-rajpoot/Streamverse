@@ -1,3 +1,4 @@
+import { Card, CardHeader, CardBody, CardFooter, Typography,} from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 
   export default function VideoCard(props) {
@@ -5,20 +6,32 @@ import { useNavigate } from "react-router-dom";
     const navigate = useNavigate();
     const {avatar,thumbnail_avatar,title,description, cloudinary_id, userName} = props;
     return (
-      <div className="w-96 mx-10 my-10 border-gray-200 border-b-4 rounded-xl flex flex-wrap cursor-pointer" onClick={()=>{console.log('clickked'); navigate(`/dashboard/${cloudinary_id}`, {state: {props:{avatar,description,title}}})}}>
-        <div color="blue" className="relative h-56">
+      <Card className="w-96 mx-10 my-10" onClick={()=>{console.log('clickked'); navigate(`/dashboard/${cloudinary_id}`, {state: {props:{avatar,description,title}}})}}>
+        <CardHeader color="blue" className="relative h-56">
           <img
             src={thumbnail_avatar}
             alt="img-blur-shadow"
             className="h-full w-full"
           />
-        </div>
-        <div className="ml-2 my-2">
-          <h1 className="mt-2 text-4xl">
+        </CardHeader>
+        <CardBody className="text-center">
+          <Typography variant="h5" className="mb-2">
             {title}
-          </h1>
-          <h3 className="text-md mt-1">{userName}</h3>
-        </div>
-      </div>
+          </Typography>
+          <Typography>
+            The place is close to Barceloneta Beach and bus stop just 2 min by
+            walk and near to "Naviglio" where you can enjoy the main night life in
+            Barcelona.
+          </Typography>
+        </CardBody>
+
+        <CardFooter divider className="flex items-center justify-between py-3">
+          <Typography variant="small">{userName}</Typography>
+          <Typography variant="small" color="gray" className="flex gap-1">
+            <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
+            {userName}
+          </Typography>
+        </CardFooter>
+      </Card>
     );
   }

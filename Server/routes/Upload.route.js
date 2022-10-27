@@ -23,7 +23,6 @@ router.post("/", upload.fields([{name:'avatar',maxCount:1},{name:"thumbnail",max
             thumbnail_cloudinary_id: result2.public_id,
             thumbnail_avatar: result2.secure_url,
             userName: req.userData.userName,
-            userId: req.userData.userId
         })
         await video.save();
         res.json({ message: "video saved in db successfully" , video});
