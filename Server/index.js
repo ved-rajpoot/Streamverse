@@ -23,8 +23,10 @@ mongoose.connect(process.env.MONGO_URL, {
 
 app.use('/signUp', require('./routes/SignUp.route'));
 app.use('/login', require('./routes/Login.route'));
-app.use('/upload', checkAuth, require('./routes/Upload.route'));
+app.use('/uploadvideo', checkAuth, require('./routes/UploadVideo.route'));
+app.use('/uploadaudio', checkAuth, require('./routes/UploadAudio.route'));
 app.use('/videolist', require('./routes/VideoList.route'));
+app.use('/audiolist', require('./routes/AudioList.route'));
 app.use('/getuservideos', require('./routes/GetUserVideos.route'));
 
 app.listen(9002, () => {

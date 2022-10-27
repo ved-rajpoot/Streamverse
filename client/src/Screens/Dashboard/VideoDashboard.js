@@ -12,7 +12,6 @@ const VideoDashboard = () => {
             axios.post("http://localhost:9002/videolist")
             .then((res) => {
                 console.log('video found');
-                console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {
                 setStatus(true)
@@ -21,9 +20,6 @@ const VideoDashboard = () => {
             })
     }, [])
 
-    useEffect(() => {
-        console.log('videoList: ', videoList);
-    }, [videoList])
     if (!status) return (
         <>
             <div className="flex item-center">
