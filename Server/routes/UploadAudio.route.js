@@ -22,6 +22,8 @@ router.post("/", upload.fields([{ name: 'avatar', maxCount: 1 }, { name: "thumbn
             thumbnail_cloudinary_id: result2.public_id,
             thumbnail_avatar: result2.secure_url,
             userName: req.userData.userName,
+            userId: req.userData.userId,
+            isPrivate: req.body.isPrivate
         })
         await audio.save();
         res.json({ message: "audio saved in db successfully", audio });
