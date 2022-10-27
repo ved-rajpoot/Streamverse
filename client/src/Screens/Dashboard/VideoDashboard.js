@@ -9,9 +9,16 @@ const VideoDashboard = () => {
     const [videoList, setVideoList] = useState(null);
     const [status, setStatus] = useState(false);
     useEffect(() => {
-            axios.post("http://localhost:9002/videolist")
+            const data = null;
+            axios.post("http://localhost:9002/videolist", data, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
+                }
+            })
             .then((res) => {
                 console.log('video found');
+                console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {
                 setStatus(true)
@@ -36,7 +43,7 @@ const VideoDashboard = () => {
                             videoList.map((val, index) => {
                                 return (
                                     <>
-                                        <VideoCard avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
+                                        <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
                                     </>
                                 )
                             })
