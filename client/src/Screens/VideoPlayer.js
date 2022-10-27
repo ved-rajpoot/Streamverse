@@ -6,14 +6,41 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DownloadIcon from '@mui/icons-material/Download';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import axios from 'axios';
 
 const VideoPlayer = () => {
-  const location = useLocation();
-  console.log(location.state.props.avatar)
+    const location = useLocation();
+    
+    const download = () => {
+      var url=location.state.props.avatar
+      
+      var link=""
+      for(var i=0;i<url.length;i++) {
+        link+=url[i]
+        if(url[i]==='/' && url[i+1]==='u') {
+          link+="upload/fl_attachment/"
+          i++;
+          while(url[i]!='/') i++;
+        }
+      }
+
+      window.location.href=link
+    }
+
+    const addToPlaylist = () => {
+      console.log(location.state.props.id)
+      axios.post("http://localhost:9002/playlist/add",{id:location.state.props.id},{            
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
+        }
+      })
+    }
+
   return (
     <div>
         <div>
-            <Video className="h-[40rem]" preload = "auto">
+            <Video className="h-[40rem]">
                 <source src={location.state.props.avatar} type="video/webm"/>
                 <track label="English" kind="subtitles" srcLang="en" src="/react-html5video/3f581f9610d039656ad3830864753a94.vtt" default />
                 <track label="Español" kind="subtitles" srcLang="es" src="/react-html5video/691c220d6cfe7ead7ad17fc2bd972543.vtt" />
@@ -29,11 +56,11 @@ const VideoPlayer = () => {
             <ThumbDownIcon/>
           </button>
           
-          <button name="download">
+          <button name="download" onClick={download}>
             <DownloadIcon/>
           </button>
           
-          <button name="addToPlaylist">
+          <button name="addToPlaylist" onClick={addToPlaylist}>
             <PlaylistAddIcon/>
           </button>
           
