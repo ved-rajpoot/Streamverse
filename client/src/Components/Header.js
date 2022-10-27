@@ -22,7 +22,7 @@ const pages = ['Upload', 'Create Room'];
 const pagesLink = ['/upload', '/room'];
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Playlists' ,'Logout'];
-const settingsLink = ['/profile', '/account', '/Dashboard', '/playlists', '/logout'];
+const settingsLink = ['/profile', '/account', '/dashboard', '/playlists', '/logout'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -88,14 +88,14 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Link to='/' className='mr-1'>
+          <Link to='/dashboard' className='mr-1'>
             <Logo/>
           </Link>
           <Typography
             variant="h6"
             noWrap
             component={Link}
-            to='/'
+            to='/dashboard'
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },

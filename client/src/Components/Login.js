@@ -20,7 +20,7 @@ const Login = () => {
             [name]: value
         })
     }
-    useEffect(()=>{console.log('x');},[redirect])
+    useEffect(()=>{},[redirect])
     const log = () => {
         // eslint-disable-next-line 
         if ((user.email && user.password) && (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(user.email))) {
