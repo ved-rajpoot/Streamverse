@@ -1,10 +1,10 @@
 const express = require("express");
 const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
-const publicAudio = require("../models/publicAudios.model")
+const Audio = require("../models/Audio.model")
 
 router.post("/", (req, res) => {
-    publicAudio.find()
+    Audio.find()
         .then((result) => {
             res.json(result)
         })
