@@ -113,12 +113,12 @@ router.post("/getvideodata", checkAuth, async (req,res)=>{
         const user = await User.find({_id:userId});
         const video = await Video.find({_id:videoId});
     
-        let isFavorite = false, isLiked = false, isDisliked = false;
+        let isFavorite = false, isLiked = false, isDisliked = false, totalLikes = video[0].likes.length, totalDislikes = video[0].dislikes.length;
         if(user[0].favorites.includes(videoId)) isFavorite = true;
         if(video[0].likes.includes(userId)) isLiked = true;
         if(video[0].dislikes.includes(userId)) isDisliked = true;
     
-        res.status(200).json({message:"Data retrieved successfully",isFavorite,isDisliked,isLiked});
+        res.status(200).json({message:"Data retrieved successfully",isFavorite,isDisliked,isLiked,totalLikes,totalDislikes});
     }
     catch (err) {
         console.log(err);
