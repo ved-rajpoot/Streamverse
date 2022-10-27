@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const publicAudioSchema = new mongoose.Schema({
+const audioSchema = new mongoose.Schema({
     avatar: { type: String, required: true },
     cloudinary_id: { type: String, required: true },
     audioName: { type: String, required: true },
@@ -10,5 +10,5 @@ const publicAudioSchema = new mongoose.Schema({
     thumbnail_avatar: { type: String, required: true },
     userName: { type: String, required: true }
 })
-const publicAudio = new mongoose.model("publicAudio", publicAudioSchema);
-module.exports = publicAudio
+const Audio = new mongoose.model("Audio", audioSchema);
+module.exports = Audio
