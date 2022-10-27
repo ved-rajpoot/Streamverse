@@ -26,6 +26,7 @@ app.use('/login', require('./routes/Login.route'));
 app.use('/uploadvideo', checkAuth, require('./routes/UploadVideo.route'));
 app.use('/uploadaudio', checkAuth, require('./routes/UploadAudio.route'));
 app.use('/videolist', require('./routes/VideoList.route'));
+app.use('/audiolist', require('./routes/AudioList.route'));
 app.use('/getuservideos', require('./routes/GetUserVideos.route'));
 
 app.listen(9002, () => {

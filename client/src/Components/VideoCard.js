@@ -2,7 +2,7 @@ import { Card, CardHeader, CardBody, CardFooter, Typography,} from "@material-ta
 import { useNavigate } from "react-router-dom";
 
   export default function VideoCard(props) {
-      console.log(props);
+  
     const navigate = useNavigate();
     const {avatar,thumbnail_avatar,title,description, cloudinary_id, userName} = props;
     return (

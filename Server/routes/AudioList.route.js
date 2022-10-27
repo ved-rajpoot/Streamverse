@@ -1,10 +1,10 @@
 const express = require("express");
 const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
-const publicVideo = require("../models/Video.model")
+const publicAudio = require("../models/publicAudios.model")
 
 router.post("/", (req, res) => {
-    publicVideo.find()
+    publicAudio.find()
         .then((result) => {
             res.json(result)
         })
