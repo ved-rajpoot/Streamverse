@@ -149,7 +149,7 @@ function Header() {
           {/* <button className=''> */}
             {/* <Logo/> */}
           {/* </button> */}
-          <Typography
+          {/* <Typography
             variant="h5"
             noWrap
             component={Link}
@@ -166,7 +166,7 @@ function Header() {
             }}
           >
             STREAMVERSE
-          </Typography>
+          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page, index) => (
               <Button

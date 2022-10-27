@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
     const navigate = useNavigate();
     const {id, avatar,thumbnail_avatar,title,description, cloudinary_id, userName} = props;
     return (
-      <Card className="w-96 mx-10 my-10 border-gray-300 border-b-4" onClick={()=>{console.log('clickked'); navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
+      <Card className="w-96 mx-10 my-10 border-gray-300 border-b-4 hover:bg-gray-100 duration-100 cursor-pointer" onClick={()=>{console.log('clickked'); navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
         <CardHeader color="blue" className="relative h-56">
           <img
             src={thumbnail_avatar}
