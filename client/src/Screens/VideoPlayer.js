@@ -9,7 +9,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const VideoPlayer = () => {
     const location = useLocation();
-    
+    console.log(location.state);
   return (
     <div>
         <div>
