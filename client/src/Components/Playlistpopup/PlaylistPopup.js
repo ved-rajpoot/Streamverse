@@ -3,7 +3,7 @@ import axios from 'axios';
 import Form from './Form';
 
 const PlaylistPopup = ({id}) => {
-    const [playlists, setPlaylists] = useState([{name:'dummy', videos:[]}, {name:'dummy2',videos:[]}, {name:'dummy3',videos:[]}]);
+    const [playlists, setPlaylists] = useState([{name:'dummy', videos:[], isEditing:false}, {name:'dummy2',videos:[], isEditing:false}, {name:'dummy3',videos:[], isEditing: false}]);
 
     // an array of boolean values which will  denote if a particular video is present in playlist of corresponding index.
     const [isVideoPresent, setIsVideoPresent] = useState([]);

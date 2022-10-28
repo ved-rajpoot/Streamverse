@@ -5,6 +5,7 @@ import TodoList from "./List";
 import './form.css';
 
 import { createMuiTheme } from "@material-ui/core/styles";
+
 const theme = createMuiTheme({
     palette: {
         primary: { main: '#000000' },
@@ -13,32 +14,33 @@ const theme = createMuiTheme({
 
 const Form = ({playlists, setPlaylists, videoId}) => {
 
-    const [ newTodo, setNewTodo ] = useState('');
-    const [ todos, setTodos ] = useState([
-        {
-            text: "Learn about React",
-            isCompleted: false,
-            isEditing: false
-        },
-        {
-            text: "Meet friend for lunch",
-            isCompleted: false,
-            isEditing: false
-        },
-        {
-            text: "Build really cool todo app",
-            isCompleted: false,
-            isEditing: false
-        }
-    ]);
+    const [ newPlaylist, setNewPlaylist ] = useState({});
+    // const [ playlists, setPlaylists ] = useState([
+    //     {
+    //         text: "Learn about React",
+    //         isCompleted: false,
+    //         isEditing: false
+    //     },
+    //     {
+    //         text: "Meet friend for lunch",
+    //         isCompleted: false,
+    //         isEditing: false
+    //     },
+    //     {
+    //         text: "Build really cool todo app",
+    //         isCompleted: false,
+    //         isEditing: false
+    //     }
+    // ]);
     const inputRef = useRef();
     const noteRef = useRef({});
     const [ isInputEmpty, setInputEmpty ] = useState(false)
 
 
+    // create button click in creating new playlist.
     const handleSubmit = e => {
         e.preventDefault();
-        addTodo(newTodo);
+        addTodo(newPlaylist);
         clearInput();
         inputRef.current.focus();
     };
@@ -49,54 +51,60 @@ const Form = ({playlists, setPlaylists, videoId}) => {
         }
     };
 
+    // adding new playlist to playlists array.
     const addTodo = text => {
         if ( text !== '') {
-            const newTodos = [...todos, { text }]
-            setNewTodo('')
-            setTodos(newTodos);
+            const newPlaylist = [...playlists, { name:text,videos:[] }]
+            setNewPlaylist({})
+            setPlaylists(newPlaylist);
         } else {
-            console.log('text', text)
+            console.log('name', text)
             setInputEmpty(true);
         }
     };
 
+    // delete a playlist
     const removeTodo = inx => {
-        const newArr = [...todos]
+        const newArr = [...playlists]
         newArr.splice(inx, 1)
-        setTodos(newArr)
+        setPlaylists(newArr)
     }
 
+    // add current video to playlist.
     const completeTodo = inx => {
-        const newTodos = [...todos];
-        newTodos[inx].isCompleted = !newTodos[inx].isCompleted;
-        setTodos(newTodos);
+        const newPlaylist = [...playlists];
+        newPlaylist[inx].isCompleted = !newPlaylist[inx].isCompleted;
+        setPlaylists(newPlaylist);
     };
 
+    // rename playlist
     const editTodo = inx => {
-        const newTodos = [...todos];
-        newTodos[inx].isEditing = !newTodos[inx].isEditing;
-        setTodos(newTodos);
+        const newPlaylist = [...playlists];
+        newPlaylist[inx].isEditing = !newPlaylist[inx].isEditing;
+        setPlaylists(newPlaylist);
     }
 
+    // save new name of playlist.
     const saveTodo = (inx) => {
-        const newTodos = [...todos];
-        newTodos[inx].isEditing = !newTodos[inx].isEditing;
-        newTodos[inx].text = noteRef.current[inx].value;
-        setTodos(newTodos);
+        const newPlaylist = [...playlists];
+        newPlaylist[inx].isEditing = !newPlaylist[inx].isEditing;
+        newPlaylist[inx].name = noteRef.current[inx].value;
+        setPlaylists(newPlaylist);
     }
 
     const clearInput = () => {
-        setNewTodo('');
+        setNewPlaylist('');
     }
 
-    const setTodo = todo => {
+
+    const setTodo = newPlaylist => {
         setInputEmpty(false);
-        setNewTodo(todo);
+        setNewPlaylist(newPlaylist);
     }
 
     useEffect(() => {
-
-    }, [todos])
+        console.log(newPlaylist);
+    }, [newPlaylist])
 
     return (
         <div>
@@ -106,7 +114,7 @@ const Form = ({playlists, setPlaylists, videoId}) => {
 
                 <TodoList
                     theme={theme}
-                    todos={todos}
+                    playlists={playlists}
                     completeTodo={completeTodo}
                     editTodo={editTodo}
                     deleteTodo={removeTodo}
@@ -116,7 +124,7 @@ const Form = ({playlists, setPlaylists, videoId}) => {
                 />
                 <TodoCreator
                     theme={theme}
-                    todo={newTodo}
+                    newPlaylist={newPlaylist}
                     setTodo={setTodo}
                     clearInput={clearInput}
                     inputRef={inputRef}

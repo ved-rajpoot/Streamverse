@@ -20,10 +20,10 @@ const useStyles = makeStyles({
     }
 });
 
-
-const TodoCreator = ({ theme, todo, setTodo, clearInput, inputRef, isInputEmpty, preventSubmit }) => {
+// bug: setToDo is not a function
+const NewPlaylistCreator = ({ theme, newPlaylist, setTodo, clearInput, inputRef, isInputEmpty, preventSubmit }) => {
+    
     const classes = useStyles();
-
     return (
         <div className="flex w-full border-gray-100 border-b-1 pt-5 h-16">
             <ThemeProvider theme={theme}>
@@ -31,7 +31,7 @@ const TodoCreator = ({ theme, todo, setTodo, clearInput, inputRef, isInputEmpty,
                     <TextField
                         id="outlined-basic"
                         // label="What's need to be done?" // better accessibility with Material UI
-                        value={todo}
+                        value={newPlaylist}
                         variant="outlined"
                         onChange={(e) => setTodo(e.target.value)}
                         onFocus={clearInput}
@@ -62,4 +62,4 @@ const TodoCreator = ({ theme, todo, setTodo, clearInput, inputRef, isInputEmpty,
 
 }
 
-export  default TodoCreator;
+export  default NewPlaylistCreator;

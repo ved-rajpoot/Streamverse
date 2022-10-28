@@ -22,7 +22,8 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const TodoList = ({ theme, todos, completeTodo, editTodo, deleteTodo, saveTodo, noteRef, preventSubmit }) => {
+const TodoList = ({ theme, playlists, completeTodo, editTodo, deleteTodo, saveTodo, noteRef, preventSubmit }) => {
+
     const classes = useStyles();
     const [checked, setChecked] = React.useState([0]);
     let UniqKey = 123;
@@ -41,17 +42,16 @@ const TodoList = ({ theme, todos, completeTodo, editTodo, deleteTodo, saveTodo, 
         setChecked(newChecked);
         completeTodo(inx);
     };
-
-
+    
     return (
         <ThemeProvider theme={theme}>
             <List className={classes.root}>
-            {todos.map((todo, inx) => {
-                const labelId = `list-todo-${todo}`;
-
+            {playlists.map((playlist, inx) => {
+                const labelId = `list-play-${playlist}`;
+                {/* console.log(todo.name,inx); */}
                 return (
                     <ListItem
-                        key={`todo-${UniqKey++}`}
+                        key={`playlist-${UniqKey++}`}
                         role={undefined}
                         dense
                         button
@@ -61,21 +61,21 @@ const TodoList = ({ theme, todos, completeTodo, editTodo, deleteTodo, saveTodo, 
                             <Checkbox
                                 color="primary"
                                 edge="start"
-                                checked={checked.indexOf(todo) !== -1}
+                                checked={checked.indexOf(playlist) !== -1}
                                 tabIndex={-1}
                                 disableRipple
                                 inputProps={{ 'aria-labelledby': labelId }}
-                                onClick={handleToggle(todo, inx)}
+                                onClick={handleToggle(playlist, inx)}
                                 onKeyPress={preventSubmit}
                             />
                         </ListItemIcon>
                         {
-                            (!todo.isEditing) ?
+                            (!playlist.isEditing) ?
                                 <>
                                     <ListItemText
                                         id={labelId}
-                                        primary={`${todo.text}`}
-                                        style={{textDecoration: todo.isCompleted ? "" : ""}}
+                                        primary={`${playlist.name}`}
+                                        style={{textDecoration: playlist.isCompleted ? "" : ""}}
                                     />
                                     <ListItemIcon>
                                         <IconButton
@@ -93,11 +93,11 @@ const TodoList = ({ theme, todos, completeTodo, editTodo, deleteTodo, saveTodo, 
                                         htmlFor="task" // better accessibility with HTML
                                         className="visuallyhidden"
                                     >
-                                        {todo.text}
+                                        {playlist.name}
                                     </label>
                                     <input
                                         className="form__edit-input"
-                                        defaultValue={todo.text}
+                                        defaultValue={playlist.name}
                                         ref={(element) => noteRef.current[inx] = element}
                                         onKeyPress={preventSubmit}
                                         id="task"
