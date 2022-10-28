@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
           />
         </CardHeader>
         <CardBody className="ml-4">
-          <Typography variant="h5" className="mt-2 text-3xl">
+          <Typography variant="h5" className="mt-2 text-3xl break-all">
             {title}
           </Typography>
           <Typography variant="small" className="text-md">{userName}</Typography>

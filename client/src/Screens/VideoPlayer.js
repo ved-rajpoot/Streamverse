@@ -16,7 +16,9 @@ const VideoPlayer = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [likes,setLikes] = useState(0);
+  // eslint-disable-next-line
+  const [likes, setLikes] = useState(0);
+  // eslint-disable-next-line
   const [dislikes, setDislikes] = useState(0);
 
   const download = () => {
@@ -28,7 +30,7 @@ const VideoPlayer = () => {
       if (url[i] === '/' && url[i + 1] === 'u') {
         link += "upload/fl_attachment/"
         i++;
-        while (url[i] != '/') i++;
+        while (url[i] !== '/') i++;
       }
     }
 
@@ -54,6 +56,7 @@ const VideoPlayer = () => {
 
   useEffect(()=>{
     getVideoData();
+    // eslint-disable-next-line
   },[])
   
   const addToPlaylist = () => {
