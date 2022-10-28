@@ -7,12 +7,10 @@ import Upload from './Screens/Upload/Upload';
 import Dashboard from './Screens/Dashboard/Dashboard';
 import VideoPlayer from './Screens/VideoPlayer';
 import Profile from './Screens/Profile/Profile';
-import { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode';
-import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import PrivateRoutes from './utils/PrivateRoutes';
 import Logout from './Components/Logout';
+import ChatBox from './ChatBox/ChatBox';
 
 const App = () =>{
   
@@ -34,7 +32,8 @@ const App = () =>{
                 <Route path='*' element={<Navigate to='/login'/>}/>
               </Route>
             </Routes>
-          </Router>
+        </Router>
+        <ChatBox />
       </div>
       </>
     )
