@@ -1,6 +1,9 @@
 import  React, { useState, useEffect, useRef } from 'react';
 import TodoCreator from "./FormInput";
 import TodoList from "./List";
+
+import './form.css';
+
 import { createMuiTheme } from "@material-ui/core/styles";
 const theme = createMuiTheme({
     palette: {
