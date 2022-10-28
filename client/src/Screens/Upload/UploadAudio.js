@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { Progress } from 'reactstrap';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
+import { Switch } from "@mui/material";
 
 const UploadAudio = () => {
 
@@ -33,6 +34,7 @@ const UploadAudio = () => {
     const [isThumbnailPicked, setIsThumbnailPicked] = useState(false);
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
+    const [isPrivate,setIsprivate] = useState(false);
 
     const changeHandler = (event) => {
         if (event.target.name === 'title') {
@@ -59,6 +61,7 @@ const UploadAudio = () => {
         data.append("thumbnail", seletcedThumbnail.file);
         data.append("title", title);
         data.append("description", description);
+        data.append("isPrivate", isPrivate);
 
         console.log(data);
         axios.post("http://localhost:9002/uploadaudio", data, {
@@ -168,7 +171,26 @@ const UploadAudio = () => {
                 <Progress max="100" color="success" value={selectedFile.loaded} className="m-5 mb-1">
                     {isNaN(Math.round(selectedFile.loaded, 2)) ? 0 : Math.round(selectedFile.loaded, 2)}%
                 </Progress>
-
+                <div className="text-2xl m-5">
+                    <Switch checked={isPrivate} onChange={()=>{setIsprivate(!isPrivate)}}/> <span>Private</span>
+                </div>
+                <div className="text-2xl m-5">
+                    Add tags:
+                    <div className="app ml-5 text-lg">
+                        <div className="todo-list">
+                            {todos.map((todo, index) => (
+                                <Todo
+                                    key={index}
+                                    index={index}
+                                    todo={todo}
+                                    removeTodo={removeTodo}
+                                />
+                            ))}
+                            <TodoForm addTodo={addTodo} />
+                        </div>
+                    </div>
+                </div>
+                
                 <button className="bg-[#002D74]  rounded-xl text-white py-2 hover:scale-105 duration-300 w-[10%] m-5 text-2xl" onClick={upload} >upload</button>
             </div>
         </>
