@@ -10,6 +10,7 @@ import axios from 'axios';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import PlaylistPopup from '../Components/Playlistpopup/PlaylistPopup';
 
 const VideoPlayer = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const VideoPlayer = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [likes,setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
+  const [popup, setPopup] = useState(false);
 
   const download = () => {
     var url = location.state.props.avatar
@@ -57,13 +59,8 @@ const VideoPlayer = () => {
   },[])
   
   const addToPlaylist = () => {
+    setPopup(true);
     console.log(location.state.props.id)
-    axios.post("http://localhost:9002/playlist/add", { id: location.state.props.id }, {
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-      }
-    })
   }
   const like = () => {
     axios.post("http://localhost:9002/like", { id: location.state.props.id }, {
@@ -106,6 +103,7 @@ const VideoPlayer = () => {
 
   const addToFavorites = () => {
     // console.log(location.state.props.id);
+    setPopup(true);
     axios.post("http://localhost:9002/addfavorite", { id: location.state.props.id }, {
       headers: {
         "Content-Type": "application/json",
@@ -126,6 +124,11 @@ const VideoPlayer = () => {
 
   return (
     <div>
+
+      {
+        popup && <PlaylistPopup/>
+      }
+
       <div>
         <Video className="h-[40rem]">
           <source src={location.state.props.avatar} type="video/webm" />
