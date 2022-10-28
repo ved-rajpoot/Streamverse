@@ -14,7 +14,7 @@ const PrivateRoutes = ()=>{
             isAuthenticated = true;
         }
     }
-    
+        
     return (
         isAuthenticated? <Outlet/> : <Navigate to='/login'/>     
     )
