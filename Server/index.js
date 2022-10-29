@@ -4,6 +4,16 @@ const morgan = require("morgan")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const checkAuth = require('./middleware/check-auth');
+const { Socket } = require("socket.io")
+const JoinRoom = require("./SocketEvents/JoinRoom")
+const CreateRoom = require("./SocketEvents/CreateRoom")
+const io = require("socket.io")(8080,{
+    cors :{
+        origin: ["http://localhost:3000"],
+        methods: ['GET', 'POST'],
+    }
+})
+
 
 const app = express();
 
@@ -32,6 +42,12 @@ app.use('/getuseraudios', require('./routes/GetUserAudios.route'));
 app.use('/',require('./routes/Video.route'));
 app.use('/getuserdata',require('./routes/GetUserData.route'));
 app.use('/updateplaylists',require('./routes/Playlists.route'));
+
+io.on("connection", socket => {
+    console.log(socket.id)
+    // JoinRoom(socket)
+    CreateRoom(socket)
+})
 
 app.listen(9002, () => {
     console.log("BE started at port 9002")

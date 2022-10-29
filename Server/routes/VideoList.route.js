@@ -6,7 +6,7 @@ const Video = require("../models/Video.model")
 router.post("/", checkAuth, (req, res) => {
     Video.find()
         .then((result) => {
-            console.log(result);
+            // console.log(result);
             res.json(result)
         })
         .catch((err) => {
