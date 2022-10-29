@@ -24,7 +24,7 @@ const NewPlaylistCreator = ({ theme, newPlaylist, setTodo, clearInput, inputRef,
     
     const classes = useStyles();
     return (
-        <div className="flex w-full border-gray-100 border-b-1 pt-5 h-16">
+        <div className="flex w-full border-gray-100 border-b-1 py-5 mb-5 h-16">
             <ThemeProvider theme={theme}>
                 <FormControl   className={classes.label}>
                     <TextField

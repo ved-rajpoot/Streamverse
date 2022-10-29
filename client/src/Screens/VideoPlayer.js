@@ -125,7 +125,7 @@ const VideoPlayer = () => {
     <div>
 
       {
-        popup && <PlaylistPopup id={location.state.props.id}/>
+        popup && <PlaylistPopup id={location.state.props.id} setPopup={setPopup}/>
       }
 
       <div>

@@ -12,7 +12,7 @@ const theme = createTheme({
     },
 });
 
-const Form = ({playlists, setPlaylists, videoId}) => {
+const Form = ({playlists, setPlaylists, videoId, setPopup}) => {
     
     // To store name of new playlist
     const [ newPlaylist, setNewPlaylist ] = useState('');
@@ -138,10 +138,21 @@ const Form = ({playlists, setPlaylists, videoId}) => {
 
     return (
         <div>
-            <h1 className=''>Add to</h1>
-            <form onSubmit={handleSubmit} className="form">
-
-
+            <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <h3 className="text-3xl font-semibold">
+                    Add to
+                  </h3>
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => setPopup(false)}
+                  >
+                  {/* bug: span not visible */}
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+            </div>
+            <form onSubmit={handleSubmit} className="w-96 p-4">
                 <TodoList
                     theme={theme}
                     playlists={playlists}
@@ -153,7 +164,6 @@ const Form = ({playlists, setPlaylists, videoId}) => {
                     preventSubmit={preventSubmit}
                     videoId={videoId}
                     handleToggle={handleToggle}
-                    // checked = {checked}
                 />
                 <TodoCreator
                     theme={theme}
@@ -170,17 +180,3 @@ const Form = ({playlists, setPlaylists, videoId}) => {
 }
 
 export default Form;
-
-
-    // useEffect to initialize checked array.
-    // useEffect(()=>{
-    //     // console.log('playlist in List.js: ', playlists);
-    //     if(playlists!=null) {
-    //         const newChecked = playlists.map((val,idx)=>{
-    //             // if(val.videos.indexOf(videoId!==-1)) return val;
-    //             return val.videos.indexOf(videoId)===-1?false:true;
-    //         })
-    //         console.log('newChecked: ', newChecked);
-    //         setChecked(newChecked);
-    //     }
-    // },[playlists])

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Form from './Form';
 
-const PlaylistPopup = ({id}) => {
+const PlaylistPopup = ({id,setPopup}) => {
     const [playlists, setPlaylists] = useState(null);
 
     const getUserData = async ()=>{
@@ -33,8 +33,14 @@ const PlaylistPopup = ({id}) => {
     },[playlists]);
 
     return (
-        <div className='text-center flex items-center justify-center flex-col'>
-            <Form playlists={playlists} setPlaylists={setPlaylists} videoId={id}    />
+        <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+          <div className='relative w-auto my-6 mx-auto max-w-3xl'>
+          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"> 
+            <Form playlists={playlists} setPlaylists={setPlaylists} videoId={id} setPopup={setPopup}/>
+            </div>
+          </div>
         </div> 
     )
 }
