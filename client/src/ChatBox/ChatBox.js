@@ -1,16 +1,21 @@
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
-import SendIcon from '@mui/icons-material/Send';
+
 import { useEffect, useState } from 'react';
 import { JoinMessage, RegularMessage, PinnedMessage, CreateMessage } from './MessageType';
+import RommJoined from './RoomJoined';
+import RoomNotJoined from './RommNotJoined';
 const ChatBox = () => {
+    const JoinedClass = "h-[90%]"
+    const notJoinedClass = "h-[90%]"
+    const chatAreaClass = 'flex flex-col fixed right-6 bottom-36 w-[20%] h-[60%] rounded-lg border-4 border-indigo-500/100'
 
     const [open, setOpen] = useState(0);
     const [classMsg, setClassMsg] = useState("");
     const [classClose, setClassClose] = useState("hidden");
     const [chatArea, setChatArea] = useState("hidden");
-    const chatAreaClass = 'flex flex-col fixed right-6 bottom-36 w-[20%] h-[60%] rounded-lg border-4 border-indigo-500/100'
+    const [joined,setJoined] = useState(localStorage.getItem("room")?JoinedClass : "hidden")
+    const [notJoined, setNotJoined] = useState(localStorage.getItem("room") ? "hidden" : notJoinedClass)
     const handleClick = () => {
         if (open === 0) setOpen(1);
         else setOpen(0);
@@ -26,39 +31,31 @@ const ChatBox = () => {
             setChatArea(chatAreaClass)
         }
     }, [open])
+    const handle = () => {
+        console.log("clicked")
+        setJoined(JoinedClass)
+        setNotJoined("hidden")
+        
+        
+    }
+    
     return (
-
+        
         <>
+            <button id = "hidden-btn" className='hidden' onClick={handle}></button>
             <div className={chatArea}>
                 <div className='flex justify-center items-center font-mono font-extrabold text-white h-[10%] bg-indigo-500/100 w-[100%]'>
                     CHATBOX
                 </div>
-                {/* <div className='flex flex-col bg-[#FAFAFA] justify-center items-center h-[90%]'>
-                    <p className='font-bold'>You have not joined a room !!</p>
-                    <br />
-                    <button className='underline decoration-sky-500 text-blue-600/100'>Create new Room</button>
-                    <p>OR</p>
-                    <button className='underline decoration-sky-500 text-blue-600/100'>Join a Room</button>
-                </div> */}
-                <div className='flex flex-col bg-[#FAFAFA] h-[78%] overflow-auto'>
-                    <PinnedMessage />
-                    <CreateMessage />
-                    <JoinMessage />
-                    <RegularMessage />
-                    <RegularMessage />
-                    <JoinMessage />
-                    <RegularMessage />
-                    <RegularMessage />
-                    
-                    
+                <div className={joined}>
+                    <RommJoined 
+                        roomID={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).roomID : null}
+                        roomName={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).roomName : null}
+                    userName={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).userName : null}
+                    />
                 </div>
-                <div className='flex flex-row p-1 sticky bottom-0 h-[12%] bg-white'>
-                    <div className='w-[80%]'>
-                         <TextField id="outlined-basic" label="Type Your Message" variant="outlined" />
-                    </div>
-                    <button className='my-1 mx-1 shadow-sm bg-purple-500 w-11 h-11 rounded-lg flex justify-center items-center'>
-                        <SendIcon />
-                    </button>
+                <div className={notJoined}>
+                    <RoomNotJoined />
                 </div>
             </div>
             <div className='fixed bottom-20 right-8'>

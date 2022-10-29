@@ -35,16 +35,27 @@ const RegularMessage = () => {
     )
 }
 
-const CreateMessage = () => {
+const CreateMessage = (props) => {
     return (
         <>
             <div className="flex w-[100%] py-1 justify-center items-center">
                 <div className="flex w-fit px-2 justify-center items-center text-xs font-sans rounded-lg bg-[#67e8f9]">
-                    <p>CreatorName created this Room </p>
+                    <p>{props.creator} created "{props.roomName}" </p>
                 </div>
             </div>
         </>
     )
 }
 
-export { JoinMessage, PinnedMessage, RegularMessage, CreateMessage }
+const RoomIdMessage = (props) => {
+    return (
+        <>
+            <div className="flex w-[100%] py-1 justify-center items-center">
+                <div className="flex w-fit px-2 justify-center items-center text-xs font-sans rounded-lg bg-[#67e8f9]">
+                    <p>RoomID : {props.roomID}  </p>
+                </div>
+            </div>
+        </>
+    )
+}
+export { JoinMessage, PinnedMessage, RegularMessage, CreateMessage, RoomIdMessage }
