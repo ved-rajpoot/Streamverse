@@ -3,6 +3,7 @@ import TodoCreator from "./FormInput";
 import TodoList from "./List";
 
 import './form.css';
+import axios from 'axios';
 
 import { createMuiTheme } from "@material-ui/core/styles";
 
@@ -14,7 +15,9 @@ const theme = createMuiTheme({
 
 const Form = ({playlists, setPlaylists, videoId}) => {
 
-    const [ newPlaylist, setNewPlaylist ] = useState({});
+    // To store name of new playlist
+    const [ newPlaylist, setNewPlaylist ] = useState('');
+
     // const [ playlists, setPlaylists ] = useState([
     //     {
     //         text: "Learn about React",
@@ -32,11 +35,22 @@ const Form = ({playlists, setPlaylists, videoId}) => {
     //         isEditing: false
     //     }
     // ]);
+
     const inputRef = useRef();
     const noteRef = useRef({});
     const [ isInputEmpty, setInputEmpty ] = useState(false)
+    
 
+    const updatePlaylists = async ()=>{
+        console.log('x');
+        const res = await axios.post("http://localhost:9002/updateplaylists", { updatedPlaylists: playlists }, {
+             headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
+             }
+        })
 
+    }
     // create button click in creating new playlist.
     const handleSubmit = e => {
         e.preventDefault();
@@ -54,9 +68,12 @@ const Form = ({playlists, setPlaylists, videoId}) => {
     // adding new playlist to playlists array.
     const addTodo = text => {
         if ( text !== '') {
-            const newPlaylist = [...playlists, { name:text,videos:[] }]
+            const tempPlaylists = [...playlists, { name:text,videos:[] }]
             setNewPlaylist({})
-            setPlaylists(newPlaylist);
+            setPlaylists(tempPlaylists);
+
+            // update this new playlist in database
+            updatePlaylists();
         } else {
             console.log('name', text)
             setInputEmpty(true);
@@ -72,34 +89,34 @@ const Form = ({playlists, setPlaylists, videoId}) => {
 
     // add current video to playlist.
     const completeTodo = inx => {
-        const newPlaylist = [...playlists];
-        newPlaylist[inx].isCompleted = !newPlaylist[inx].isCompleted;
-        setPlaylists(newPlaylist);
+        const tempPlaylists = [...playlists];
+        tempPlaylists[inx].isCompleted = !tempPlaylists[inx].isCompleted;
+        setPlaylists(tempPlaylists);
     };
 
     // rename playlist
     const editTodo = inx => {
-        const newPlaylist = [...playlists];
-        newPlaylist[inx].isEditing = !newPlaylist[inx].isEditing;
-        setPlaylists(newPlaylist);
+        const tempPlaylists = [...playlists];
+        tempPlaylists[inx].isEditing = !tempPlaylists[inx].isEditing;
+        setPlaylists(tempPlaylists);
     }
 
     // save new name of playlist.
     const saveTodo = (inx) => {
-        const newPlaylist = [...playlists];
-        newPlaylist[inx].isEditing = !newPlaylist[inx].isEditing;
-        newPlaylist[inx].name = noteRef.current[inx].value;
-        setPlaylists(newPlaylist);
+        const tempPlaylists = [...playlists];
+        tempPlaylists[inx].isEditing = !tempPlaylists[inx].isEditing;
+        tempPlaylists[inx].name = noteRef.current[inx].value;
+        setPlaylists(tempPlaylists);
     }
 
     const clearInput = () => {
         setNewPlaylist('');
     }
 
-
-    const setTodo = newPlaylist => {
+    // setNewPlaylist whose name is entered in input box
+    const setTodo = text => {
         setInputEmpty(false);
-        setNewPlaylist(newPlaylist);
+        setNewPlaylist(text);
     }
 
     useEffect(() => {
@@ -108,7 +125,7 @@ const Form = ({playlists, setPlaylists, videoId}) => {
 
     return (
         <div>
-            <h1 className='mb-4'>Add to</h1>
+            <h1 className=''>Add to</h1>
             <form onSubmit={handleSubmit} className="form">
 
 

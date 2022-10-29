@@ -20,7 +20,6 @@ const useStyles = makeStyles({
     }
 });
 
-// bug: setToDo is not a function
 const NewPlaylistCreator = ({ theme, newPlaylist, setTodo, clearInput, inputRef, isInputEmpty, preventSubmit }) => {
     
     const classes = useStyles();
@@ -30,7 +29,7 @@ const NewPlaylistCreator = ({ theme, newPlaylist, setTodo, clearInput, inputRef,
                 <FormControl   className={classes.label}>
                     <TextField
                         id="outlined-basic"
-                        // label="What's need to be done?" // better accessibility with Material UI
+                        label="Create new playlist" // better accessibility with Material UI
                         value={newPlaylist}
                         variant="outlined"
                         onChange={(e) => setTodo(e.target.value)}
