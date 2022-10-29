@@ -13,11 +13,18 @@ const PlaylistPopup = ({id}) => {
                 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
              }
         })
-        // console.log(res.data.playlists);
-        setPlaylists(res.data.playlists);
+
+        // isVideoPresent means if current video is present in the playlist or not.
+        const newArr = res.data.playlists.map((val,idx)=>{
+            let isVideoPresent = false;
+            if(val.videos.indexOf(id)!==-1) isVideoPresent = true;
+            return {isVideoPresent:isVideoPresent,isEditing:false,...val};
+        })
+        setPlaylists(newArr);
     }
 
     useEffect(()=>{
+        console.log('id: ',id);
         getUserData();
     },[]);
 
@@ -27,7 +34,7 @@ const PlaylistPopup = ({id}) => {
 
     return (
         <div className='text-center flex items-center justify-center flex-col'>
-            <Form playlists={playlists} setPlaylists={setPlaylists} videoId={id}/>
+            <Form playlists={playlists} setPlaylists={setPlaylists} videoId={id}    />
         </div> 
     )
 }

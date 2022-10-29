@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -22,33 +22,33 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const TodoList = ({ theme, playlists, completeTodo, editTodo, deleteTodo, saveTodo, noteRef, preventSubmit }) => {
+const TodoList = ({ theme, playlists, completeTodo, editTodo, deleteTodo, saveTodo, noteRef, preventSubmit, videoId, handleToggle, checked }) => {
 
     const classes = useStyles();
-    const [checked, setChecked] = React.useState([0]);
     let UniqKey = 123;
 
 
-    const handleToggle = (value, inx) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
 
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
+    // const handleToggle = (value, inx) => () => {
+    //     const currentIndex = checked.indexOf(value);
+    //     const newChecked = [...checked];
 
-        setChecked(newChecked);
-        completeTodo(inx);
-    };
+    //     if (currentIndex === -1) {
+    //         newChecked.push(value);
+    //     } else {
+    //         newChecked.splice(currentIndex, 1);
+    //     }
+
+    //     setChecked(newChecked);
+    //     completeTodo(inx);
+    // };
+
 
     return (
         <ThemeProvider theme={theme}>
             <List className={classes.root}>
             { Array.isArray(playlists) && playlists.map((playlist, inx) => {
                 const labelId = `list-play-${playlist}`;
-                {/* console.log(todo.name,inx); */}
                 return (
                     <ListItem
                         key={`playlist-${UniqKey++}`}
@@ -61,7 +61,7 @@ const TodoList = ({ theme, playlists, completeTodo, editTodo, deleteTodo, saveTo
                             <Checkbox
                                 color="primary"
                                 edge="start"
-                                checked={checked.indexOf(playlist) !== -1}
+                                checked={playlist.isVideoPresent}
                                 tabIndex={-1}
                                 disableRipple
                                 inputProps={{ 'aria-labelledby': labelId }}

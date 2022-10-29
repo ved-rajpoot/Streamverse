@@ -103,7 +103,6 @@ const VideoPlayer = () => {
 
   const addToFavorites = () => {
     // console.log(location.state.props.id);
-    setPopup(true);
     axios.post("http://localhost:9002/addfavorite", { id: location.state.props.id }, {
       headers: {
         "Content-Type": "application/json",
@@ -126,7 +125,7 @@ const VideoPlayer = () => {
     <div>
 
       {
-        popup && <PlaylistPopup/>
+        popup && <PlaylistPopup id={location.state.props.id}/>
       }
 
       <div>
