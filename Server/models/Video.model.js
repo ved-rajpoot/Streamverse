@@ -13,7 +13,8 @@ const videoSchema = new mongoose.Schema({
         likes: [{type:String, default:[]}],
         dislikes: [{type:String, default:[]}] ,
         tags: [{ type: String,default:[] }],
-        isPrivate: {type:Boolean, default:true}
+        isPrivate: {type:Boolean, default:true},
+        date: { type: Date, default: Date.now}
 })
 const Video = new mongoose.model("video", videoSchema);
 module.exports = Video;
