@@ -8,12 +8,12 @@ const PrivateRoutes = ()=>{
     if(token) {
         console.log(token);
         const user = jwtDecode(token);
-        if(user) {
+        if(user && user.exp*1000>=Date.now()) {
             console.log(user);
             isAuthenticated = true;
         }
     }
-
+        
     return (
         isAuthenticated? <Outlet/> : <Navigate to='/login'/>     
     )
