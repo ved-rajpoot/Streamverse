@@ -42,11 +42,11 @@ const TodoList = ({ theme, playlists, completeTodo, editTodo, deleteTodo, saveTo
         setChecked(newChecked);
         completeTodo(inx);
     };
-    
+
     return (
         <ThemeProvider theme={theme}>
             <List className={classes.root}>
-            {playlists.map((playlist, inx) => {
+            { Array.isArray(playlists) && playlists.map((playlist, inx) => {
                 const labelId = `list-play-${playlist}`;
                 {/* console.log(todo.name,inx); */}
                 return (
