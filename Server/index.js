@@ -39,9 +39,10 @@ app.use('/videolist', require('./routes/VideoList.route'));
 app.use('/audiolist', require('./routes/AudioList.route'));
 app.use('/getuservideos', require('./routes/GetUserVideos.route'));
 app.use('/getuseraudios', require('./routes/GetUserAudios.route'));
-app.use('/', require('./routes/Video.route'));
+app.use('/',require('./routes/Video.route'));
+app.use('/getuserdata',require('./routes/GetUserData.route'));
+app.use('/updateplaylists',require('./routes/Playlists.route'));
 
-// Socket connections
 io.on("connection", socket => {
     console.log(socket.id)
     // JoinRoom(socket)

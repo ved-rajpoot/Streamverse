@@ -13,7 +13,8 @@ const audioSchema = new mongoose.Schema({
     isPrivate: {type:Boolean, default:false},
     userName: { type: String, required: true },
     userId: {type:String, requied:true},
-    tags: [String]
+    tags: [String],
+    date: {type:Date,default:Date.now}
 })
 const Audio = new mongoose.model("Audio", audioSchema);
 module.exports = Audio
