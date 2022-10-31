@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-
+import AudioCard from '../../Components/AudioCard';
 
 const AudioDashboard = () => {
 
@@ -36,15 +36,12 @@ const AudioDashboard = () => {
                     audioList.map((val, index) => {
                         return (
                             <>
-                                <div className='flex flex-col'>
-                                    <button onClick={() => {
-                                        setSource(val.avatar)
-                                    }}
-                                    >
-                                        {val.audioName}
-                                    </button>
-                                </div>
-                                
+                                <button class='w-screen' onClick={()=>{
+                                    setSource(val.avatar)
+                                }}
+                                >
+                                <AudioCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
+                                </button>
                             </>
                         )
                     })
