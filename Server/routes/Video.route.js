@@ -67,7 +67,7 @@ router.post("/addfavorite", checkAuth, (req, res) => {
     const videoId = req.body.id;
 
     User.findByIdAndUpdate(userId,{
-        $addToSet:{favorites:videoId}
+        $addToSet:{videoFavorites:videoId}
       })
     .then(
         // (result)=>{console.log(result)}
@@ -82,7 +82,7 @@ router.post("/removefavorite", checkAuth, (req, res) => {
     const userId = req.userData.userId;
     const videoId = req.body.id;
     User.findByIdAndUpdate(userId,{
-        $pull:{favorites:videoId},
+        $pull:{videoFavorites:videoId},
       })
     .then(
         res.status(200).json("Removed from favorites")
@@ -95,7 +95,7 @@ router.post("/getfavorites", checkAuth, async (req,res)=>{
     const userId = req.userData.userId;
     const user = await User.find({_id:userId});
     
-    Video.find({_id:{$in:user[0].favorites}})
+    Video.find({_id:{$in:user[0].videoFavorites}})
     .then((result)=>{
         console.log(result);
         res.status(200).json(result);
@@ -114,7 +114,7 @@ router.post("/getvideodata", checkAuth, async (req,res)=>{
         const video = await Video.find({_id:videoId});
     
         let isFavorite = false, isLiked = false, isDisliked = false, totalLikes = video[0].likes.length, totalDislikes = video[0].dislikes.length;
-        if(user[0].favorites.includes(videoId)) isFavorite = true;
+        if(user[0].videoFavorites.includes(videoId)) isFavorite = true;
         if(video[0].likes.includes(userId)) isLiked = true;
         if(video[0].dislikes.includes(userId)) isDisliked = true;
     

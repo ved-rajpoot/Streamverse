@@ -12,7 +12,7 @@ const theme = createTheme({
     },
 });
 
-const Form = ({playlists, setPlaylists, videoId, setPopup}) => {
+const Form = ({playlists, setPlaylists, videoId, type, setPopup}) => {
     
     // To store name of new playlist
     const [ newPlaylist, setNewPlaylist ] = useState('');
@@ -27,7 +27,7 @@ const Form = ({playlists, setPlaylists, videoId, setPopup}) => {
     
     const updatePlaylists = async ()=>{
         console.log('playlists from updatePlaylists: ', playlists);    
-        const res = await axios.post("http://localhost:9002/updateplaylists", { updatedPlaylists: playlists }, {
+        const res = await axios.post("http://localhost:9002/updateplaylists", { updatedPlaylists: playlists, type: type }, {
             headers: {
                 "Content-Type": "application/json",
                 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
@@ -77,7 +77,13 @@ const Form = ({playlists, setPlaylists, videoId, setPopup}) => {
     const addTodo = text => {
         if ( text !== '') {
             // creating new playlist.
-            const tempPlaylists = [...playlists, { name:text,videos:[] }]
+
+            let tempPlaylists
+            if(type=="video")
+                tempPlaylists = [...playlists, { name:text,videos:[] }]
+            else 
+                tempPlaylists = [...playlists, { name:text,audios:[] }]
+
             setNewPlaylist({})
             // console.log('tempPlaylists: ', tempPlaylists);
 
@@ -101,8 +107,15 @@ const Form = ({playlists, setPlaylists, videoId, setPopup}) => {
         tempPlaylists[inx].isCompleted = !tempPlaylists[inx].isCompleted;
 
         // playlists[inx].videos me agr videoId nhi preseent hai to daal do, agr present hai to nikaal do.
-        let videoInx = tempPlaylists[inx].videos.indexOf(videoId);
-        videoInx === -1 ? tempPlaylists[inx].videos.push(videoId) : tempPlaylists[inx].videos.splice(videoInx,1);
+        if(type=="video") {
+            let videoInx = tempPlaylists[inx].videos.indexOf(videoId);
+            videoInx === -1 ? tempPlaylists[inx].videos.push(videoId) : tempPlaylists[inx].videos.splice(videoInx,1);
+        }
+        else {
+            let audioInx = tempPlaylists[inx].audios.indexOf(videoId);
+            audioInx === -1 ? tempPlaylists[inx].audios.push(videoId) : tempPlaylists[inx].audios.splice(audioInx,1);
+        }    
+        
         setPlaylists(tempPlaylists);
         console.log('completeTodo ')
     };
