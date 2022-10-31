@@ -9,6 +9,7 @@ const {instrument} = require("@socket.io/admin-ui")
 const JoinRoom = require("./SocketEvents/JoinRoom")
 const CreateRoom = require("./SocketEvents/CreateRoom")
 const SendMessage = require("./SocketEvents/SendMessage")
+const RefreshCheck = require("./SocketEvents/RefreshCheck")
 const io = require("socket.io")(8080,{
     cors :{
         origin: ["http://localhost:3000", "https://admin.socket.io"],
@@ -41,14 +42,15 @@ app.use('/videolist', require('./routes/VideoList.route'));
 app.use('/audiolist', require('./routes/AudioList.route'));
 app.use('/getuservideos', require('./routes/GetUserVideos.route'));
 app.use('/getuseraudios', require('./routes/GetUserAudios.route'));
-app.use('/', require('./routes/Video.route'));
+app.use('/',require('./routes/Video.route'));
+app.use('/getuserdata',require('./routes/GetUserData.route'));
+app.use('/updateplaylists',require('./routes/Playlists.route'));
 
-// Socket connections
 io.on("connection", socket => {
-    console.log(socket.id)
     JoinRoom(socket,io)
     CreateRoom(socket)
     SendMessage(socket, io)
+    RefreshCheck(socket)
 })
 instrument(io, {auth : false})
 app.listen(9002, () => {

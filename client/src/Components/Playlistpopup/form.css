@@ -1,0 +1,26 @@
+  .wrapper {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto 0;
+    flex-direction: column;
+  }
+
+  .form__edit-input {
+    outline: none;
+    border: none;
+    font-size: 20px;
+    width: 90%;
+  }
+  
+  .visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }

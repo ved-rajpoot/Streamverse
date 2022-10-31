@@ -13,6 +13,7 @@ import Logout from './Components/Logout';
 import ChatBox from './ChatBox/ChatBox';
 import SocketContext, { socket } from './SocketContext';
 
+import PlaylistPopup from './Components/Playlistpopup/PlaylistPopup';
 const App = () =>{
   
   return (
@@ -26,7 +27,8 @@ const App = () =>{
               <Route element={<PrivateRoutes />}>
                 {/* <Route exact path="/" element={<Login />} /> */}
                 <Route exact path="/dashboard" element={<Dashboard />} />
-                <Route exact path="/dashboard/:cloudinary_id" element={<VideoPlayer />} />
+                <Route exact path="/dashboard/:cloudinary_id" element={ <VideoPlayer />} />
+                {/* <Route exact path="/dashboard/:cloudinary_id" element={ <PlaylistPopup />} /> */}
                 <Route exact path="/upload" element={<Upload />} />
                 <Route exact path="/profile" element={<Profile />} />
                 <Route exact path="/logout" element={<Logout />} />

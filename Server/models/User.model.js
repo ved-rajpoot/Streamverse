@@ -9,8 +9,12 @@ const userSchema = new mongoose.Schema({
         match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     },
     password: { type: String, required: true },
-    playlists: [{type:String}],
-    favorites: [{type:String}]
+    playlists: [{
+                    name:String,
+                    videos:[String]
+                }],
+    favorites: [{type:String}],
+    date: { type: Date, default: Date.now }
 })
 const User = new mongoose.model("User", userSchema);
 module.exports = User
