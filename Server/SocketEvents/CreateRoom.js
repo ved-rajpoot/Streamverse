@@ -4,16 +4,18 @@ const CreateRoom = (socket) => {
     socket.on("createRoom", (res, cb) => {
         const roomName = res.roomName;
         const userName = res.createUserName;
+        const userID = res.userID
         const room = new Room({
             roomName: roomName,
             userArray: [{
-                userId: socket.id,
+                userId: userID,
                 userName: userName
             }]
         })
         room
             .save()
-            .then((room) => {
+            .then(async (room) => {
+                await socket.join(room._id.toString())
                 cb({
                     userName: userName,
                     roomID: room._id,

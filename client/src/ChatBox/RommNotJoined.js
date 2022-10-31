@@ -1,7 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import SocketContext from '../SocketContext'
+import { getUserId } from "./HelperFunctions";
+import { JoinMessage } from "./MessageType";
 
 const RoomNotJoined = () => {
+    const userID = getUserId()
     const socket = useContext(SocketContext)
     const [showCreateRoom,setShowCreateRoom] = useState(false)
     const [showJoinRoom, setShowJoinRoom] = useState(false)
@@ -12,8 +15,7 @@ const RoomNotJoined = () => {
     const [joinUserName, setJoinUserName] = useState("");
     
     const Create = () => {
-        socket.emit("createRoom", { roomName, createUserName }, user => {
-            console.log(user);
+        socket.emit("createRoom", { roomName, createUserName, userID }, user => {
             localStorage.setItem("room", JSON.stringify(user))
             document.getElementById("hidden-btn").click();
         })
@@ -21,7 +23,16 @@ const RoomNotJoined = () => {
     
 
     const Join = () => {
-        
+        socket.emit("joinRoom", { roomID, joinUserName, userID }, room => {
+            const user = {
+                userName: room.userArray[0].userName,
+                roomID: room._id,
+                roomName : room.roomName
+            }
+            localStorage.setItem("room", JSON.stringify(user))
+            document.getElementById("hidden-btn").click();
+            // document.getElementById("messageArea").append(JoinMessage(user))
+        })
     }
 
     return (

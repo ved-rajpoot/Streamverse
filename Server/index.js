@@ -4,12 +4,15 @@ const morgan = require("morgan")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const checkAuth = require('./middleware/check-auth');
-const { Socket } = require("socket.io")
+
+const {instrument} = require("@socket.io/admin-ui")
 const JoinRoom = require("./SocketEvents/JoinRoom")
 const CreateRoom = require("./SocketEvents/CreateRoom")
+const SendMessage = require("./SocketEvents/SendMessage")
+const RefreshCheck = require("./SocketEvents/RefreshCheck")
 const io = require("socket.io")(8080,{
     cors :{
-        origin: ["http://localhost:3000"],
+        origin: ["http://localhost:3000", "https://admin.socket.io"],
         methods: ['GET', 'POST'],
     }
 })
@@ -45,11 +48,12 @@ app.use('/updateplaylists',require('./routes/Playlists.route'));
 app.use('/audio',require('./routes/Audio.route'));
 
 io.on("connection", socket => {
-    console.log(socket.id)
-    // JoinRoom(socket)
+    JoinRoom(socket,io)
     CreateRoom(socket)
+    SendMessage(socket, io)
+    RefreshCheck(socket)
 })
-
+instrument(io, {auth : false})
 app.listen(9002, () => {
     console.log("BE started at port 9002")
 })

@@ -1,11 +1,11 @@
 
 
-const JoinMessage = () => {
+const JoinMessage = (props) => {
     return (
         <>
             <div className="flex w-[100%] py-1 justify-center items-center">
                 <div className="flex w-fit px-2 justify-center items-center text-xs font-sans rounded-lg bg-[#67e8f9]">
-                    <p>Username joined the chat</p>
+                    <p>{props.userName} joined the chat</p>
                 </div>
             </div>
         </>
@@ -22,13 +22,13 @@ const PinnedMessage = () => {
         </>
     )
 }
-const RegularMessage = () => {
+const RegularMessage = (props) => {
     return (
         <>
             <div className="flex w-[100%] py-1 justify-center items-center">
                 <div className="flex flex-col w-[95%] px-2 text-xs font-sans rounded-lg bg-[#bbf7d0] break-words">
-                    <p className="text-xs font-bold left-2 font-mono">UserName</p>
-                    <p >This is a RegularMessage</p>
+                    <p className="text-xs font-bold left-2 font-mono">{props.userName}</p>
+                    <p >{props.message}</p>
                 </div>
             </div>
         </>

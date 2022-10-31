@@ -6,10 +6,10 @@ const PrivateRoutes = ()=>{
     let isAuthenticated = false;
     const token = localStorage.getItem('userTokenTime');
     if(token) {
-        console.log(token);
+        // console.log(token);
         const user = jwtDecode(token);
         if(user && user.exp*1000>=Date.now()) {
-            console.log(user);
+            // console.log(user);
             isAuthenticated = true;
         }
     }
