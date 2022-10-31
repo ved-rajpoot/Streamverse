@@ -3,7 +3,6 @@ const Room = require("../models/Room.model");
 
 const JoinRoom = (socket,io) => {
     socket.on("joinRoom", (res, cb) => {
-        console.log(res)
         const room_id = res.roomID
         const userName = res.joinUserName
         Room.findOneAndUpdate({ _id: room_id }, {

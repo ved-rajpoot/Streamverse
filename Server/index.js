@@ -8,6 +8,7 @@ const checkAuth = require('./middleware/check-auth');
 const {instrument} = require("@socket.io/admin-ui")
 const JoinRoom = require("./SocketEvents/JoinRoom")
 const CreateRoom = require("./SocketEvents/CreateRoom")
+const SendMessage = require("./SocketEvents/SendMessage")
 const io = require("socket.io")(8080,{
     cors :{
         origin: ["http://localhost:3000", "https://admin.socket.io"],
@@ -47,6 +48,7 @@ io.on("connection", socket => {
     console.log(socket.id)
     JoinRoom(socket,io)
     CreateRoom(socket)
+    SendMessage(socket, io)
 })
 instrument(io, {auth : false})
 app.listen(9002, () => {

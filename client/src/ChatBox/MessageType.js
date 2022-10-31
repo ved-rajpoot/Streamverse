@@ -22,13 +22,13 @@ const PinnedMessage = () => {
         </>
     )
 }
-const RegularMessage = () => {
+const RegularMessage = (props) => {
     return (
         <>
             <div className="flex w-[100%] py-1 justify-center items-center">
                 <div className="flex flex-col w-[95%] px-2 text-xs font-sans rounded-lg bg-[#bbf7d0] break-words">
-                    <p className="text-xs font-bold left-2 font-mono">UserName</p>
-                    <p >This is a RegularMessage</p>
+                    <p className="text-xs font-bold left-2 font-mono">{props.userName}</p>
+                    <p >{props.message}</p>
                 </div>
             </div>
         </>

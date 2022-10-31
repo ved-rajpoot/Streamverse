@@ -6,16 +6,27 @@ import React, { useContext, useState } from 'react';
 
 
 const RommJoined = (props) => {
+    const roomID = localStorage.getItem("room") ? JSON.parse(localStorage.getItem("room")).roomID : null
     const socket = useContext(SocketContext)
+    const [messageArray, setMessageArray] = useState([]);
+    const [textMessage, setTextMessage] = useState("");
+    const updateMessageArea = (res) => {
+        let newArray = messageArray;
+        let data;
+        if(res.messageType === "join") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName } }
+        else if(res.messageType === "regular") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName , message: res.message} }
+        setMessageArray([...newArray, data]);
+    }
+    const send = () => {
+        if (textMessage === "") return;
+        socket.emit("send",{roomID : roomID,message:textMessage})
+    }
     socket.off('userJoined').on('userJoined', res => {
         updateMessageArea({ messageType: "join", userName: res.userName })
     })
-    const [messageArray, setMessageArray] = useState([]);
-    const updateMessageArea = (res) => {
-        let newArray = messageArray;
-        const data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName } }
-        setMessageArray([...newArray, data]);
-    }
+    socket.off('recieve').on('recieve', res => {
+        updateMessageArea({ messageType: "regular", userName: res.userName, message: res.message })
+    })
     
     return (
         <>
@@ -47,14 +58,15 @@ const RommJoined = (props) => {
                                 />
                             )
                         }
+                        return (null)
                     })
                 }
                 </div>
                 <div className='flex flex-row p-1 sticky justify-center bottom-0 h-[14%] bg-white'>
                     <div className='w-[75%]'>
-                        <TextField id="outlined-basic" label="Type Your Message" variant="outlined" />
+                    <TextField id="outlined-basic" label="Type Your Message" variant="outlined" value={textMessage} onChange={(e)=>setTextMessage(e.target.value)} />
                     </div>
-                    <button className='my-1 mx-1 shadow-sm bg-purple-500 w-11 h-11 rounded-lg flex justify-center items-center'>
+                    <button className='my-1 mx-1 shadow-sm bg-purple-500 w-11 h-11 rounded-lg flex justify-center items-center' onClick={send}>
                         <SendIcon />
                     </button>
                 </div>
