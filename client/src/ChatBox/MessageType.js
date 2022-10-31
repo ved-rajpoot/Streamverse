@@ -1,11 +1,11 @@
 
 
-const JoinMessage = () => {
+const JoinMessage = (props) => {
     return (
         <>
             <div className="flex w-[100%] py-1 justify-center items-center">
                 <div className="flex w-fit px-2 justify-center items-center text-xs font-sans rounded-lg bg-[#67e8f9]">
-                    <p>Username joined the chat</p>
+                    <p>{props.userName} joined the chat</p>
                 </div>
             </div>
         </>

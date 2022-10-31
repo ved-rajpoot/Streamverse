@@ -30,7 +30,7 @@ const Login = () => {
                     token: res.data.token,
                     time: new Date().getTime()
                     }
-                    console.log(data);
+                    // console.log(data);
                     localStorage.setItem('userTokenTime', JSON.stringify(data));
                     setRedirect(true)
                 })

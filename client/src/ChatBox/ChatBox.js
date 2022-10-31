@@ -35,8 +35,6 @@ const ChatBox = () => {
         console.log("clicked")
         setJoined(JoinedClass)
         setNotJoined("hidden")
-        
-        
     }
     
     return (
@@ -51,7 +49,7 @@ const ChatBox = () => {
                     <RommJoined 
                         roomID={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).roomID : null}
                         roomName={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).roomName : null}
-                    userName={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).userName : null}
+                        userName={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).userName : null}
                     />
                 </div>
                 <div className={notJoined}>

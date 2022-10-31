@@ -13,7 +13,8 @@ const CreateRoom = (socket) => {
         })
         room
             .save()
-            .then((room) => {
+            .then(async (room) => {
+                await socket.join(room._id)
                 cb({
                     userName: userName,
                     roomID: room._id,
