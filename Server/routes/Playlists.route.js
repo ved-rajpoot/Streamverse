@@ -13,13 +13,24 @@ router.post("/", checkAuth, async (req, res) => {
         return rest;
     })
 
-    User.findOneAndUpdate( { _id : req.userData.userId }, {playlists:newArr}, {new:true})
-    .then((result)=>{
-        console.log('updatedUser: ',result);
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
+    if(req.body.type=="video") {
+        User.findOneAndUpdate( { _id : req.userData.userId }, {videoPlaylists:newArr}, {new:true})
+        .then((result)=>{
+            console.log('updatedUser: ',result);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+    else {
+        User.findOneAndUpdate( { _id : req.userData.userId }, {audioPlaylists:newArr}, {new:true})
+        .then((result)=>{
+            console.log('updatedUser: ',result);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
 })
 
 module.exports = router
