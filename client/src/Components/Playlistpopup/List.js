@@ -61,7 +61,7 @@ const TodoList = ({ theme, playlists, completeTodo, editTodo, deleteTodo, saveTo
                             <Checkbox
                                 color="primary"
                                 edge="start"
-                                checked={playlist.isVideoPresent}
+                                checked={playlist.isFilePresent}
                                 tabIndex={-1}
                                 disableRipple
                                 inputProps={{ 'aria-labelledby': labelId }}
