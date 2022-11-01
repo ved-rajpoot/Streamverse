@@ -126,22 +126,22 @@ const UploadVideo = () => {
             <div className="flex flex-col m-5 shadow-2xl bg-slate-100">
                 <div className="text-2xl m-5">
                     Enter title: <br />
-                    <input type="text" placeholder="Title" onChange={changeHandler} name="title" value={title} />
+                    <input type="text" className="text-lg" placeholder="Title" onChange={changeHandler} name="title" value={title} />
                 </div>
 
                 <div className="m-5">
                     <p className="text-2xl"> Upload thumbnail: </p>
-                    <input type="file" name="thumbnail" onChange={changeHandler} />
+                    <input type="file" className="text-sm" name="thumbnail" onChange={changeHandler} />
                 </div>
 
                 <div className="m-5">
                     <p className="text-2xl">Upload Video file: </p>
-                    <input type="file" name="avatar" onChange={changeHandler} />
+                    <input type="file" className="text-sm" name="avatar" onChange={changeHandler} />
                 </div>
 
                 <div className="text-2xl m-5">
                     Add Description: <br />
-                    <input type="text" placeholder="Description" onChange={changeHandler} name="description" value={description} />
+                    <input type="text" className="text-lg" placeholder="Description" onChange={changeHandler} name="description" value={description} />
                 </div>
                 {isFilePicked ? (
                     <div>
@@ -156,6 +156,7 @@ const UploadVideo = () => {
                 ) : (
                     <p className="ml-5">Select a file to show details</p>
                 )}
+                {console.log(selectedFile.loaded)}
                 <Progress max="100" color="success" value={selectedFile.loaded} className="m-5 mb-1">
                     {isNaN(Math.round(selectedFile.loaded, 2)) ? 0 : Math.round(selectedFile.loaded, 2)}%
                 </Progress>
