@@ -14,7 +14,7 @@ import { Checkbox } from '@material-ui/core';
 const useStyles = makeStyles(() => ({
     root: {
         width: '100%',
-        backgroundColor: '#f5f5f5',
+        // backgroundColor: '#f5f5f5',
         padding: 0
     },
     li: {
@@ -61,7 +61,7 @@ const TodoList = ({ theme, playlists, completeTodo, editTodo, deleteTodo, saveTo
                             <Checkbox
                                 color="primary"
                                 edge="start"
-                                checked={playlist.isVideoPresent}
+                                checked={playlist.isFilePresent}
                                 tabIndex={-1}
                                 disableRipple
                                 inputProps={{ 'aria-labelledby': labelId }}
