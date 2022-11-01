@@ -11,6 +11,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PlaylistPopup from '../Components/Playlistpopup/PlaylistPopup';
+import CastConnectedIcon from '@mui/icons-material/CastConnected';
 
 const VideoPlayer = () => {
   const location = useLocation();
@@ -176,6 +177,7 @@ const VideoPlayer = () => {
           </button>
         }
 
+        <button name="stream"><CastConnectedIcon/></button>
       </div>
 
       <div className='m-3 text-2xl font-bold'>
