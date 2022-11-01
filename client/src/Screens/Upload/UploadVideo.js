@@ -39,12 +39,15 @@ const UploadVideo = () => {
         }
     }
     const upload = async (e) => {
+        let tags=[]
+        for(var i=0;i<todos.length;i++) tags.push(todos[i].text)
 
         const data = new FormData();
         data.append("avatar", selectedFile.file);
         data.append("thumbnail", seletcedThumbnail.file);
         data.append("title", title);
         data.append("description", description);
+        data.append("tags",tags);
         data.append("isPrivate", isPrivate);
 
         console.log(data);
@@ -71,12 +74,12 @@ const UploadVideo = () => {
 
     function Todo({ todo, index, removeTodo }) {
         return (
-            <>
-                {todo.text}
+            <div className=" bg-[#002D99] w-fit text-white p-1 m-2 rounded-lg flex flex-row">
+                <div className="mr-2">#{todo.text}</div>
                 <div>
                     <button onClick={() => removeTodo(index)} className="text-slate text-base">x</button>
                 </div>
-            </>
+            </div>
         );
     }
 
@@ -94,10 +97,11 @@ const UploadVideo = () => {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    className="input"
+                    className="input bg-gray-300 h-9 rounded-lg"
                     value={value}
                     onChange={e => setValue(e.target.value)}
                 />
+                <button className=" bg-[#002D99] w-fit text-white m-1 rounded-lg p-1">Enter</button>
             </form>
         );
     }
