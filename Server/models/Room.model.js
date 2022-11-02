@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const RoomSchema = new mongoose.Schema({
-    roomName: {type : String , required : true},
+    roomName: { type: String, required: true },
+    AdminID: { type: String, required: true },
     userArray: [{
         userId: { type: String },
         userName: {type: String}

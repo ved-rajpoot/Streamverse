@@ -17,7 +17,6 @@ const VideoDashboard = () => {
                 }
             })
             .then((res) => {
-                console.log('video found');
                 console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {

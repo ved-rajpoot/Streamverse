@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import { DefaultPlayer as Video } from "react-html5video"
+import { Player, ControlBar, LoadingSpinner, BigPlayButton, ReplayControl, ForwardControl, CurrentTimeDisplay, TimeDivider, PlaybackRateMenuButton, VolumeMenuButton } from 'video-react';
+import { useLocation, useNavigate } from 'react-router-dom'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -12,8 +12,10 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PlaylistPopup from '../Components/Playlistpopup/PlaylistPopup';
 import CastConnectedIcon from '@mui/icons-material/CastConnected';
+import { getUserId } from '../ChatBox/HelperFunctions';
 
 const VideoPlayer = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
@@ -23,6 +25,7 @@ const VideoPlayer = () => {
   // eslint-disable-next-line
   const [dislikes, setDislikes] = useState(0);
   const [popup, setPopup] = useState(false);
+  const [inRoomAndAdmin,setInRoomAndAdmin] = useState(true)
 
   const download = () => {
     var url = location.state.props.avatar
@@ -59,6 +62,12 @@ const VideoPlayer = () => {
 
   useEffect(()=>{
     getVideoData();
+    
+    if (localStorage.getItem("room") === null) return;
+    const admin = JSON.parse(localStorage.getItem("room")).AdminID;
+    const user = getUserId();
+    if (user === admin) setInRoomAndAdmin(false);
+    
     // eslint-disable-next-line
   },[])
   
@@ -124,7 +133,9 @@ const VideoPlayer = () => {
     })
     setIsFavorite(false);
   }
-
+  const stream = () => {
+    navigate("/streamroom", { state: { props: { url: location.state.props.avatar, title: location.state.props.title, description: location.state.props.description } } })
+  }
   return (
     <div>
 
@@ -132,12 +143,21 @@ const VideoPlayer = () => {
         popup && <PlaylistPopup id={location.state.props.id} type="video" setPopup={setPopup}/>
       }
 
-      <div>
-        <Video className="h-[40rem]">
+      <div className="flex object-cover h-[40rem] w-full">
+        <Player fluid={false} height="100%" width="100%">
+          <BigPlayButton position="center" />
+          <LoadingSpinner />
+          <ControlBar>
+            <ReplayControl seconds={10} order={1.1} />
+            <ForwardControl seconds={10} order={1.2} />
+            <CurrentTimeDisplay order={4.1} />
+            <TimeDivider order={4.2} />
+            <PlaybackRateMenuButton rates={[5, 2, 1, 0.5, 0.1]} order={7.1} />
+            <VolumeMenuButton />
+          </ControlBar>
           <source src={location.state.props.avatar} type="video/webm" />
-          <track label="English" kind="subtitles" srcLang="en" src="/react-html5video/3f581f9610d039656ad3830864753a94.vtt" default />
-          <track label="Español" kind="subtitles" srcLang="es" src="/react-html5video/691c220d6cfe7ead7ad17fc2bd972543.vtt" />
-        </Video>
+        </Player>
+
       </div>
       <div className="flex justify-between m-5 scale-y-[1.2]">
 
@@ -177,7 +197,7 @@ const VideoPlayer = () => {
           </button>
         }
 
-        <button name="stream"><CastConnectedIcon/></button>
+        <button name="stream" className='disabled:opacity-25' disabled ={inRoomAndAdmin} onClick = {stream}><CastConnectedIcon/></button>
       </div>
 
       <div className='m-3 text-2xl font-bold'>
