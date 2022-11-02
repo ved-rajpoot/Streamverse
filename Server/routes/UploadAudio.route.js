@@ -10,7 +10,7 @@ router.post("/", upload.fields([{ name: 'avatar', maxCount: 1 }, { name: "thumbn
     // console.log("recieved")
     try {
         const result = await cloudinary.uploader.upload(req.files.avatar[0].path, { "resource_type": "auto" });
-        const result2 = await cloudinary.uploader.upload(req.files.thumbnail[0].path, { "resource_type": "auto" });
+        // const result2 = await cloudinary.uploader.upload(req.files.thumbnail[0].path, { "resource_type": "auto" });
 
         console.log(result)
         const audio = new Audio({
@@ -19,8 +19,8 @@ router.post("/", upload.fields([{ name: 'avatar', maxCount: 1 }, { name: "thumbn
             audioName: result.original_filename,
             title: req.body.title,
             description: req.body.description,
-            thumbnail_cloudinary_id: result2.public_id,
-            thumbnail_avatar: result2.secure_url,
+            // thumbnail_cloudinary_id: result2.public_id,
+            // thumbnail_avatar: result2.secure_url,
             userName: req.userData.userName,
             userId: req.userData.userId,
             isPrivate: req.body.isPrivate

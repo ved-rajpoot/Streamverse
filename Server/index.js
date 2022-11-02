@@ -43,10 +43,11 @@ app.use('/audiolist', require('./routes/AudioList.route'));
 app.use('/getuservideos', require('./routes/GetUserVideos.route'));
 app.use('/getuseraudios', require('./routes/GetUserAudios.route'));
 app.use('/',require('./routes/Video.route'));
+app.use('/',require('./routes/Audio.route'));
 app.use('/getuserdata',require('./routes/GetUserData.route'));
 app.use('/updateplaylists',require('./routes/Playlists.route'));
-app.use('/audio',require('./routes/Audio.route'));
 app.use('/getvideos',require('./routes/GetVideos.route'));
+app.use('/getaudios',require('./routes/GetAudios.route'));
 
 io.on("connection", socket => {
     JoinRoom(socket,io)
