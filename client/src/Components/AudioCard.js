@@ -50,6 +50,7 @@ export default function AudioCard(props) {
 
     window.location.href = link
   }
+
   const addToFavorites = () => {
     console.log("add to fav")
     axios.post("http://localhost:9002/audio/addfavorite", { id: id }, {
@@ -71,40 +72,25 @@ export default function AudioCard(props) {
     setIsFavorite(false);
   }
 
-    return (
-      <>
+  return (
+    <>
+      {
+        popup && <PlaylistPopup id={id} type="audio" setPopup={setPopup}/>
+      }
+      <div className="mr-[10%] mb-1 shadow-xl flex flex-row w-fit bg-white">
+        <button className="m-1" onClick={addToPlaylist}><PlaylistAddIcon/></button>
+        <button className="m-1" onClick={download}><DownloadIcon/></button>
 
-     
-        {
-          popup && <PlaylistPopup id={id} type="audio" setPopup={setPopup}/>
-        }
-        <div className="m-1 relative shadow-xl flex flex-row justify-center w-[90%] bg-white">
-          <div className="bg-white relative flex flex-row rounded-b rounded-b-none rounded-r p-2 leading-normal w-full">
-          <PlayCircleOutlineIcon className="mr-2"/>
-            <div className="mb-2">
-              <div className="text-gray-900 font-bold text-sm mb-2 text-left">{title}</div>
-          </div>
-          </div>
-          <div className="right-5 flex items-center">
-            <audio controls>
-              <source src={avatar} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
-          </div>
-          
-          <button className="m-2" onClick={addToPlaylist}><PlaylistAddIcon/></button>
-          <button className="m-2" onClick={download}><DownloadIcon/></button>
-          
+      {isFavorite ?
+        <button name="favourite" onClick={removeFromFavorites}>
+          <FavoriteIcon />
+        </button> :
+        <button name="favourite" onClick={addToFavorites}>
+          <FavoriteBorderIcon />
+        </button>
+      }
 
-        {isFavorite ?
-          <button className = "m-2" name="favourite" onClick={removeFromFavorites}>
-            <FavoriteIcon />
-          </button> :
-            <button className="m-2" name="favourite" onClick={addToFavorites}>
-            <FavoriteBorderIcon />
-          </button>
-          }
-          </div>
-        </>
-      )
+      </div>
+    </>
+  );
 }
