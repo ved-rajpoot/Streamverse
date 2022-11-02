@@ -7,5 +7,11 @@ const getUserId = () => {
         return user.userId;
     }
 }
-
-export {getUserId}
+const getUserName = () => {
+    const token = localStorage.getItem('userTokenTime');
+    if (token) {
+        const user = jwtDecode(token);
+        return user.userName;
+    }
+}
+export {getUserId ,getUserName}

@@ -8,7 +8,7 @@ import RoomNotJoined from './RommNotJoined';
 const ChatBox = () => {
     const JoinedClass = "h-[90%]"
     const notJoinedClass = "h-[90%]"
-    const chatAreaClass = 'flex flex-col fixed right-6 bottom-36 w-[20%] h-[60%] rounded-lg border-4 border-indigo-500/100'
+    const chatAreaClass = 'flex flex-col fixed right-2 bottom-36 w-[350px] h-[700px] rounded-lg border-4 border-indigo-500/100'
 
     const [open, setOpen] = useState(0);
     const [classMsg, setClassMsg] = useState("");

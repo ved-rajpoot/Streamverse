@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import "react-html5video/dist/styles.css"
 import { useNavigate } from "react-router-dom";
 import VideoCard from "../../Components/VideoCard";
 
@@ -17,7 +16,6 @@ const VideoDashboard = () => {
                 }
             })
             .then((res) => {
-                console.log('video found');
                 console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {

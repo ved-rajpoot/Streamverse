@@ -26,6 +26,7 @@ const RoomNotJoined = () => {
         socket.emit("joinRoom", { roomID, joinUserName, userID }, room => {
             const user = {
                 userName: room.userArray[0].userName,
+                AdminID: room.AdminID,
                 roomID: room._id,
                 roomName : room.roomName
             }

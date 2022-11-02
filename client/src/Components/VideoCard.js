@@ -5,7 +5,7 @@ export default function VideoCard(props) {
     const navigate = useNavigate();
     const {id, avatar,thumbnail_avatar,title,description, cloudinary_id, userName} = props;
     return (
-      <Card className="w-80 mx-2 my-8 border-gray-300 border-b-2 hover:bg-gray-100 duration-100 cursor-pointer" onClick={()=>{console.log('clickked'); navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
+      <Card className="w-80 mx-2 my-8 border-gray-300 border-b-2 hover:bg-gray-100 duration-100 cursor-pointer" onClick={()=>{ navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
         <CardHeader color="blue" className="relative h-48">
           <img
             src={thumbnail_avatar}
