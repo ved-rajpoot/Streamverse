@@ -15,7 +15,7 @@ const Favorites = () => {
             }
           })
           .then((res) => {
-              console.log(res);
+            //   console.log(res);
               setVideoList(res.data)
           }).then(() => {
               setStatus(true)

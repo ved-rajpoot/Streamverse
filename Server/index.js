@@ -46,6 +46,7 @@ app.use('/',require('./routes/Video.route'));
 app.use('/getuserdata',require('./routes/GetUserData.route'));
 app.use('/updateplaylists',require('./routes/Playlists.route'));
 app.use('/audio',require('./routes/Audio.route'));
+app.use('/getvideos',require('./routes/GetVideos.route'));
 
 io.on("connection", socket => {
     JoinRoom(socket,io)
