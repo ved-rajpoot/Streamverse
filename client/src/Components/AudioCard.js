@@ -52,7 +52,7 @@ export default function AudioCard(props) {
   }
   const addToFavorites = () => {
     console.log("add to fav")
-    axios.post("http://localhost:9002/audio/addfavoriteaudio", { id: id }, {
+    axios.post("http://localhost:9002/addfavoriteaudio", { id: id }, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
@@ -62,7 +62,7 @@ export default function AudioCard(props) {
   }
 
   const removeFromFavorites = () => {
-    axios.post("http://localhost:9002/audio/removefavoriteaudio", { id: id }, {
+    axios.post("http://localhost:9002/removefavoriteaudio", { id: id }, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
