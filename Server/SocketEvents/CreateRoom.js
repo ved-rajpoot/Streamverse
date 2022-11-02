@@ -7,6 +7,7 @@ const CreateRoom = (socket) => {
         const userID = res.userID
         const room = new Room({
             roomName: roomName,
+            AdminID: userID,
             userArray: [{
                 userId: userID,
                 userName: userName
@@ -18,6 +19,7 @@ const CreateRoom = (socket) => {
                 await socket.join(room._id.toString())
                 cb({
                     userName: userName,
+                    AdminID: userID,
                     roomID: room._id,
                     roomName: roomName
                 })

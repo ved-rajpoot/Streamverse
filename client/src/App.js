@@ -1,4 +1,5 @@
 import './App.css';
+import 'video-react/dist/video-react.css'; // import css
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Components/Login"
 import SignUp from './Components/SignUp';
@@ -14,6 +15,7 @@ import ChatBox from './ChatBox/ChatBox';
 import SocketContext, { socket } from './SocketContext';
 import Playlist from '../src/Screens/Profile/Playlist';
 import PlaylistPopup from './Components/Playlistpopup/PlaylistPopup';
+import AdminVideoPlayer from './StreamRoom/AdminVideoPlayer';
 const App = () =>{
   
   return (
@@ -27,6 +29,7 @@ const App = () =>{
               <Route element={<PrivateRoutes />}>
                 {/* <Route exact path="/" element={<Login />} /> */}
                 <Route exact path="/dashboard" element={<Dashboard />} />
+                <Route exact path="/streamroom" element={<AdminVideoPlayer />} />
                 <Route exact path="/dashboard/:cloudinary_id" element={ <VideoPlayer />} />
                 {/* <Route exact path="/dashboard/:cloudinary_id" element={ <PlaylistPopup />} /> */}
                 <Route exact path="/upload" element={<Upload />} />

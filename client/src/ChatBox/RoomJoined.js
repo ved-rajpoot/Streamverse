@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
-import { CreateMessage, JoinMessage, RegularMessage, RoomIdMessage } from "./MessageType"
+import { CreateMessage, JoinMessage, PinnedMessage, RegularMessage, RoomIdMessage } from "./MessageType"
 import SocketContext from '../SocketContext';
 import React, { useContext, useEffect, useState } from 'react';
 import { getUserId } from './HelperFunctions';
@@ -36,8 +36,9 @@ const RommJoined = (props) => {
     
     return (
         <>
-            <div id="MessageArea" className='flex flex-col bg-[#FAFAFA] h-[86%] overflow-auto'>
-                <button className = "hidden" onClick={updateMessageArea}></button>
+            <div id="MessageArea" className='flex flex-col bg-[#FAFAFA] h-[550px] overflow-auto'>
+                <button className="hidden" onClick={updateMessageArea}></button>
+                <PinnedMessage />
                 <CreateMessage 
                     creator={props.userName}
                     roomName = {props.roomName}
@@ -68,7 +69,7 @@ const RommJoined = (props) => {
                     })
                 }
                 </div>
-                <div className='flex flex-row p-1 sticky justify-center bottom-0 h-[14%] bg-white'>
+                <div className='flex flex-row p-1 sticky justify-center bottom-0 h-[50px] bg-white'>
                     <div className='w-[75%]'>
                     <TextField id="outlined-basic" label="Type Your Message" autoComplete='off' variant="outlined" value={textMessage} onChange={(e)=>setTextMessage(e.target.value)} />
                     </div>
