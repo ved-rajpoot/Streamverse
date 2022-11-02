@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom'
 import VideoCard from '../../Components/VideoCard';
+import {useLocation} from 'react-router-dom';
 
-const Playlist = () => {
+const PlaylistVideos = () => {
+        const location = useLocation();
+        
         const {playlistId} = useParams();
         console.log(playlistId);
         const [videos,setVideos] = useState(null);
@@ -31,17 +34,19 @@ const Playlist = () => {
     return (
         <>
             <div>
-                Hii {playlistId}
+                {location.state.props.name}
             </div>
+            <div className='flex flex-wrap'>
             {
                 Array.isArray(videos) && videos.map((val,index)=>{
                     return (
                         <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
                     )
                 })
-            }
+                }
+            </div>
         </>
     )
 }
 
-export default Playlist
+export default PlaylistVideos

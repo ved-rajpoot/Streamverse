@@ -4,9 +4,10 @@ import Videos from './Videos.js';
 import Audios from './Audios.js';
 import VideoPlaylists from './VideoPlaylists.js';
 import AudioPlaylists from './AudioPlaylists.js';
-import Favorites from './Favorites.js';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import FavoriteAudios from './FavoriteAudios.js';
+import FavoriteVideos from './FavoriteVideos.js';
 
 const Profile = () => {
     const [status,setStatus] = useState(1);
@@ -57,14 +58,16 @@ const Profile = () => {
                 <button id="audio" type="button" className= {(status === 2) ? selected : notSelected} onClick={() => setStatus(2)} >Audios</button> 
                 <button id="audio" type="button" className= {(status === 3) ? selected : notSelected} onClick={() => setStatus(3)} >VideoPlaylists</button> 
                 <button id="audio" type="button" className= {(status === 4) ? selected : notSelected} onClick={() => setStatus(4)} >AudioPlaylists</button> 
-                <button id="audio" type="button" className= {(status === 5) ? selected : notSelected} onClick={() => setStatus(5)} >Favorites</button>  
-                <button id="audio" type="button" className= {(status === 6) ? selected : notSelected} onClick={() => setStatus(6)} >About</button>  
+                <button id="audio" type="button" className= {(status === 5) ? selected : notSelected} onClick={() => setStatus(5)} >Favorite Videos</button>  
+                <button id="audio" type="button" className= {(status === 6) ? selected : notSelected} onClick={() => setStatus(6)} >Favorite Audios</button>  
+                <button id="audio" type="button" className= {(status === 7) ? selected : notSelected} onClick={() => setStatus(7)} >About</button>  
             </div>
             <div className={(status === 1) ? "relative top-5":"hidden"} ><Videos/></div>
             <div className={(status === 2) ? "relative top-5":"hidden"} ><Audios/></div>
             <div className={(status === 3) ? "relative top-5":"hidden"} ><VideoPlaylists playlists={userData && userData.videoPlaylists}/></div>
             <div className={(status === 4) ? "relative top-5":"hidden"} ><AudioPlaylists playlists={userData && userData.audioPlaylists}/></div>
-            <div className={(status === 5) ? "relative top-5":"hidden"} ><Favorites/></div>
+            <div className={(status === 5) ? "relative top-5":"hidden"} ><FavoriteVideos/></div>
+            <div className={(status === 6) ? "relative top-5":"hidden"} ><FavoriteAudios/></div>
             {/* <div className={(status === 6) ? "relative top-5":"hidden"} ><About/></div> */}
             {/* <div className={(status === 2) ? "hidden" : "relative top-5"} ><VideoDashboard/></div> */}
         </div>
