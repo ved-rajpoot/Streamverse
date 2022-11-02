@@ -12,7 +12,7 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import Logout from './Components/Logout';
 import ChatBox from './ChatBox/ChatBox';
 import SocketContext, { socket } from './SocketContext';
-
+import Playlist from '../src/Screens/Profile/Playlist';
 import PlaylistPopup from './Components/Playlistpopup/PlaylistPopup';
 const App = () =>{
   
@@ -32,6 +32,7 @@ const App = () =>{
                 <Route exact path="/upload" element={<Upload />} />
                 <Route exact path="/profile" element={<Profile />} />
                 <Route exact path="/logout" element={<Logout />} />
+                <Route path='/playlists/:playlistId' element={<Playlist/>} />
                 <Route path='*' element={<Navigate to='/login' />} />
               </Route>
             </Routes>

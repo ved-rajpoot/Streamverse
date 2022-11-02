@@ -13,7 +13,7 @@ const Audios = () => {
             }
         })
         .then((res)=>{
-            console.log(res.data);
+            // console.log(res.data);
             setUserAudios(res.data);
         })
     },[])
