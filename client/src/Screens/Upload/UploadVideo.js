@@ -39,12 +39,15 @@ const UploadVideo = () => {
         }
     }
     const upload = async (e) => {
+        let tags=[]
+        for(var i=0;i<todos.length;i++) tags.push(todos[i].text)
 
         const data = new FormData();
         data.append("avatar", selectedFile.file);
         data.append("thumbnail", seletcedThumbnail.file);
         data.append("title", title);
         data.append("description", description);
+        data.append("tags",tags);
         data.append("isPrivate", isPrivate);
 
         console.log(data);
@@ -71,12 +74,12 @@ const UploadVideo = () => {
 
     function Todo({ todo, index, removeTodo }) {
         return (
-            <>
-                {todo.text}
+            <div className=" bg-[#002D99] w-fit text-white p-1 m-2 rounded-lg flex flex-row">
+                <div className="mr-2">#{todo.text}</div>
                 <div>
                     <button onClick={() => removeTodo(index)} className="text-slate text-base">x</button>
                 </div>
-            </>
+            </div>
         );
     }
 
@@ -94,10 +97,11 @@ const UploadVideo = () => {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    className="input"
+                    className="input bg-gray-300 h-9 rounded-lg"
                     value={value}
                     onChange={e => setValue(e.target.value)}
                 />
+                <button className=" bg-[#002D99] w-fit text-white m-1 rounded-lg p-1">Enter</button>
             </form>
         );
     }
@@ -122,22 +126,22 @@ const UploadVideo = () => {
             <div className="flex flex-col m-5 shadow-2xl bg-slate-100">
                 <div className="text-2xl m-5">
                     Enter title: <br />
-                    <input type="text" placeholder="Title" onChange={changeHandler} name="title" value={title} />
+                    <input type="text" className="text-lg" placeholder="Title" onChange={changeHandler} name="title" value={title} />
                 </div>
 
                 <div className="m-5">
                     <p className="text-2xl"> Upload thumbnail: </p>
-                    <input type="file" name="thumbnail" onChange={changeHandler} />
+                    <input type="file" className="text-sm" name="thumbnail" onChange={changeHandler} />
                 </div>
 
                 <div className="m-5">
                     <p className="text-2xl">Upload Video file: </p>
-                    <input type="file" name="avatar" onChange={changeHandler} />
+                    <input type="file" className="text-sm" name="avatar" onChange={changeHandler} />
                 </div>
 
                 <div className="text-2xl m-5">
                     Add Description: <br />
-                    <input type="text" placeholder="Description" onChange={changeHandler} name="description" value={description} />
+                    <input type="text" className="text-lg" placeholder="Description" onChange={changeHandler} name="description" value={description} />
                 </div>
                 {isFilePicked ? (
                     <div>
@@ -152,6 +156,7 @@ const UploadVideo = () => {
                 ) : (
                     <p className="ml-5">Select a file to show details</p>
                 )}
+                {console.log(selectedFile.loaded)}
                 <Progress max="100" color="success" value={selectedFile.loaded} className="m-5 mb-1">
                     {isNaN(Math.round(selectedFile.loaded, 2)) ? 0 : Math.round(selectedFile.loaded, 2)}%
                 </Progress>
