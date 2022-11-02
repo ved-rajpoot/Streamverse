@@ -2,20 +2,20 @@ import React, {useState,useEffect} from 'react'
 import axios from 'axios';
 import VideoCard from '../../Components/VideoCard';
 
-const Favorites = () => {
+const FavoriteVideos = () => {
   const [videoList, setVideoList] = useState(null);
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
           const data = null;
-          axios.post("http://localhost:9002/getfavorites", data, {
+          axios.post("http://localhost:9002/getfavoritevideos", data, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
             }
           })
           .then((res) => {
-              console.log(res);
+            //   console.log(res);
               setVideoList(res.data)
           }).then(() => {
               setStatus(true)
@@ -43,4 +43,4 @@ const Favorites = () => {
   )
 }
 
-export default Favorites
+export default FavoriteVideos

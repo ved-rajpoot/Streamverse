@@ -53,7 +53,7 @@ const Form = ({playlists, setPlaylists, videoId, type, setPopup}) => {
         // const newChecked = [...checked];
 
         // newChecked[inx] = !newChecked[inx];
-        playlists[inx].isVideoPresent = !playlists[inx].isVideoPresent;
+        playlists[inx].isFilePresent = !playlists[inx].isFilePresent;
         // setChecked(newChecked);
         completeTodo(inx);  
     };

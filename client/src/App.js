@@ -13,7 +13,8 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import Logout from './Components/Logout';
 import ChatBox from './ChatBox/ChatBox';
 import SocketContext, { socket } from './SocketContext';
-
+import PlaylistVideos from '../src/Screens/Profile/PlaylistVideos';
+import PlaylistAudios from '../src/Screens/Profile/PlaylistAudios';
 import PlaylistPopup from './Components/Playlistpopup/PlaylistPopup';
 import AdminVideoPlayer from './StreamRoom/AdminVideoPlayer';
 const App = () =>{
@@ -35,6 +36,8 @@ const App = () =>{
                 <Route exact path="/upload" element={<Upload />} />
                 <Route exact path="/profile" element={<Profile />} />
                 <Route exact path="/logout" element={<Logout />} />
+                <Route path='/videoplaylists/:playlistId' element={<PlaylistVideos/>} />
+                <Route path='/audioplaylists/:playlistId' element={<PlaylistAudios/>} />
                 <Route path='*' element={<Navigate to='/login' />} />
               </Route>
             </Routes>

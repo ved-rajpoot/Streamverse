@@ -13,7 +13,7 @@ const Videos = () => {
             }
         })
         .then((res)=>{
-            console.log(res.data);
+            // console.log(res.data);
             setUserVideos(res.data);
         })
     },[])
