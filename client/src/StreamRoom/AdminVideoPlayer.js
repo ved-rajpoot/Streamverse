@@ -1,15 +1,28 @@
 import { Player,ControlBar,LoadingSpinner,BigPlayButton,ReplayControl,ForwardControl,CurrentTimeDisplay,TimeDivider,PlaybackRateMenuButton,VolumeMenuButton } from 'video-react';
 import { useLocation } from "react-router-dom"
+import SocketContext from '../SocketContext';
+import { useContext } from 'react';
+import { useRef } from 'react';
 
 
 const AdminVideoPlayer = () => {
-
-
+    const VideoElement = useRef(null)
+    const socket = useContext(SocketContext)
     const location = useLocation();
+
+    //socket events
+    socket.off('getVideo').on('getVideo', (res) => {
+        const id = res.id;
+        const { player } = VideoElement.current.getState();
+        socket.emit("currentVideo", { time: player.currentTime, url: location.state.props.url, title: location.state.props.title, description: location.state.props.description, id: id });
+    })
+
+
+
     return (
         <div>
             <div className="flex object-cover h-[40rem] w-full">
-                <Player fluid={false} height="100%" width="100%">
+                <Player ref={VideoElement} fluid={false} height="100%" width="100%">
                     <BigPlayButton position="center" />
                     <LoadingSpinner />
                     <ControlBar>

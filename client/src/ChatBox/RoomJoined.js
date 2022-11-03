@@ -26,7 +26,11 @@ const RommJoined = (props) => {
         socket.emit("send", { roomID: roomID, message: textMessage, userID:userID })
         setTextMessage("")
     }
-    useEffect(() => { if(localStorage.getItem("room")) socket.emit("refresh-check", { roomID: JSON.parse(localStorage.getItem("room")).roomID }) })
+
+    //Initial render
+    useEffect(() => { if (localStorage.getItem("room")) socket.emit("refresh-check", { roomID: JSON.parse(localStorage.getItem("room")).roomID }) })
+    
+    //Socket Events
     socket.off('userJoined').on('userJoined', res => {
         updateMessageArea({ messageType: "join", userName: res.userName })
     })

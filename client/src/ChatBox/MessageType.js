@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 
 
 const JoinMessage = (props) => {
@@ -12,11 +13,12 @@ const JoinMessage = (props) => {
     )
 }
 const PinnedMessage = () => {
+    const navigate = useNavigate();
     return (
         <>
             <div className=" sticky flex flex-row top-0 bg-white px-1 py-1 text-sm justify-center items-center border b-4">
                 <div className="w-[70%]">CreatorName is streaming videoName/AudioName</div>
-                <button className="w-[20%] h-[80%] rounded-lg bg-[#2563eb]">Join</button>
+                <button className="w-[20%] h-[80%] rounded-lg bg-[#2563eb]" onClick={() => { navigate("/viewer") }} >Join</button>
             </div>
 
         </>

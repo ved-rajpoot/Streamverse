@@ -1,18 +1,61 @@
-import { Player, ControlBar, LoadingSpinner, BigPlayButton,VolumeMenuButton, Shortcut,TimeDivider  } from 'video-react';
+import { Player, ControlBar, LoadingSpinner, BigPlayButton ,VolumeMenuButton, Shortcut,TimeDivider, CurrentTimeDisplay  } from 'video-react';
 import { useLocation } from "react-router-dom"
+import { useRef, useEffect, useContext, useState } from 'react';
+import SocketContext from '../SocketContext';
+
 
 
 const ViewerVideoPlayer = () => {
+    const socket = useContext(SocketContext)
+    const VideoElement = useRef(null);
+    const [source,setSource] = useState("")
+    const [title,setTitle] = useState("")
+    const [description,setDescription] = useState("")
+
+    //Disabling Keyboard Shortcuts
     const shortCut = [{ keyCode: 32, ctrl: false, handle: () => { } }, { keyCode: 75, ctrl: false, handle: () => { } }, { keyCode: 39, ctrl: false, handle: () => { } }, { keyCode: 37, ctrl: false, handle: () => { } }, { keyCode: 74, ctrl: false, handle: () => { } }, { keyCode: 76, ctrl: false, handle: () => { } }, { keyCode: 35, ctrl: false, handle: () => { } }, { keyCode: 36, ctrl: false, handle: () => { } },]
 
-    const location = useLocation();
+    //on Page render
+    useEffect(() => {
+        socket.emit("fetchVideo", { AdminID: JSON.parse(localStorage.getItem("room")).AdminID });
+    })
+
+    //controls functions
+    const play = () => VideoElement.current.play();
+    const pause = () => VideoElement.current.pause();
+    const moveToTimeStamp = (seconds) => VideoElement.current.seek(seconds);
+    const changePlayBackSpeed = (speed) => VideoElement.current.playbackRate = speed;
+
+    // socket events
+    socket.off("setVideo").on("setVideo", res => {
+        console.log(res)
+        const seconds = res.time;
+        const url = res.url;
+        const videoTitle = res.title;
+        const videoDescription = res.description;
+        setSource(url);
+        setTitle(videoTitle);
+        setDescription(videoDescription);
+        setTimeout(() => {
+            moveToTimeStamp(seconds);
+            play();
+        },1000)
+        
+    })
+
+
+
+
+
+
+
     return (
         <div>
             <div className="flex object-cover h-[40rem] w-full">
-                <Player src={location.state.props.url} fluid={false} height="100%" width="100%" autoPlay={true} >
+                <Player ref={VideoElement} src={source} preload = "auto" fluid={false} height="100%" width="100%" autoPlay >
                     <Shortcut clickable={false} shortcuts={shortCut} />
+                    <BigPlayButton position="center" />
                     <LoadingSpinner />
-                    <BigPlayButton position='center' />
                     <ControlBar disableDefaultControls >
                         <VolumeMenuButton />
                         <TimeDivider order={4.2} />
@@ -21,11 +64,11 @@ const ViewerVideoPlayer = () => {
                 </Player>
             </div>
             <div className='m-3 text-2xl font-bold'>
-                {location.state.props.title}
+                {title}
             </div>
 
             <div className='m-3 text-sm'>
-                {location.state.props.description}
+                {description}
             </div>
         </div>
     )
