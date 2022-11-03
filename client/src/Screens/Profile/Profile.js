@@ -8,6 +8,7 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import FavoriteAudios from './FavoriteAudios.js';
 import FavoriteVideos from './FavoriteVideos.js';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Profile = () => {
     const [status,setStatus] = useState(1);
@@ -45,12 +46,15 @@ const Profile = () => {
 
     return (
         <div>
-            <div className='flex border-b-4 border-gray-200 my-4 ml-4'>
-                <Avatar/>
-                <div>
-                    <h1 className='font-semibold text-black text-3xl'>{user.userName}</h1>
-                    <h3 className='font-semibold text-black text-md'>Hii guys, welcome to my youtube channel</h3>
-                </div>
+            <div className='border-b-4 border-gray-200'>
+              <div className='flex  my-4 ml-5'>
+                  <Avatar/>
+                  <div className='ml-4 flex'>
+                      <h1 className='font-semibold text-black text-3xl mb-2'>{user.userName}</h1>
+                      {/* <EditIcon className='ml-2 mt-1'/> */}
+                      {/* <h3 className='font-semibold text-black text-md'>Hii guys, welcome to my youtube channel</h3> */}
+                  </div>
+              </div>
             </div>
             
             <div className="flex items-center space-x-6 mx-8 overflow-x-auto">
