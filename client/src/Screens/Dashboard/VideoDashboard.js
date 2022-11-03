@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import VideoCard from "../../Components/VideoCard";
+import AdminVideoCard from "../Admin/adminVideoCard"
 
-const VideoDashboard = () => {
+const VideoDashboard = (props) => {
     const navigate = useNavigate()
     const [videoList, setVideoList] = useState(null);
     const [status, setStatus] = useState(false);
@@ -39,11 +40,18 @@ const VideoDashboard = () => {
                     {
                         Array.isArray(videoList) ?
                             videoList.map((val, index) => {
-                                return (
+                                if(props.type==="admin") 
+                                    return (
+                                    <>
+                                        <AdminVideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id}/> 
+                                    </>
+                                    )
+                                else 
+                                    return (
                                     <>
                                         <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
                                     </>
-                                )
+                                    )
                             })
                             : null
                     }

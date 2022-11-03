@@ -8,6 +8,7 @@ import Upload from './Screens/Upload/Upload';
 import Dashboard from './Screens/Dashboard/Dashboard';
 import VideoPlayer from './Screens/VideoPlayer';
 import Profile from './Screens/Profile/Profile';
+import Admin from './Screens/Admin/admin';
 import { Navigate } from 'react-router-dom';
 import PrivateRoutes from './utils/PrivateRoutes';
 import Logout from './Components/Logout';
@@ -35,6 +36,7 @@ const App = () =>{
                 <Route exact path="/upload" element={<Upload />} />
                 <Route exact path="/profile" element={<Profile />} />
                 <Route exact path="/logout" element={<Logout />} />
+                <Route exact path="/admin" element={<Admin />} />
                 <Route path='*' element={<Navigate to='/login' />} />
               </Route>
             </Routes>
