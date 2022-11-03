@@ -47,6 +47,8 @@ app.use('/getuserdata',require('./routes/GetUserData.route'));
 app.use('/updateplaylists',require('./routes/Playlists.route'));
 app.use('/audio',require('./routes/Audio.route'));
 
+app.use('/admin', require('./routes/Admin.route'));
+
 io.on("connection", socket => {
     JoinRoom(socket,io)
     CreateRoom(socket)
