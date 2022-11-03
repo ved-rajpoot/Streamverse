@@ -10,6 +10,7 @@ const JoinRoom = require("./SocketEvents/JoinRoom")
 const CreateRoom = require("./SocketEvents/CreateRoom")
 const SendMessage = require("./SocketEvents/SendMessage")
 const RefreshCheck = require("./SocketEvents/RefreshCheck")
+const FetchVideo = require("./SocketEvents/StreamSocketEvents/FetchVideo")
 const io = require("socket.io")(8080,{
     cors :{
         origin: ["http://localhost:3000", "https://admin.socket.io"],
@@ -54,6 +55,7 @@ io.on("connection", socket => {
     CreateRoom(socket)
     SendMessage(socket, io)
     RefreshCheck(socket)
+    FetchVideo(socket,io)
 })
 instrument(io, {auth : false})
 app.listen(9002, () => {
