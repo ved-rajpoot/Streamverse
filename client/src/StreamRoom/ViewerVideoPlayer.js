@@ -24,7 +24,7 @@ const ViewerVideoPlayer = () => {
     const play = () => VideoElement.current.play();
     const pause = () => VideoElement.current.pause();
     const moveToTimeStamp = (seconds) => VideoElement.current.seek(seconds);
-    const changePlayBackSpeed = (speed) => VideoElement.current.playbackRate = speed;
+    const changePlaybackSpeed = (speed) => VideoElement.current.playbackRate = speed;
 
     // socket events
     socket.off("setVideo").on("setVideo", res => {
@@ -41,25 +41,20 @@ const ViewerVideoPlayer = () => {
         },1000)
         
     })
-
     socket.off('playPlayer').on('playPlayer', () => {
-        console.log("here")
         play();
     })
     socket.off('pausePlayer').on('pausePlayer', () => {
         pause();
     })
     socket.off('setTime').on('setTime', (res) => {
-        const currentTime = res.currTime
+        const currentTime = res.currTime;
         moveToTimeStamp(currentTime);
     })
-
-
-
-
-
-
-
+    socket.off('changePlaybackSpeed').on('changePlaybackSpeed', (res) => {
+        const playbackSpeed = res.playbackSpeed;
+        changePlaybackSpeed(playbackSpeed);
+    })
 
     return (
         <div>
