@@ -17,12 +17,14 @@ import PlaylistVideos from '../src/Screens/Profile/PlaylistVideos';
 import PlaylistAudios from '../src/Screens/Profile/PlaylistAudios';
 import PlaylistPopup from './Components/Playlistpopup/PlaylistPopup';
 import AdminVideoPlayer from './StreamRoom/AdminVideoPlayer';
+import ViewerVideoPlayer from './StreamRoom/ViewerVideoPlayer';
 const App = () =>{
   
   return (
       <>
       <div>
           <Router>
+        <SocketContext.Provider value={socket}>
             <Header />
             <Routes>
               <Route exact path="/Login" element={<Login />} />
@@ -31,6 +33,7 @@ const App = () =>{
                 {/* <Route exact path="/" element={<Login />} /> */}
                 <Route exact path="/dashboard" element={<Dashboard />} />
                 <Route exact path="/streamroom" element={<AdminVideoPlayer />} />
+                <Route exact path="/viewer" element={<ViewerVideoPlayer />} />
                 <Route exact path="/dashboard/:cloudinary_id" element={ <VideoPlayer />} />
                 {/* <Route exact path="/dashboard/:cloudinary_id" element={ <PlaylistPopup />} /> */}
                 <Route exact path="/upload" element={<Upload />} />
@@ -41,10 +44,9 @@ const App = () =>{
                 <Route path='*' element={<Navigate to='/login' />} />
               </Route>
             </Routes>
-          </Router>
-        <SocketContext.Provider value={socket}>
           <ChatBox />
         </SocketContext.Provider>
+          </Router>
         
       </div>
       </>
