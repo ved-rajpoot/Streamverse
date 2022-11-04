@@ -28,7 +28,6 @@ const ViewerVideoPlayer = () => {
 
     // socket events
     socket.off("setVideo").on("setVideo", res => {
-        console.log(res)
         const seconds = res.time;
         const url = res.url;
         const videoTitle = res.title;
@@ -42,6 +41,19 @@ const ViewerVideoPlayer = () => {
         },1000)
         
     })
+
+    socket.off('playPlayer').on('playPlayer', () => {
+        console.log("here")
+        play();
+    })
+    socket.off('pausePlayer').on('pausePlayer', () => {
+        pause();
+    })
+    socket.off('setTime').on('setTime', (res) => {
+        const currentTime = res.currTime
+        moveToTimeStamp(currentTime);
+    })
+
 
 
 

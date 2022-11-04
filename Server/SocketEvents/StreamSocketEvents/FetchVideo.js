@@ -1,11 +1,12 @@
 const FetchVideo = (socket, io) => {
     socket.on("fetchVideo", (res) => {
-        console.log(res)
+        // console.log(res)
         const admin = res.AdminID;
         io.to(admin).emit("getVideo", { id: socket.id });
     })
     socket.on("currentVideo", (res) => {
-        console.log(res)
+        // console.log(res)
+
         const socketId = res.id;
         const currentTime = res.time;
         const url = res.url;
