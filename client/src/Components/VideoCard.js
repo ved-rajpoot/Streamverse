@@ -1,24 +1,28 @@
-import { Card, CardHeader, CardBody, CardFooter, Typography,} from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 
 export default function VideoCard(props) {
     const navigate = useNavigate();
-    const {id, avatar,thumbnail_avatar,title,description, cloudinary_id, userName} = props;
+    const {id, avatar,thumbnail_avatar,title,description, cloudinary_id, userName,tags} = props;
     return (
-      <Card className="w-80 mx-2 my-8 border-gray-300 border-b-2 hover:bg-gray-100 duration-100 cursor-pointer" onClick={()=>{ navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
-        <CardHeader color="blue" className="relative h-48">
-          <img
-            src={thumbnail_avatar}
-            alt="img-blur-shadow"
-            className="h-full w-full"
-          />
-        </CardHeader>
-        <CardBody className="p-2">
-          <Typography variant="h5" className="text-2xl break-all">
-            {title}
-          </Typography>
-          <Typography variant="small" className="text-sm text-gray-500">{userName}</Typography>
-        </CardBody>
-      </Card>
+      <>
+        <div class="rounded overflow-hidden shadow-lg mx-4 my-4 cursor-pointer" style={{width:'21rem', height:'21rem'}} onClick={()=>{ navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
+          <img class="h-48 w-full" src={thumbnail_avatar} alt="Sunset in the mountains"/>
+          <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-1">{title}</div>
+            <p class="text-gray-700 text-base">
+              {userName}
+            </p>
+          </div>
+          <div class="px-6 pt-4 pb-2 overflow-x-auto">
+            {
+              tags.length!==1 && tags.map((tag,idx)=>{
+              return (
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{tag}</span>
+              )
+              })
+            }
+          </div>
+      </div>
+    </>
     );
 }
