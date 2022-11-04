@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Users from './users'
-import Videos from '../Dashboard/VideoDashboard'
+import Videos from './videos'
 import Audios from './audios'
 
 const Admin = () => {
@@ -47,7 +47,7 @@ const Admin = () => {
             </aside>
         </div>
             {status==2 && <Users/>}
-            {status==3 && <Videos type="admin"/>}
+            {status==3 && <Videos/>}
             <div>
 
             {status==4 && <Audios/>}

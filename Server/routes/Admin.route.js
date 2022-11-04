@@ -35,4 +35,26 @@ router.post("/deleteUser", (req,res) => {
     res.json("deletion done")
 })
 
+router.post("/deleteVideo", (req,res) => {
+    Video.deleteOne({_id:req.body.id})
+        .then((result) => {
+            console.log(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+})
+
+router.post("/deleteAudio", (req,res) => {
+    console.log(req.body.id)
+    Audio.deleteOne({_id:req.body.id})
+        .then((result) => {
+            console.log(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+})
+
+
 module.exports = router
