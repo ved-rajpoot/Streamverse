@@ -11,7 +11,7 @@ const AudioPlaylists = ({playlists}) => {
         return (
                 <div className="mb-2 shadow-xl flex flex-row justify-center w-[100%] bg-white cursor-pointer" onClick={()=>navigate(`/audioplaylists/${playlist._id}`, {state: {props:{name:playlist.name}}})}>
                 <div className="bg-white flex flex-row rounded-r p-2 leading-normal w-full mb-2 ml-4">
-                    <div className="text-gray-900 font-bold text-sm mb-2 text-left">{playlist.name}</div>
+                    <div className="text-gray-900 font-bold text-sm mb-2 text-left">{idx+1}. {playlist.name}</div>
                 </div>
                 </div>
           )

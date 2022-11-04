@@ -53,6 +53,7 @@ app.use('/getuserdata',require('./routes/GetUserData.route'));
 app.use('/updateplaylists',require('./routes/Playlists.route'));
 app.use('/getvideos',require('./routes/GetVideos.route'));
 app.use('/getaudios',require('./routes/GetAudios.route'));
+app.use('/getmembers',require('./routes/GetMembers.route'));
 
 io.on("connection", socket => {
     JoinRoom(socket, io);
