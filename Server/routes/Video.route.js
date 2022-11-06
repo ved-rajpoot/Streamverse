@@ -91,7 +91,7 @@ router.post("/removefavorite", checkAuth, (req, res) => {
         console.log(err);
     })
 })
-router.post("/getfavorites", checkAuth, async (req,res)=>{
+router.post("/getfavoritevideos", checkAuth, async (req,res)=>{
     const userId = req.userData.userId;
     const user = await User.find({_id:userId});
     
@@ -104,7 +104,6 @@ router.post("/getfavorites", checkAuth, async (req,res)=>{
         console.log(err);
     })
 })
-module.exports = router
 
 router.post("/getvideodata", checkAuth, async (req,res)=>{
     const userId = req.userData.userId;

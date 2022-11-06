@@ -16,7 +16,7 @@ export default function AudioCard(props) {
   const [popup, setPopup] = useState(false);
 
   const getAudioData = async () => {
-    const res = await axios.post("http://localhost:9002/audio/getaudiodata", { id: id }, {
+    const res = await axios.post("http://localhost:9002/getaudiodata", { id: id }, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
@@ -53,7 +53,7 @@ export default function AudioCard(props) {
 
   const addToFavorites = () => {
     console.log("add to fav")
-    axios.post("http://localhost:9002/audio/addfavorite", { id: id }, {
+    axios.post("http://localhost:9002/addfavoriteaudio", { id: id }, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
@@ -63,7 +63,7 @@ export default function AudioCard(props) {
   }
 
   const removeFromFavorites = () => {
-    axios.post("http://localhost:9002/audio/removefavorite", { id: id }, {
+    axios.post("http://localhost:9002/removefavoriteaudio", { id: id }, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token

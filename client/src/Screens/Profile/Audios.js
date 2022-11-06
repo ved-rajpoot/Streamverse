@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios';
-import VideoCard from '../../Components/VideoCard.js'
+import AudioCard from '../../Components/AudioCard.js'
 const Audios = () => {
         
     const [userAudios, setUserAudios] = useState();
@@ -13,28 +13,27 @@ const Audios = () => {
             }
         })
         .then((res)=>{
-            console.log(res.data);
+            // console.log(res.data);
             setUserAudios(res.data);
         })
     },[])
 
     return (
-        <div className="flex" >
-        <div className="flex flex-wrap">
-            {
-                Array.isArray(userAudios) ?
-                    userAudios.map((val, index) => {
-                        {/* console.log(index); */}
-                        return (
-                            <>
-                                <VideoCard avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
-                            </>
-                        )
-                    })
-                    : null
-            }
-        </div>
-    </div>
+        <>
+        {
+            Array.isArray(userAudios) ?
+                userAudios.map((val, index) => {
+                    return (
+                        <>
+                            <div class='w-screen'>
+                                <AudioCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
+                            </div>
+                        </>
+                    )
+                })
+                : null
+        }
+    </>
   )
 }
 

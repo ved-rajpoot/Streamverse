@@ -1,15 +1,15 @@
 const express = require("express"); 
 const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
-const Audio = require('../models/Audio.model');
+const Room = require('../models/Room.model')
 
 router.post("/", checkAuth, (req, res) => {
     // console.log(req);
     // console.log(req.userData);
-    Audio.find( { userId : req.userData.userId })
+    Room.find( {_id:req.body.roomId})
     .then((result)=>{
         // console.log(result.length);
-        res.json(result);
+        res.json(result[0].userArray);
     })
     .catch((err)=>{
         console.log(err);

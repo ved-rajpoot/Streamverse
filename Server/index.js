@@ -10,6 +10,11 @@ const JoinRoom = require("./SocketEvents/JoinRoom")
 const CreateRoom = require("./SocketEvents/CreateRoom")
 const SendMessage = require("./SocketEvents/SendMessage")
 const RefreshCheck = require("./SocketEvents/RefreshCheck")
+const FetchVideo = require("./SocketEvents/StreamSocketEvents/FetchVideo")
+const PauseVideo = require("./SocketEvents/StreamSocketEvents/PauseVideo")
+const PlayVideo = require("./SocketEvents/StreamSocketEvents/PlayVideo")
+const ChangeTimeStamp = require("./SocketEvents/StreamSocketEvents/ChangeTimeStamp")
+const PlaybackSpeed = require("./SocketEvents/StreamSocketEvents/PlaybackSpeed")
 const io = require("socket.io")(8080,{
     cors :{
         origin: ["http://localhost:3000", "https://admin.socket.io"],
@@ -43,17 +48,25 @@ app.use('/audiolist', require('./routes/AudioList.route'));
 app.use('/getuservideos', require('./routes/GetUserVideos.route'));
 app.use('/getuseraudios', require('./routes/GetUserAudios.route'));
 app.use('/',require('./routes/Video.route'));
+app.use('/',require('./routes/Audio.route'));
 app.use('/getuserdata',require('./routes/GetUserData.route'));
 app.use('/updateplaylists',require('./routes/Playlists.route'));
-app.use('/audio',require('./routes/Audio.route'));
+app.use('/getvideos',require('./routes/GetVideos.route'));
+app.use('/getaudios',require('./routes/GetAudios.route'));
+app.use('/getmembers',require('./routes/GetMembers.route'));
 
 app.use('/admin', require('./routes/Admin.route'));
 
 io.on("connection", socket => {
-    JoinRoom(socket,io)
-    CreateRoom(socket)
-    SendMessage(socket, io)
-    RefreshCheck(socket)
+    JoinRoom(socket, io);
+    CreateRoom(socket);
+    SendMessage(socket, io);
+    RefreshCheck(socket);
+    FetchVideo(socket, io);
+    PauseVideo(socket, io);
+    PlayVideo(socket, io);
+    ChangeTimeStamp(socket, io);
+    PlaybackSpeed(socket, io);
 })
 instrument(io, {auth : false})
 app.listen(9002, () => {

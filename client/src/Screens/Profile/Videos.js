@@ -13,7 +13,7 @@ const Videos = () => {
             }
         })
         .then((res)=>{
-            console.log(res.data);
+            // console.log(res.data);
             setUserVideos(res.data);
         })
     },[])
@@ -27,7 +27,7 @@ const Videos = () => {
                         {/* console.log(index); */}
                         return (
                             <>
-                                <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
+                                <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} tags={val.tags}/>
                             </>
                         )
                     })

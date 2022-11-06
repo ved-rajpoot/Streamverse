@@ -17,6 +17,7 @@ const CreateRoom = (socket) => {
             .save()
             .then(async (room) => {
                 await socket.join(room._id.toString())
+                await socket.join(userID.toString())
                 cb({
                     userName: userName,
                     AdminID: userID,
