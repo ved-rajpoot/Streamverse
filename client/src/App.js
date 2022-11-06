@@ -8,6 +8,7 @@ import Upload from './Screens/Upload/Upload';
 import Dashboard from './Screens/Dashboard/Dashboard';
 import VideoPlayer from './Screens/VideoPlayer';
 import Profile from './Screens/Profile/Profile';
+import Admin from './Screens/Admin/admin';
 import { Navigate } from 'react-router-dom';
 import PrivateRoutes from './utils/PrivateRoutes';
 import Logout from './Components/Logout';
@@ -42,6 +43,9 @@ const App = () =>{
                 <Route path='/videoplaylists/:playlistId' element={<PlaylistVideos/>} />
                 <Route path='/audioplaylists/:playlistId' element={<PlaylistAudios/>} />
                 <Route path='*' element={<Navigate to='/login' />} />
+                
+                <Route exact path="/admin" element={<Admin />} />
+                
               </Route>
             </Routes>
           <ChatBox />

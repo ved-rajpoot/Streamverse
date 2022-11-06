@@ -55,6 +55,8 @@ app.use('/getvideos',require('./routes/GetVideos.route'));
 app.use('/getaudios',require('./routes/GetAudios.route'));
 app.use('/getmembers',require('./routes/GetMembers.route'));
 
+app.use('/admin', require('./routes/Admin.route'));
+
 io.on("connection", socket => {
     JoinRoom(socket, io);
     CreateRoom(socket);
