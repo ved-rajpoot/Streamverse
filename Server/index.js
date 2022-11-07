@@ -56,6 +56,7 @@ app.use('/getaudios',require('./routes/GetAudios.route'));
 app.use('/getmembers',require('./routes/GetMembers.route'));
 app.use('/recommendations',require('./routes/Recommendations.route'));
 app.use('/trendingvideos',require('./routes/TrendingVideos.route'));
+app.use('/likedvideos',require('./routes/LikedVideos.route'));
 
 io.on("connection", socket => {
     JoinRoom(socket, io);

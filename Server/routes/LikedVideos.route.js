@@ -7,14 +7,18 @@ const checkAuth = require("../middleware/check-auth");
 router.post("/", checkAuth, async (req, res) => {
     // console.log(req);
     console.log(req.userData.userId);
-    const userId = req.userData.userId;
-    User.find({_id:userId})
-    .then((result)=>{
-        res.status(200).json(result[0].likedVideos,{message:"All Liked videos of user"});
-    })
-    .catch((err)=>{
+
+    try {
+        const userId = req.userData.userId;
+        const user = await User.find({_id:userId});
+        // console.log(user);
+        const likedVideos = user[0].likedVideos;
+        const result = await Video.find({_id:{$in:likedVideos}});
+        res.send(result);
+    }
+    catch (err) {
         console.log(err);
-    })
+    }
 })
 
 module.exports = router

@@ -138,7 +138,7 @@ router.post("/getvideodata", checkAuth, async (req,res)=>{
             // console.log('updated user: ',result);
         });
 
-        let isFavorite = false, isLiked = false, isDisliked = false, totalLikes = video[0].likes.length, totalDislikes = video[0].dislikes.length;
+        let isFavorite = false, isLiked = false, isDisliked = false, totalLikes = video[0].likes, totalDislikes = video[0].dislikes;
         if(user[0].videoFavorites.includes(videoId)) isFavorite = true;
         if(user[0].likedVideos.includes(videoId)) isLiked = true;
         if(user[0].dislikedVideos.includes(videoId)) isDisliked = true;
