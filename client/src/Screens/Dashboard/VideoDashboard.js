@@ -35,7 +35,7 @@ const VideoDashboard = () => {
     return (
         <>
             <div className="flex" >
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap justify-center ">
                     {
                         Array.isArray(videoList) ?
                             videoList.map((val, index) => {
@@ -47,6 +47,7 @@ const VideoDashboard = () => {
                             })
                             : null
                     }
+                    
                 </div>
             </div>
         </>

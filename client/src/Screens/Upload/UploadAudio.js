@@ -3,8 +3,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Progress } from 'reactstrap';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import { Switch } from "@mui/material";
 
 const UploadAudio = () => {
@@ -80,21 +78,20 @@ const UploadAudio = () => {
     if (redirectStatus) return <Navigate to="/signIn" />
     return (
         <>
-            <p className="text-4xl m-5">Audio Upload</p>
-            <div className="flex flex-col m-5 shadow-2xl bg-slate-100">
-                <div className="text-2xl m-5">
+            <div className="flex flex-col dark:text-white ">
+                <div className="text-xl m-3">
                     Enter title: <br />
-                    <input type="text" className="text-lg" placeholder="Title" onChange={changeHandler} name="title" value={title} />
+                    <input autoComplete={false} type="text" className="input bg-[#f9fafb] dark:bg-[#374151] h-7 rounded-lg" placeholder="Title" onChange={changeHandler} name="title" value={title} />
                 </div>
 
-                <div className="m-5">
-                    <p className="text-2xl">Upload Audio file: </p>
+                <div className="m-3">
+                    <p className="text-xl">Upload Audio file: </p>
                     <input type="file" className="text-sm" name="avatar" onChange={changeHandler} />
                 </div>
 
-                <div className="text-2xl m-5">
+                <div className="text-xl m-3">
                     Add Description: <br />
-                    <input type="text" className="text-lg" placeholder="Description" onChange={changeHandler} name="description" value={description} />
+                    <input autoComplete={false} type="text" className="input bg-[#f9fafb] dark:bg-[#374151] h-7 rounded-lg" placeholder="Description" onChange={changeHandler} name="description" value={description} />
                 </div>
                 {isFilePicked ? (
                     <div>
@@ -107,16 +104,16 @@ const UploadAudio = () => {
                         </p>
                     </div>
                 ) : (
-                    <p className="ml-5">Select a file to show details</p>
+                    <p className="ml-3">Select a file to show details</p>
                 )}
-                <Progress max="100" color="success" value={selectedFile.loaded} className="m-5 mb-1">
+                <Progress max="100" color="success" value={selectedFile.loaded} className="m-3 mb-1">
                     {isNaN(Math.round(selectedFile.loaded, 2)) ? 0 : Math.round(selectedFile.loaded, 2)}%
                 </Progress>
-                <div className="text-2xl m-5">
+                <div className="text-xl m-3">
                     <Switch checked={isPrivate} onChange={()=>{setIsprivate(!isPrivate)}}/> <span>Private</span>
                 </div>
                 
-                <button className="bg-[#002D74]  rounded-xl text-white py-2 hover:scale-105 duration-300 w-[10%] m-5 text-2xl" onClick={upload} >upload</button>
+                <button className="bg-[#1d4ed8] rounded-xl text-white hover:scale-105 duration-300 w-[90px] py-1 m-3 text-sm" onClick={upload} >upload</button>
             </div>
         </>
     )
