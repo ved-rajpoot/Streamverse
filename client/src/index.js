@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-
-import UserDetailsProvider from './utils/Context';
+import App1 from './App1';
+import { UserProvider } from './Context/UserContext';
+import { SocketProvider } from './Context/SocketContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <UserDetailsProvider>
-      <App />
-    </UserDetailsProvider>
+    <SocketProvider>
+      <UserProvider>
+        <App1 />
+      </UserProvider>
+    </SocketProvider>
   </React.StrictMode>
 );
 
