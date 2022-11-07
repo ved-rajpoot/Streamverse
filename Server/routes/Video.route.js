@@ -8,57 +8,68 @@ router.post("/like",checkAuth, (req, res) => {
     console.log('like');
         const userId = req.userData.userId;
         const videoId = req.body.id;
-        Video.findByIdAndUpdate(videoId,{
-            $addToSet:{likes:userId},
-            $pull:{dislikes:userId}
-          })
-        .then(
-            res.status(200).json("The video has been liked.")
-        )
-        .catch((err)=>{
-            console.log(err);
-        })
+        // Video.findByIdAndUpdate(videoId,{
+        //     $addToSet:{likes:userId},
+        //     $pull:{dislikes:userId}
+        //   })
+        // .catch((err)=>{
+        //     console.log(err);
+        // })
+
+        User.findByIdAndUpdate(userId,{
+            $addToSet:{likedVideos:videoId},
+            $pull:{dislikedVideos:videoId}
+        },{new:true})
+        .then((res)=>{console.log(res)})
 })
 router.post("/removelike",checkAuth, (req, res) => {
     const userId = req.userData.userId;
     const videoId = req.body.id;
-    Video.findByIdAndUpdate(videoId,{
-        $pull:{likes:userId},
-      })
-    .then(
-        res.status(200).json("Like from this video has been removed")
-    )
-    .catch((err)=>{
-        console.log(err);
-    })
+    // Video.findByIdAndUpdate(videoId,{
+    //     $pull:{likes:userId},
+    //   })
+    // .catch((err)=>{
+    //     console.log(err);
+    // })
+
+    User.findByIdAndUpdate(userId,{
+        $pull:{likedVideos:videoId}
+    });
 })
 
 router.post("/dislike",checkAuth, (req, res) => {
     const userId = req.userData.userId;
     const videoId = req.body.id;
-    Video.findByIdAndUpdate(videoId,{
-        $pull:{likes:userId},
-        $addToSet:{dislikes:userId},
-      })
-    .then(
-        res.status(200).json("Video disliked")
-    )
-    .catch((err)=>{
-        console.log(err);
-    })
+
+    // Video.findByIdAndUpdate(videoId,{
+    //     $pull:{likes:userId},
+    //     $addToSet:{dislikes:userId},
+    //   })
+    // .catch((err)=>{
+    //     console.log(err);
+    // })
+
+    User.findByIdAndUpdate(userId,{
+        $pull:{likedVideos:videoId},
+        $addToSet:{dislikedVideos:videoId}
+    },{new:true})
+    .then((res)=>{
+        console.log('disliked video: ',res);
+    });
 })
 router.post("/removedislike",checkAuth, (req, res) => {
     const userId = req.userData.userId;
     const videoId = req.body.id;
-    Video.findByIdAndUpdate(videoId,{
-        $pull:{dislikes:userId},
-      })
-    .then(
-        res.status(200).json("Dislike removed")
-    )
-    .catch((err)=>{
-        console.log(err);
-    })
+    // Video.findByIdAndUpdate(videoId,{
+    //     $pull:{dislikes:userId},
+    //   })
+    // .catch((err)=>{
+    //     console.log(err);
+    // })
+
+    User.findByIdAndUpdate(userId,{
+        $pull:{dislikedVideos:videoId},
+    });
 })
 
 
@@ -111,11 +122,26 @@ router.post("/getvideodata", checkAuth, async (req,res)=>{
     try {
         const user = await User.find({_id:userId});
         const video = await Video.find({_id:videoId});
-    
+        
+        // increasing views of that video by 1.
+        Video.findByIdAndUpdate(videoId,{$inc:{views:1}},{new:false})
+        .then((result)=>{
+            // console.log('updated video: ', result)
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+
+        // adding that video to watched videos of user.
+        User.findByIdAndUpdate(userId,{$addToSet:{watchedVideos:videoId}},{new:true})
+        .then((result)=>{
+            // console.log('updated user: ',result);
+        });
+
         let isFavorite = false, isLiked = false, isDisliked = false, totalLikes = video[0].likes.length, totalDislikes = video[0].dislikes.length;
         if(user[0].videoFavorites.includes(videoId)) isFavorite = true;
-        if(video[0].likes.includes(userId)) isLiked = true;
-        if(video[0].dislikes.includes(userId)) isDisliked = true;
+        if(user[0].likedVideos.includes(videoId)) isLiked = true;
+        if(user[0].dislikedVideos.includes(videoId)) isDisliked = true;
     
         res.status(200).json({message:"Data retrieved successfully",isFavorite,isDisliked,isLiked,totalLikes,totalDislikes});
     }

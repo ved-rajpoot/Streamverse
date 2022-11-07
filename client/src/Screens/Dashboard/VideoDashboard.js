@@ -9,7 +9,7 @@ const VideoDashboard = () => {
     const [status, setStatus] = useState(false);
     useEffect(() => {
             const data = null;
-            axios.post("http://localhost:9002/videolist", data, {
+            axios.post("http://localhost:9002/recommendations", data, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
