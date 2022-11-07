@@ -58,6 +58,8 @@ app.use('/recommendations',require('./routes/Recommendations.route'));
 app.use('/trendingvideos',require('./routes/TrendingVideos.route'));
 app.use('/likedvideos',require('./routes/LikedVideos.route'));
 
+app.use('/admin', require('./routes/Admin.route'));
+
 io.on("connection", socket => {
     JoinRoom(socket, io);
     CreateRoom(socket);
