@@ -7,7 +7,6 @@ const Video = require("../models/Video.model")
 
 
 router.post("/", upload.fields([{name:'avatar',maxCount:1},{name:"thumbnail",maxCount:1}]), async (req, res) => {
-    console.log(req);
     // console.log("recieved")
     try {
         const result = await cloudinary.uploader.upload(req.files.avatar[0].path, { "resource_type": "auto" });

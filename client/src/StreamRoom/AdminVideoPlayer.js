@@ -1,4 +1,3 @@
-import { Player,ControlBar,LoadingSpinner,BigPlayButton,ReplayControl,ForwardControl,CurrentTimeDisplay,TimeDivider,PlaybackRateMenuButton,VolumeMenuButton } from 'video-react';
 import { useLocation } from "react-router-dom"
 import SocketContext from '../SocketContext';
 import { useContext, useEffect } from 'react';

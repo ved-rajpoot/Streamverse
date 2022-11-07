@@ -6,7 +6,10 @@ module.exports = multer({
     storage: multer.diskStorage({
         destination: "./uploads",
         filename: (req, file, cb) => {
-            cb(null, file.originalname);
+            // console.log("file: \n" + file + "\n That was file \n")
+            const date = new Date();
+            const token = Date.parse(date);
+            cb(null, file.originalname + token);
         }
     }),
     fileFilter: (req, file, cb) => {
