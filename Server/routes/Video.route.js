@@ -3,7 +3,32 @@ const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 const Video = require('../models/Video.model');
 const User = require('../models/User.model');
+const fs = require('fs');
 
+router.get("/video",(req,res) => {
+    console.log('sending video in chunks')
+    console.log(req.body)
+
+    const range = req.headers.range
+    const videoPath = 'C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\1667812843804VID-20220925-WA0010.mp4';
+    const videoSize = fs.statSync(videoPath).size
+    const chunkSize = 1 * 1e6;
+    const start = Number(range.replace(/\D/g, ""))
+    const end = Math.min(start + chunkSize, videoSize - 1)
+    const contentLength = end - start + 1;
+    const headers = {
+        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+        "Accept-Ranges": "bytes",
+        "Content-Length": contentLength,
+        "Content-Type": "video/mp4"
+    }
+    res.writeHead(206, headers)
+    const stream = fs.createReadStream(videoPath, {
+        start,
+        end
+    })
+    stream.pipe(res)
+})
 router.post("/like",checkAuth, (req, res) => {
     console.log('like');
         const userId = req.userData.userId;
