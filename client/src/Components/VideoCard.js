@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function VideoCard(props) {
     const navigate = useNavigate();
-    const {id, avatar,thumbnail_avatar,title,description, cloudinary_id, userName,tags} = props;
+    const {id, videoPath,thumbnailPath,title,description, userName,tags} = props;
     return (
       <>
-        <div class="rounded overflow-hidden shadow-lg mx-4 my-4 cursor-pointer" style={{width:'21rem', height:'21rem'}} onClick={()=>{ navigate(`/dashboard/${cloudinary_id}`, {state: {props:{id, avatar,description,title}}})}}>
-          <img class="h-48 w-full" src={thumbnail_avatar} alt="Sunset in the mountains"/>
+        <div class="rounded overflow-hidden shadow-lg mx-4 my-4 cursor-pointer" style={{width:'21rem', height:'21rem'}} onClick={()=>{ navigate(`/dashboard/${id}`, {state: {props:{id, videoPath,thumbnailPath,description,title}}})}}>
+          <img class="h-48 w-full" src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="Sunset in the mountains"/>
           <div class="px-6 py-4">
             <div class="font-bold text-xl mb-1">{title}</div>
             <p class="text-gray-700 text-base">

@@ -157,9 +157,8 @@ const VideoPlayer = () => {
             <PlaybackRateMenuButton rates={[5, 2, 1, 0.5, 0.1]} order={7.1} />
             <VolumeMenuButton />
           </ControlBar>
-          <source src={location.state.props.avatar} type="video/webm" />
+          <source src={`http://localhost:9002/file/video/${location.state.props.videoPath}`} type="video/webm" />
         </Player>
-
       </div>
       <div className="flex justify-between m-5 scale-y-[1.2]">
 
