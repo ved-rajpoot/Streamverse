@@ -26,6 +26,7 @@ const VideoPlayer = () => {
   const [dislikes, setDislikes] = useState(0);
   const [popup, setPopup] = useState(false);
   const [inRoomAndAdmin,setInRoomAndAdmin] = useState(true)
+  const [loading,setLoading] = useState(true);
 
   const download = () => {
     var url = location.state.props.avatar
@@ -61,8 +62,9 @@ const VideoPlayer = () => {
   }
 
   useEffect(()=>{
-    getVideoData();
-    
+    // console.log('helllo');
+    if(loading) getVideoData();
+    setLoading(false);
     if (localStorage.getItem("room") === null) return;
     const admin = JSON.parse(localStorage.getItem("room")).AdminID;
     const user = getUserId();

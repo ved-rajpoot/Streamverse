@@ -5,6 +5,8 @@ const videoSchema = new mongoose.Schema({
         title: {type:String, required: true},
         description: {type:String, required: true},
         thumbnailPath:{type:String, required:true},
+        thumbnail_cloudinary_id:{type:String, required:true},
+        thumbnail_avatar:{type:String,required:true},
         views:{type:Number,default:0},
         userName: { type: String, required: true },
         userId: {type:String, required:true},
