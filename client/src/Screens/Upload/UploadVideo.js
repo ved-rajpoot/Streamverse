@@ -27,13 +27,13 @@ const UploadVideo = () => {
         if (event.target.name === 'description') {
             return setDescription(event.target.value);
         }
-        if (event.target.name === 'avatar') {
-            setSelectedFile({ ...selectedFile, file: event.target.files[0] });
+        if (event.target.name === 'video') {
+            setSelectedFile({ ...selectedFile, file: event.target.files[0] ,name: event.target.files[0].name});
             setIsFilePicked(true);
             return;
         }
         if (event.target.name === 'thumbnail') {
-            setSelectedThumbnail({ ...seletcedThumbnail, file: event.target.files[0] });
+            setSelectedThumbnail({ ...seletcedThumbnail, file: event.target.files[0],name: event.target.files[0].name });
             setIsThumbnailPicked(true);
             return;
         }
@@ -43,7 +43,7 @@ const UploadVideo = () => {
         for(var i=0;i<todos.length;i++) tags.push(todos[i].text)
 
         const data = new FormData();
-        data.append("avatar", selectedFile.file);
+        data.append("video", selectedFile.file);
         data.append("thumbnail", seletcedThumbnail.file);
         data.append("title", title);
         data.append("description", description);
@@ -136,7 +136,7 @@ const UploadVideo = () => {
 
                 <div className="m-5">
                     <p className="text-2xl">Upload Video file: </p>
-                    <input type="file" className="text-sm" name="avatar" onChange={changeHandler} />
+                    <input type="file" className="text-sm" name="video" onChange={changeHandler} />
                 </div>
 
                 <div className="text-2xl m-5">

@@ -9,7 +9,7 @@ const VideoDashboard = () => {
     const [status, setStatus] = useState(false);
     useEffect(() => {
             const data = null;
-            axios.post("http://localhost:9002/videolist", data, {
+            axios.post("http://localhost:9002/recommendations", data, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
@@ -41,7 +41,7 @@ const VideoDashboard = () => {
                             videoList.map((val, index) => {
                                 return (
                                     <>
-                                        <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} tags={val.tags}/>
+                                        <VideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags}/>
                                     </>
                                 )
                             })
