@@ -10,7 +10,7 @@ export default function VideoCard(props) {
       <>
   <div class="w-64 m-4 cursor-pointer" onClick={() => { navigate(`/app/${userState.userId}/dashboard/video/${id}`, { state: { props: { id, videoPath, thumbnailPath, description, title, tags, views,userName,userId} } }) }}>
           <div class="h-36 w-full rounded-lg shadow-md dark:shadow-black">
-            <img class="w-64 h-36 object-cover" src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="" />
+            <img class="w-64 h-36" src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="" />
           </div>
           <div class="mt-3 flex items-start space-x-2">
             <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-white">
