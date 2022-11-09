@@ -1,10 +1,14 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import Switch from "../Switch/Switch";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import TvIcon from '@mui/icons-material/Tv';
+import { BottomSheet } from "react-spring-bottom-sheet";
+import "react-spring-bottom-sheet/dist/style.css";
 import Header from "./Header"
 import ChatBox from "../ChatBox/ChatBox";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../Context/UserContext";
+import Members from "./Members";
 const Home = () => {
     const [userState, setUserState] = useContext(UserContext)
     const navigate = useNavigate();
@@ -14,7 +18,7 @@ const Home = () => {
         userName: null,
         email: null,
     }
-
+    const [showMembers, setShowMembers] = useState(false);
     /* OnClick Functions*/
     const Click1 = () => {
         if (document.getElementById("dropdown1").classList.contains("hidden")) {
@@ -37,6 +41,14 @@ const Home = () => {
             document.getElementById("dropdown3").classList.add("hidden")
         }
     }
+    const Click4 = () => {
+        if (document.getElementById("dropdown4").classList.contains("hidden")) {
+            document.getElementById("dropdown4").classList.remove("hidden");
+        } else {
+            document.getElementById("dropdown4").classList.add("hidden")
+        }
+    }
+    const ViewMembers = () => { setShowMembers(true) }
 
     /*Navigateion Routes */
     const navigateVideo = () => { navigate(`/app/:${userState.userId}/dashboard/video`) }
@@ -110,6 +122,25 @@ const Home = () => {
 
                                         </ul>
                                     </li>
+                                    <li>
+                                        <button onClick={Click4} disabled={false} type="button" class="flex items-center p-2 w-full text-base font-normal disabled:opacity-25 text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown4" data-collapse-toggle="dropdown4">
+                                            <TvIcon />
+                                            <span class="flex-1 ml-3 text-left text-xl font-bold whitespace-nowrap" sidebar-toggle-item="">Room</span>
+                                            <svg sidebar-toggle-item="" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+                                        </button>
+                                        <ul id="dropdown4" class="hidden py-2 space-y-2">
+                                            <li className="flex items-center w-full transition duration-75 group hover:bg-gray-100 rounded-lg dark:text-white dark:hover:bg-gray-700">
+                                                <i class='fas fa-users ml-5'></i>
+                                                <button onClick={ViewMembers} class="flex items-center p-2 ml-1 text-base font-bold text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Members</button>
+                                                {showMembers ? <Members setShowMembers={setShowMembers} /> : null}
+                                            </li>
+                                            <li className="flex items-center w-full transition duration-75 group hover:bg-gray-100 rounded-lg dark:text-white dark:hover:bg-gray-700">
+                                                <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 ml-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd"></path></svg>
+                                                <button onClick={navigateVideoPlaylist} class="flex items-center p-2 text-base font-bold text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Leave Room</button>
+                                            </li>
+
+                                        </ul>
+                                    </li>
 
                                     <li>
                                         <button onClick={navigateProfile} class="flex w-full items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -117,6 +148,7 @@ const Home = () => {
                                             <span class="flex-1 ml-3 text-left text-xl font-bold whitespace-nowrap">Profile</span>
                                         </button>
                                     </li>
+                                    
                                     <li>
                                         <button onClick={logOut} class="flex w-full items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                                             <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd"></path></svg>
@@ -137,6 +169,19 @@ const Home = () => {
                     <div className="flex flex-col ml-4 w-[98%] md:w-[85%] bottom-0 h-[97%] mt-2">
                         <div className=" overflow-y-auto py-4 px-3 bg-gray-50 rounded-lg shadow-lg dark:bg-[#1E1E1C] h-[100%] w-[98%]">
                             <Outlet />
+                            {/* <div className="bg-black">
+                                {/* <BottomSheet
+                                    open={true}
+                                    blocking={false}
+                                    snapPoints={({ maxHeight }) => [maxHeight / 4, maxHeight * 0.6]}>
+
+                                    
+
+                                </BottomSheet> */}
+                            {/* </div> */} 
+                            
+                            {/* <div className="mt-auto"> */}
+                            {/* // </div> */}
                         </div>
                     </div>
                 </div>
