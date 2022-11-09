@@ -133,15 +133,9 @@ const UploadVideo = () => {
                     <input type="file" className="text-sm" name="thumbnail" onChange={changeHandler} />
                 </div>
 
-<<<<<<< HEAD
                 <div className="m-3">
                     <p className="text-xl">Upload Video file: </p>
-                    <input type="file" className="text-sm" name="avatar" onChange={changeHandler} />
-=======
-                <div className="m-5">
-                    <p className="text-2xl">Upload Video file: </p>
                     <input type="file" className="text-sm" name="video" onChange={changeHandler} />
->>>>>>> upstream/main
                 </div>
 
                 <div className="text-xl m-3">

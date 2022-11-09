@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 // import "./App.css"
 import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+import 'video-react/dist/video-react.css';
 
 // Elements imports
 import Home from "./Components/Home";
@@ -17,6 +18,9 @@ import PlaylistAudios from './Screens/Profile/PlaylistAudios';
 import Profile from "./Screens/Profile/Profile"
 import Logout from "./Components/Logout";
 import Admin from './Screens/Admin/admin';
+import VideoPlayer from './Screens/VideoPlayer'
+import AdminVideoPlayer from "./StreamRoom/AdminVideoPlayer";
+import ViewerVideoPlayer from "./StreamRoom/ViewerVideoPlayer"
 
 const App1 = () => {
     return (
@@ -40,6 +44,9 @@ const App1 = () => {
                                 <Route path="dashboard">
                                     <Route path="" element={<Navigate to='/app/:userId/dashboard/video' />} />
                                     <Route path="video" element={<VideoDashboard />} />
+                                    <Route path="video/:id" element={<VideoPlayer />} />
+                                    <Route path="video/:id/stream/admin" element={<AdminVideoPlayer />} />
+                                    <Route path="video/:id/stream/viewer" element={<ViewerVideoPlayer />} />
                                     <Route path="audio" element={<AudioDashboard />} />
                                 </Route>
                                 <Route path="upload">

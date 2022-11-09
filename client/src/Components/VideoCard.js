@@ -1,13 +1,16 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 export default function VideoCard(props) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [userState, setUserState] = useContext(UserContext);
     const {id, videoPath,thumbnailPath,title,description, userName,tags} = props;
     return (
       <>
-  <div class="w-64 m-4 cursor-pointer" onClick={() => { navigate(`/dashboard/${id}`, { state: { props: { id, videoPath, thumbnailPath, description, title } } }) }}>
-          <div class="h-36 w-full">
-            <img class="w-64 " src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="" />
+  <div class="w-64 m-4 cursor-pointer" onClick={() => { navigate(`/app/${userState.userId}/dashboard/video/${id}`, { state: { props: { id, videoPath, thumbnailPath, description, title } } }) }}>
+          <div class="h-36 w-full rounded-lg shadow-md">
+            <img class="w-64 h-36 object-cover" src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="" />
           </div>
           <div class="mt-3 flex items-start space-x-2">
             <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-white">

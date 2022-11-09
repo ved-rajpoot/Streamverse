@@ -50,14 +50,14 @@ const Home = () => {
     }
     const ViewMembers = () => { setShowMembers(true) }
 
-    /*Navigateion Routes */
-    const navigateVideo = () => { navigate(`/app/:${userState.userId}/dashboard/video`) }
-    const navigateAudio = () => { navigate(`/app/:${userState.userId}/dashboard/audio`) }
-    const navigateUploadVideo = () => { navigate(`/app/:${userState.userId}/upload/video`) }
-    const navigateUploadAudio = () => { navigate(`/app/:${userState.userId}/upload/audio`) }
-    const navigateVideoPlaylist = () => { navigate(`/app/:${userState.userId}/playlist/video`) }
-    const navigateAudioPlaylist = () => { navigate(`/app/:${userState.userId}/playlist/audio`) }
-    const navigateProfile = () => { navigate(`/app/:${userState.userId}/profile`) }
+    /*Navigation Routes */
+    const navigateVideo = () => { navigate(`/app/${userState.userId}/dashboard/video`) }
+    const navigateAudio = () => { navigate(`/app/${userState.userId}/dashboard/audio`) }
+    const navigateUploadVideo = () => { navigate(`/app/${userState.userId}/upload/video`) }
+    const navigateUploadAudio = () => { navigate(`/app/${userState.userId}/upload/audio`) }
+    const navigateVideoPlaylist = () => { navigate(`/app/${userState.userId}/playlist/video`) }
+    const navigateAudioPlaylist = () => { navigate(`/app/${userState.userId}/playlist/audio`) }
+    const navigateProfile = () => { navigate(`/app/${userState.userId}/profile`) }
     const logOut = () => {
         setUserState(defaultUserState);
         navigate(`/logout`)

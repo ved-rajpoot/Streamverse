@@ -1,5 +1,5 @@
 import { CreateMessage, JoinMessage, PinnedMessage, RegularSenderMessage, RegularRecieverMessage, RoomIdMessage } from "./MessageType"
-import SocketContext from '../Context/SocketContext';
+import {SocketContext} from '../Context/SocketContext';
 import React, { useContext, useEffect, useState } from 'react';
 import { getUserId } from './HelperFunctions';
 

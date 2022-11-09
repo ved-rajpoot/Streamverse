@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fs = require('fs');
+const exists = require('fs').exists
 
 router.get("/video/:id",(req,res) => {
     const id=req.params.id
@@ -8,7 +9,7 @@ router.get("/video/:id",(req,res) => {
     console.log(id)
 
     const range = req.headers.range
-    const videoPath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;
+    const videoPath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
     const videoSize = fs.statSync(videoPath).size
     const chunkSize = 1 * 1e6;
     const start = Number(range.replace(/\D/g, ""))
@@ -32,10 +33,10 @@ router.get("/image/:id", (req,res) => {
     const id=req.params.id;
     console.log("fetching image "+id)
 
-    const imagePath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;
+    const imagePath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
     
     // Checking if the path exists
-    fs.exists(imagePath, function (exists) {
+    fs.exists(imagePath, (exists) => {
         if (!exists) {
             res.writeHead(404, {
                 "Content-Type": "text/plain" });

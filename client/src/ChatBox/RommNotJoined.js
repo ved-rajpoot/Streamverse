@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import SocketContext from '../Context/SocketContext'
+import {SocketContext} from '../Context/SocketContext'
 import { getUserId } from "./HelperFunctions";
 import { JoinMessage } from "./MessageType";
 

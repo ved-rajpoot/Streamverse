@@ -19,7 +19,13 @@ const Login = () => {
     const updatePassword = (e) => {
         setPassword(e.target.value);
     }
-    useEffect(() => { }, [redirect])
+    const [userId, setUserId] = useState(null);
+    useEffect(() => { 
+        console.log(redirect + " " + userId)
+        if (redirect && userId) {
+            navigate(`/app/${userId}/dashboard`)
+        }
+    }, [redirect,userId])
     const log = () => {
         // eslint-disable-next-line 
         if ((userState.email && password) && (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(userState.email))) {
@@ -29,14 +35,14 @@ const Login = () => {
                     password: password
                 }
             })
-                .then((res) => {
-                    const user = jwtDecode(res.data.token);
+                .then(async (res) => {
+                    const user = await jwtDecode(res.data.token);
                     //Set User Details after logging in
                     setUserState({
                         ...userState,
                         userId: user.userId
                     })
-
+                    setUserId(user.userId);
 
                     //Create a Token for authenticating user for future requests
                     const data = {
@@ -62,9 +68,9 @@ const Login = () => {
         }
     }
 
-    const register = () => navigate("/signup")
-    const userId = userState.userId;
-    if (redirect) return <Navigate to={`/app/${userId}/dashboard`} />
+    const register = () => navigate("/signup");
+    
+    
 
     return (
         <>

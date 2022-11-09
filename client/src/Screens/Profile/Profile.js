@@ -45,12 +45,12 @@ const Profile = () => {
     const selected = "py-4 px-2 font-semibold text-green-500 border-b-4 border-green-500"
 
     return (
-        <div>
+        <div className='dark:text-white text-black'>
             <div className='border-b-4 border-gray-200'>
               <div className='flex  my-4 ml-5'>
                   <Avatar/>
                   <div className='ml-4 flex'>
-                      <h1 className='font-semibold text-black text-3xl mb-2'>{user.userName}</h1>
+                      <h1 className='font-semibold text-3xl mb-2'>{user.userName}</h1>
                       {/* <EditIcon className='ml-2 mt-1'/> */}
                       {/* <h3 className='font-semibold text-black text-md'>Hii guys, welcome to my youtube channel</h3> */}
                   </div>
