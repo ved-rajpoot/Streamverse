@@ -15,12 +15,15 @@ const PauseVideo = require("./SocketEvents/StreamSocketEvents/PauseVideo")
 const PlayVideo = require("./SocketEvents/StreamSocketEvents/PlayVideo")
 const ChangeTimeStamp = require("./SocketEvents/StreamSocketEvents/ChangeTimeStamp")
 const PlaybackSpeed = require("./SocketEvents/StreamSocketEvents/PlaybackSpeed")
+const LeaveRoom = require("./SocketEvents/LeaveRoom")
 const io = require("socket.io")(8080,{
     cors :{
         origin: ["http://localhost:3000", "https://admin.socket.io"],
         methods: ['GET', 'POST'],
     }
 })
+
+
 
 
 const app = express();
@@ -49,7 +52,8 @@ app.use('/getuservideos', require('./routes/GetUserVideos.route'));
 app.use('/getuseraudios', require('./routes/GetUserAudios.route'));
 app.use('/',require('./routes/Video.route'));
 app.use('/',require('./routes/Audio.route'));
-app.use('/getuserdata',require('./routes/GetUserData.route'));
+app.use('/getuserdata', require('./routes/GetUserData.route'));
+app.use('/updateuser', require('./routes/UpdateUser.route'));
 app.use('/updateplaylists',require('./routes/Playlists.route'));
 app.use('/getvideos',require('./routes/GetVideos.route'));
 app.use('/getaudios',require('./routes/GetAudios.route'));
@@ -64,6 +68,7 @@ app.use('/admin', require('./routes/Admin.route'));
 io.on("connection", socket => {
     JoinRoom(socket, io);
     CreateRoom(socket);
+    LeaveRoom(socket, io);
     SendMessage(socket, io);
     RefreshCheck(socket);
     FetchVideo(socket, io);
@@ -71,6 +76,7 @@ io.on("connection", socket => {
     PlayVideo(socket, io);
     ChangeTimeStamp(socket, io);
     PlaybackSpeed(socket, io);
+    
 })
 instrument(io, {auth : false})
 app.listen(9002, () => {

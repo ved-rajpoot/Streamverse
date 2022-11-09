@@ -1,11 +1,15 @@
-import { CreateMessage, JoinMessage, PinnedMessage, RegularSenderMessage, RegularRecieverMessage, RoomIdMessage } from "./MessageType"
+import { CreateMessage, JoinMessage, PinnedMessage, RegularSenderMessage, RegularRecieverMessage, RoomIdMessage, LeaveMessage, KickMessage } from "./MessageType"
 import {SocketContext} from '../Context/SocketContext';
 import React, { useContext, useEffect, useState } from 'react';
 import { getUserId } from './HelperFunctions';
+import { UserContext } from "../Context/UserContext";
+import { RoomContext } from "../Context/RoomContext";
 
 const RommJoined = (props) => {
-    const userID = getUserId()
-    const roomID = localStorage.getItem("room") ? JSON.parse(localStorage.getItem("room")).roomID : null
+    const [userState, setUserState] = useContext(UserContext);
+    const [roomState, setRoomState] = useContext(RoomContext);
+    const userID = userState.userId
+    const roomID = localStorage.getItem("room") ? JSON.parse(localStorage.getItem("room")) : null
     const socket = useContext(SocketContext)
     const [messageArray, setMessageArray] = useState([]);
     const [textMessage, setTextMessage] = useState("");
@@ -15,6 +19,7 @@ const RommJoined = (props) => {
         if (res.messageType === "join") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName } }
         else if (res.messageType === "regular") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName, message: res.message } }
         else if (res.messageType === "send") data = { id: new Date(), messageType: res.messageType, content: { message: res.message } }
+        else if (res.messageType === "leave") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName } }
         setMessageArray([...newArray, data]);
         const chatWindow = document.getElementById('MessageArea');
         chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -27,11 +32,30 @@ const RommJoined = (props) => {
     }
 
     //Initial render
-    useEffect(() => { if (localStorage.getItem("room")) socket.emit("refresh-check", { roomID: JSON.parse(localStorage.getItem("room")).roomID }) })
+    useEffect(() => { if (localStorage.getItem("room")) socket.emit("refresh-check", { roomID: JSON.parse(localStorage.getItem("room")) }) })
 
     //Socket Events
-    socket.off('userJoined').on('userJoined', res => {
+    socket.off('userJoined').on('userJoined', async res => {
         updateMessageArea({ messageType: "join", userName: res.userName })
+        let newUserArray = roomState.userArray;
+        await newUserArray.push({ userId: res.userId, userName: res.userName, role:"Member" });
+        setRoomState({
+            ...roomState,
+            userArray: newUserArray
+        })
+    })
+    socket.off('userLeft').on('userLeft', async res => {
+        console.log("i was here")
+        updateMessageArea({ messageType: res.type, userName: res.userName })
+        let newUserArray = roomState.userArray;
+        const index = newUserArray.indexOf({ userId: res.userId, userName: res.userName });
+        if (index > -1) { 
+           await newUserArray.splice(index, 1); 
+        }
+        setRoomState({
+            ...roomState,
+            userArray: newUserArray
+        })
     })
     socket.off('recieve').on('recieve', res => {
         updateMessageArea({ messageType: "regular", userName: res.userName, message: res.message })
@@ -72,6 +96,20 @@ const RommJoined = (props) => {
                                 } else if (val.messageType === "send") {
                                     return (
                                         <RegularSenderMessage
+                                            key={val.id}
+                                            message={val.content.message}
+                                        />
+                                    )
+                                } else if (val.messageType === "leave") {
+                                    return (
+                                        <LeaveMessage
+                                            key={val.id}
+                                            userName={val.content.userName}
+                                        />
+                                    )
+                                } else if (val.messageType === "leave") {
+                                    return (
+                                        <KickMessage
                                             key={val.id}
                                             message={val.content.message}
                                         />

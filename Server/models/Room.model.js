@@ -5,7 +5,8 @@ const RoomSchema = new mongoose.Schema({
     AdminID: { type: String, required: true },
     userArray: [{
         userId: { type: String },
-        userName: {type: String}
+        userName: { type: String },
+        role: {type:String},
     }]
 })
 const Room = new mongoose.model("Room", RoomSchema);

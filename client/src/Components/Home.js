@@ -6,13 +6,18 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
 import Header from "./Header"
 import ChatBox from "../ChatBox/ChatBox";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context/UserContext";
 import Members from "./Members";
+import { SocketContext } from "../Context/SocketContext";
+import { RoomContext } from "../Context/RoomContext";
+
 const Home = () => {
     const [userState, setUserState] = useContext(UserContext)
+    const [roomState, setRoomState] = useContext(RoomContext)
+    const [hideRoom, setHideRoom] = useState(localStorage.getItem("room") ? false : true);
     const navigate = useNavigate();
-
+    const socket = useContext(SocketContext);
     const defaultUserState = {
         userId: null,
         userName: null,
@@ -50,6 +55,25 @@ const Home = () => {
     }
     const ViewMembers = () => { setShowMembers(true) }
 
+    /*Socket Events / Room Functions*/
+    const LeaveRoom = () => {
+        socket.emit('leaveRoom', { roomID: roomState.roomId, userName: roomState.userName, userID: userState.userId, type: "leave" })
+        localStorage.removeItem("room")
+        document.getElementById("leaveroom-btn").click();
+        setTimeout(() => {
+            setRoomState({
+                roomId: "",
+                roomName: "",
+                AdminID: "",
+                role: "",
+                userArray: [{userName:"",userID:""}]
+            })
+        },500)
+        
+        setHideRoom(true);
+        document.getElementById("room-btn").click();
+    }
+    // useEffect(() => { }, [hideRoom]);
     /*Navigation Routes */
     const navigateVideo = () => { navigate(`/app/${userState.userId}/dashboard/video`) }
     const navigateAudio = () => { navigate(`/app/${userState.userId}/dashboard/audio`) }
@@ -123,8 +147,9 @@ const Home = () => {
                                         </ul>
                                     </li>
                                     <li>
-                                        <button onClick={Click4} disabled={false} type="button" class="flex items-center p-2 w-full text-base font-normal disabled:opacity-25 text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown4" data-collapse-toggle="dropdown4">
+                                        <button id="room-btn" onClick={Click4} disabled={hideRoom} type="button" class="flex items-center p-2 w-full text-base font-normal disabled:opacity-25 text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown4" data-collapse-toggle="dropdown4">
                                             <TvIcon />
+                                            <button id="roomjoined-btn" onClick={() => setHideRoom(false)} className="hidden"></button>
                                             <span class="flex-1 ml-3 text-left text-xl font-bold whitespace-nowrap" sidebar-toggle-item="">Room</span>
                                             <svg sidebar-toggle-item="" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                                         </button>
@@ -136,7 +161,7 @@ const Home = () => {
                                             </li>
                                             <li className="flex items-center w-full transition duration-75 group hover:bg-gray-100 rounded-lg dark:text-white dark:hover:bg-gray-700">
                                                 <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 ml-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd"></path></svg>
-                                                <button onClick={navigateVideoPlaylist} class="flex items-center p-2 text-base font-bold text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Leave Room</button>
+                                                <button onClick={LeaveRoom} class="flex items-center p-2 text-base font-bold text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Leave Room</button>
                                             </li>
 
                                         </ul>
@@ -148,7 +173,7 @@ const Home = () => {
                                             <span class="flex-1 ml-3 text-left text-xl font-bold whitespace-nowrap">Profile</span>
                                         </button>
                                     </li>
-                                    
+
                                     <li>
                                         <button onClick={logOut} class="flex w-full items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                                             <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd"></path></svg>
@@ -178,8 +203,8 @@ const Home = () => {
                                     
 
                                 </BottomSheet> */}
-                            {/* </div> */} 
-                            
+                            {/* </div> */}
+
                             {/* <div className="mt-auto"> */}
                             {/* // </div> */}
                         </div>

@@ -17,7 +17,7 @@ const VideoDashboard = (props) => {
                 }
             })
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {
                 setStatus(true)

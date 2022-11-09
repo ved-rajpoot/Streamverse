@@ -1,8 +1,10 @@
 import { useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [user, setUser] = useState ({
         email: '',
         password: '',
@@ -20,7 +22,8 @@ const SignUp = () => {
     const register = () => {
          axios.post("http://localhost:9002/signup", user)
             .then((res) => {
-                console.log(res)
+                // console.log(res)
+                navigate('/login');
             })
             .catch(err=>console.log(err))
     }

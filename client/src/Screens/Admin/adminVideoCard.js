@@ -9,7 +9,7 @@ export default function AdminVideoCard(props) {
     const deleteVideo = () => {
       axios.post("http://localhost:9002/admin/deleteVideo",{id:id})
       .then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
       })
       .catch((err) => {
           console.log(err)

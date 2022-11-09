@@ -8,7 +8,7 @@ const Users = () => {
     useEffect(() => {
         axios.post("http://localhost:9002/admin/users")
             .then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 setUsers(res.data)
             })
             .catch((err) => {

@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
+import { RoomContext } from "../Context/RoomContext";
 import {SocketContext} from '../Context/SocketContext'
 import { getUserId } from "./HelperFunctions";
-import { JoinMessage } from "./MessageType";
+
 
 const RoomNotJoined = () => {
     const userID = getUserId()
     const socket = useContext(SocketContext)
+    const [roomState, setRoomState] = useContext(RoomContext);
     const [showCreateRoom, setShowCreateRoom] = useState(false)
     const [showJoinRoom, setShowJoinRoom] = useState(false)
 
@@ -15,24 +17,37 @@ const RoomNotJoined = () => {
     const [joinUserName, setJoinUserName] = useState("");
 
     const Create = () => {
-        socket.emit("createRoom", { roomName, createUserName, userID }, user => {
-            localStorage.setItem("room", JSON.stringify(user))
-            document.getElementById("hidden-btn").click();
+        socket.emit("createRoom", { roomName, createUserName, userID }, res => {
+            console.log(res.room);
+            setRoomState({
+                roomName: res.room.roomName,
+                userName: createUserName,
+                roomId: res.room._id,
+                AdminID: res.room.AdminID,
+                role:"Admin",
+                userArray: res.room.userArray
+            })
+            localStorage.setItem("room", JSON.stringify(res.room._id))
+            document.getElementById("roomjoined-btn").click();
+            document.getElementById("joinroom-btn").click();
         })
     }
 
 
     const Join = () => {
-        socket.emit("joinRoom", { roomID, joinUserName, userID }, room => {
-            const user = {
-                userName: room.userArray[0].userName,
-                AdminID: room.AdminID,
-                roomID: room._id,
-                roomName: room.roomName
-            }
-            localStorage.setItem("room", JSON.stringify(user))
-            document.getElementById("hidden-btn").click();
-            // document.getElementById("messageArea").append(JoinMessage(user))
+        socket.emit("joinRoom", { roomID, joinUserName, userID }, res => {
+            console.log(res)
+            setRoomState({
+                roomName: res.roomName,
+                userName: joinUserName, 
+                roomID: res._id,
+                AdminID: res.AdminID,
+                role:"Member",
+                userArray: res.userArray,
+            })
+            localStorage.setItem("room", JSON.stringify(res._id))
+            document.getElementById("joinroom-btn").click();
+            document.getElementById("roomjoined-btn").click();
         })
     }
 

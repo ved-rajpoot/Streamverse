@@ -10,7 +10,7 @@ const Audios = () => {
     useEffect(() => {
         axios.post("http://localhost:9002/audiolist")
             .then((res) => {
-                console.log('audio found');
+                // console.log('audio found');
                 setAudioList(res.data)
             }).then(() => {
                 setStatus(true)

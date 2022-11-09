@@ -47,7 +47,7 @@ const UploadVideo = () => {
         data.append("tags",tags);
         data.append("isPrivate", isPrivate);
 
-        console.log(data);
+        // console.log(data);
         axios.post("http://localhost:9002/uploadvideo", data, {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -61,7 +61,7 @@ const UploadVideo = () => {
             }
         })
             .then((res) => {
-                console.log(res)
+                // console.log(res)
             })
             .catch((err) => {
                 console.log(err)

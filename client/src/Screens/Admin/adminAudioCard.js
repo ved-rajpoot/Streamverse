@@ -9,7 +9,7 @@ export default function AdminAudioCard(props) {
   const deleteAudio = () => {
     axios.post("http://localhost:9002/admin/deleteAudio", {id:props.id})
     .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
     })
     .catch((err) => {
         console.log(err)

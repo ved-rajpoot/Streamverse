@@ -7,6 +7,15 @@ export const UserProvider = (props) => {
         userId: null,
         userName: null,
         email: null,
+        videoPlaylists: [],
+        audioPlaylists: [],
+        videoFavourites:[],
+        audioFavourites: [],
+        likedVideos: [],
+        likedAudios: [],
+        dislikedVideos: [],
+        dislikedAudios: [],
+        favouriteTags: []
     });
 
     useEffect(() => {

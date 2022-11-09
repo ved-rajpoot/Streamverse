@@ -26,7 +26,7 @@ const Form = ({playlists, setPlaylists, videoId, type, setPopup}) => {
     
     
     const updatePlaylists = async ()=>{
-        console.log('playlists from updatePlaylists: ', playlists);    
+        // console.log('playlists from updatePlaylists: ', playlists);    
         const res = await axios.post("http://localhost:9002/updateplaylists", { updatedPlaylists: playlists, type: type }, {
             headers: {
                 "Content-Type": "application/json",
@@ -36,13 +36,13 @@ const Form = ({playlists, setPlaylists, videoId, type, setPopup}) => {
     }
 
     useEffect(()=>{
-        console.log('playlists: ',playlists);
+        // console.log('playlists: ',playlists);
         if(playlists!=null)
             updatePlaylists();
     },[playlists])
 
     useEffect(()=>{
-        console.log('playlists: ',playlists);
+        // console.log('playlists: ',playlists);
     },[])
     
     // useEffect(()=>{
@@ -89,7 +89,7 @@ const Form = ({playlists, setPlaylists, videoId, type, setPopup}) => {
 
             setPlaylists(tempPlaylists);
         } else {
-            console.log('name', text)
+            // console.log('name', text)
             setInputEmpty(true);
         }
     };
@@ -117,7 +117,7 @@ const Form = ({playlists, setPlaylists, videoId, type, setPopup}) => {
         }    
         
         setPlaylists(tempPlaylists);
-        console.log('completeTodo ')
+        // console.log('completeTodo ')
     };
     
     // rename playlist
@@ -146,7 +146,7 @@ const Form = ({playlists, setPlaylists, videoId, type, setPopup}) => {
     }
 
     useEffect(() => {
-        console.log(newPlaylist);
+        // console.log(newPlaylist);
     }, [newPlaylist])
 
     return (
