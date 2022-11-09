@@ -42,7 +42,7 @@ const VideoDashboard = () => {
                                 console.log(val)
                                 return (
                                     <>
-                                        <VideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags}/>
+                                        <VideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags} views={val.views} userId={val.userId}/>
                                     </>
                                 )
                             })

@@ -9,7 +9,7 @@ router.get("/video/:id",(req,res) => {
     console.log(id)
 
     const range = req.headers.range
-    const videoPath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
+    const videoPath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;
     const videoSize = fs.statSync(videoPath).size
     const chunkSize = 1 * 1e6;
     const start = Number(range.replace(/\D/g, ""))
