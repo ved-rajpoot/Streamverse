@@ -192,7 +192,7 @@ const Home = () => {
 
                     </div>
                     <div className="flex flex-col ml-4 w-[98%] md:w-[85%] bottom-0 h-[97%] mt-2">
-                        <div className=" overflow-y-auto py-4 px-3 bg-gray-50 rounded-lg shadow-lg dark:bg-[#1E1E1C] h-[100%] w-[98%]">
+                        <div className=" overflow-y-auto scrollbar-default py-4 px-3 bg-gray-50 rounded-lg shadow-lg dark:bg-[#1E1E1C] h-[100%] w-[98%]">
                             <Outlet />
                             {/* <div className="bg-black">
                                 {/* <BottomSheet

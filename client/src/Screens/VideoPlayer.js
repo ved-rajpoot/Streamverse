@@ -25,23 +25,25 @@ const VideoPlayer = () => {
   // eslint-disable-next-line
   const [dislikes, setDislikes] = useState(0);
   const [popup, setPopup] = useState(false);
-  const [inRoomAndAdmin,setInRoomAndAdmin] = useState(true)
+  const [inRoomAndAdmin,setInRoomAndAdmin] = useState(true);
   const [loading,setLoading] = useState(true);
+  const [tags,setTags] = useState(location.state.props.tags);
+  const [userId,setUserId] = useState(location.state.props.userId);
 
   const download = () => {
-    var url = location.state.props.avatar
+    // var url = location.state.props.avatar
 
-    var link = ""
-    for (var i = 0; i < url.length; i++) {
-      link += url[i]
-      if (url[i] === '/' && url[i + 1] === 'u') {
-        link += "upload/fl_attachment/"
-        i++;
-        while (url[i] !== '/') i++;
-      }
-    }
+    // var link = ""
+    // for (var i = 0; i < url.length; i++) {
+    //   link += url[i]
+    //   if (url[i] === '/' && url[i + 1] === 'u') {
+    //     link += "upload/fl_attachment/"
+    //     i++;
+    //     while (url[i] !== '/') i++;
+    //   }
+    // }
 
-    window.location.href = link
+    // window.location.href = link
   }
 
   const getVideoData = async ()=>{
@@ -62,7 +64,6 @@ const VideoPlayer = () => {
   }
 
   useEffect(()=>{
-    // console.log('helllo');
     if(loading) getVideoData();
     setLoading(false);
     if (localStorage.getItem("room") === null) return;
@@ -136,66 +137,89 @@ const VideoPlayer = () => {
     setIsFavorite(false);
   }
   const stream = () => {
-    navigate("/streamroom", { state: { props: { url: location.state.props.avatar, title: location.state.props.title, description: location.state.props.description } } })
+    navigate("/streamroom", { state: { props: { videoPath: location.state.props.videoPath, title: location.state.props.title, description: location.state.props.description } } })
   }
   return (
-    <div>
+    <div className='dark:text-white'>
 
       {
         popup && <PlaylistPopup id={location.state.props.id} type="video" setPopup={setPopup}/>
       }
 
-      <div className="flex object-cover h-[40rem] w-full">
-        <video src={`http://localhost:9002/file/video/${location.state.props.videoPath}`} controls preload='metadata'>
+      <div className="flex h-[40rem]">
+      
+        <video className='w-[70%] object-cover' src={`http://localhost:9002/file/video/${location.state.props.videoPath}`} controls preload='metadata'>
 
         </video>
       </div>
-      <div className="flex justify-between m-5 scale-y-[1.2]">
+
+      <div className='flex m-1'>
+        {
+          Array.isArray(tags) ?
+            tags.map((val,idx) => {
+              return (
+                <div className="px-1 py-1 text-[#3EA6FF] m-1 rounded-xl gap-1 flex flex-row">
+                  <div className="flex items-center justify-center text-md">
+                    #{val}
+                  </div>
+                </div>
+              )
+            })
+          : null
+        }
+      </div>
+
+      <div className="flex w-64 justify-between m-5 scale-y-[1.2] dark:bg-opacity-20 rounded-2xl p-2 bg-gray-300 dark:bg-[#FFFFFF]">
 
         {
           isLiked ?
-            <button name="upvote" onClick={removeLike}>
+            <button className="hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black" name="upvote" onClick={removeLike}>
               <ThumbUpIcon />
             </button> :
-            <button name="upvote" onClick={like}>
+            <button className="hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black" name="upvote" onClick={like}>
               <ThumbUpOffAltIcon />
             </button>
         }
         {
           isDisliked ?
-            <button name="downvote" onClick={removeDislike}>
+            <button className="hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black" name="downvote" onClick={removeDislike}>
               <ThumbDownIcon />
             </button> :
-            <button name="downvote" onClick={dislike}>
+            <button className="hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black" name="downvote" onClick={dislike}>
               <ThumbDownOffAltIcon />
             </button>
         }
-        <button name="download" onClick={download}>
+        <button className="hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black" name="download" onClick={download}>
           <DownloadIcon />
         </button>
 
-        <button name="addToPlaylist" onClick={addToPlaylist}>
+        <button className="hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black" name="addToPlaylist" onClick={addToPlaylist}>
           <PlaylistAddIcon />
         </button>
 
 
         {isFavorite ?
-          <button name="favourite" onClick={removeFromFavorites}>
+          <button className="hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black" name="favourite" onClick={removeFromFavorites}>
             <FavoriteIcon />
           </button> :
-          <button name="favourite" onClick={addToFavorites}>
+          <button className="hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black" name="favourite" onClick={addToFavorites}>
             <FavoriteBorderIcon />
           </button>
         }
 
-        <button name="stream" className='disabled:opacity-25' disabled ={inRoomAndAdmin} onClick = {stream}><CastConnectedIcon/></button>
+        <button name="stream" className='disabled:opacity-25 hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black' disabled ={inRoomAndAdmin} onClick = {stream}><CastConnectedIcon/></button>
       </div>
 
-      <div className='m-3 text-2xl font-bold'>
-        {location.state.props.title}
+      <div className='m-3 text-2xl font-bold h-20 flex'>
+          <img class="w-16 h-16 rounded-[50%] mr-2" src={`http://localhost:9002/file/image/${location.state.props.thumbnailPath}`} alt="" />
+          <div>
+            {location.state.props.title}
+            <div className='font-light text-[75%] cursor-pointer' onClick={() => navigate(`/app/${userId}/profile/`, { state: { props: { userId}}})} >Uploaded by: {location.state.props.userName}</div>
+          </div>
       </div>
 
-      <div className='m-3 text-sm'>
+      <div className='m-3 text-md dark:bg-opacity-10 p-3 rounded-3xl bg-gray-200 dark:bg-white'>
+        <div className='font-bold'>{location.state.props.views} views</div>
         {location.state.props.description}
       </div>
     </div>
