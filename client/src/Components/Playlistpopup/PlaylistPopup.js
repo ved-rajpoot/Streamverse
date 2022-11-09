@@ -28,12 +28,12 @@ const PlaylistPopup = ({id,type,setPopup}) => {
     }
 
     useEffect(()=>{
-        console.log('id: ',id);
+        // console.log('id: ',id);
         getUserData();
     },[]);
 
     useEffect(()=>{
-        console.log(playlists);
+        // console.log(playlists);
     },[playlists]);
 
     return (

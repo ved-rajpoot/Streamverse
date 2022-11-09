@@ -10,7 +10,8 @@ const CreateRoom = (socket) => {
             AdminID: userID,
             userArray: [{
                 userId: userID,
-                userName: userName
+                userName: userName,
+                role:"Admin",
             }]
         })
         room
@@ -19,10 +20,7 @@ const CreateRoom = (socket) => {
                 await socket.join(room._id.toString())
                 await socket.join(userID.toString())
                 cb({
-                    userName: userName,
-                    AdminID: userID,
-                    roomID: room._id,
-                    roomName: roomName
+                    room
                 })
             })
     })

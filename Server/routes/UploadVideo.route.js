@@ -6,7 +6,7 @@ const Video = require("../models/Video.model")
 
 
 router.post("/",upload.fields([{name:'video',maxCount:1},{name:"thumbnail",maxCount:1}]), async (req, res) => {
-    console.log(req.files);
+    // console.log(req.files);
     
     try {
         const video = new Video({

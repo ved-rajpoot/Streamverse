@@ -16,7 +16,7 @@ const VideoDashboard = () => {
                 }
             })
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {
                 setStatus(true)
@@ -39,7 +39,7 @@ const VideoDashboard = () => {
                     {
                         Array.isArray(videoList) ?
                             videoList.map((val, index) => {
-                                console.log(val)
+                                
                                 return (
                                     <>
                                         <VideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags}/>

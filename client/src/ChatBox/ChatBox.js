@@ -1,18 +1,21 @@
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { JoinMessage, RegularMessage, PinnedMessage, CreateMessage } from './MessageType';
 import RommJoined from './RoomJoined';
 import RoomNotJoined from './RommNotJoined';
 import axios from 'axios';
+import { RoomContext } from '../Context/RoomContext';
 
 
 const ChatBox = () => {
+
     const JoinedClass = "h-[90%]"
     const notJoinedClass = "h-[90%]"
     const chatAreaClass = 'flex flex-col w-[350px] h-[60%] rounded-lg border-4 dark:border-[#00212B] border-indigo-500/100'
 
+    const [roomState,setRoomState] = useContext(RoomContext)
     const [open, setOpen] = useState(0);
     const [classMsg, setClassMsg] = useState("");
     const [classClose, setClassClose] = useState("hidden");
@@ -35,17 +38,22 @@ const ChatBox = () => {
             setChatArea(chatAreaClass)
         }
     }, [open])
-    const handle = () => {
-        console.log("clicked")
+    const handleJoin = () => {
+        // console.log("clicked")
         setJoined(JoinedClass)
         setNotJoined("hidden")
     }
-
+    const handleLeave = () => {
+        // console.log("clicked")
+        setNotJoined(JoinedClass)
+        setJoined("hidden")
+    }
 
     return (
 
         <>
-            <button id="hidden-btn" className='hidden' onClick={handle}></button>
+            <button id="joinroom-btn" className='hidden' onClick={handleJoin}></button>
+            <button id="leaveroom-btn" className='hidden' onClick={handleLeave}></button>
             <div className='flex flex-col fixed bottom-10 right-4'>
                 <div className={chatArea}>
                     <div className='flex justify-center items-center font-mono font-extrabold text-white h-[15%] dark:bg-[#00212B] bg-indigo-500/100 w-full'>
@@ -54,9 +62,9 @@ const ChatBox = () => {
                     <div className='h-[90%]'>
                         <div className={joined}>
                             <RommJoined
-                                roomID={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).roomID : null}
-                                roomName={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).roomName : null}
-                                userName={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")).userName : null}
+                                roomID={(localStorage.getItem("room")) ? JSON.parse(localStorage.getItem("room")) : null}
+                                roomName= {roomState.roomName}
+                                userName= {roomState.userArray[0].userName}
                             />
                         </div>
                         <div className={notJoined}>

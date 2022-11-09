@@ -5,7 +5,7 @@ const Video = require('../models/Video.model');
 const User = require('../models/User.model');
 
 router.post("/like",checkAuth, (req, res) => {
-    console.log('like');
+    // console.log('like');
         const userId = req.userData.userId;
         const videoId = req.body.id;
         // Video.findByIdAndUpdate(videoId,{
@@ -20,7 +20,7 @@ router.post("/like",checkAuth, (req, res) => {
             $addToSet:{likedVideos:videoId},
             $pull:{dislikedVideos:videoId}
         },{new:true})
-        .then((res)=>{console.log(res)})
+        // .then((res)=>{console.log(res)})
 })
 router.post("/removelike",checkAuth, (req, res) => {
     const userId = req.userData.userId;
@@ -54,7 +54,7 @@ router.post("/dislike",checkAuth, (req, res) => {
         $addToSet:{dislikedVideos:videoId}
     },{new:true})
     .then((res)=>{
-        console.log('disliked video: ',res);
+        // console.log('disliked video: ',res);
     });
 })
 router.post("/removedislike",checkAuth, (req, res) => {
@@ -108,7 +108,7 @@ router.post("/getfavoritevideos", checkAuth, async (req,res)=>{
     
     Video.find({_id:{$in:user[0].videoFavorites}})
     .then((result)=>{
-        console.log(result);
+        // console.log(result);
         res.status(200).json(result);
     })
     .catch(err=>{

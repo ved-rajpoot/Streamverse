@@ -13,7 +13,7 @@ const AudioDashboard = () => {
     useEffect(() => {
         axios.post("http://localhost:9002/audiolist")
             .then((res) => {
-                console.log('audio found');
+                // console.log('audio found');
                 setAudioList(res.data)
             }).then(() => {
                 setStatus(true)
@@ -61,7 +61,7 @@ const AudioDashboard = () => {
                 <AudioPlayer
                     autoPlay
                     src={source}
-                    onPlay={e => console.log("Playing")}
+                    
                 />
             </div>
             

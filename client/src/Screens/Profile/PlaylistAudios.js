@@ -9,11 +9,11 @@ const PlaylistVideos = () => {
         const location = useLocation();
 
         const {playlistId} = useParams();
-        console.log(playlistId);
+        // console.log(playlistId);
         const [audios,setAudios] = useState(null);
         const getAudios = ()=>{
             const data = {playlistId:playlistId};
-            console.log('data: ',data);
+            // console.log('data: ',data);
             axios.post("http://localhost:9002/getaudios", data , {
                 headers: {
                     // "Content-Type": "multipart/form-data",
@@ -21,7 +21,7 @@ const PlaylistVideos = () => {
                 }
             })
             .then((res)=>{
-                console.log('audios:  ', res.data);
+                // console.log('audios:  ', res.data);
                 setAudios(res.data);  
             })
             .catch((err)=>{

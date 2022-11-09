@@ -19,7 +19,7 @@ router.post("/users", (req, res) => {
 router.post("/deleteUser", (req,res) => {
     User.deleteOne({_id:req.body.id})
         .then((result) => {
-            console.log(result)
+            // console.log(result)
         })
         .catch((err) => {
             console.log(err)
@@ -38,7 +38,7 @@ router.post("/deleteUser", (req,res) => {
 router.post("/deleteVideo", (req,res) => {
     Video.deleteOne({_id:req.body.id})
         .then((result) => {
-            console.log(result)
+            // console.log(result)
         })
         .catch((err) => {
             console.log(err)
@@ -49,7 +49,7 @@ router.post("/deleteAudio", (req,res) => {
     console.log(req.body.id)
     Audio.deleteOne({_id:req.body.id})
         .then((result) => {
-            console.log(result)
+            // console.log(result)
         })
         .catch((err) => {
             console.log(err)

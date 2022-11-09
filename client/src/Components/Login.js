@@ -21,7 +21,7 @@ const Login = () => {
     }
     const [userId, setUserId] = useState(null);
     useEffect(() => { 
-        console.log(redirect + " " + userId)
+        // console.log(redirect + " " + userId)
         if (redirect && userId) {
             navigate(`/app/${userId}/dashboard`)
         }

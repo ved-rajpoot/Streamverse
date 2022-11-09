@@ -51,7 +51,7 @@ const VideoPlayer = () => {
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
       }
     })
-    console.log(res);
+    // console.log(res);
     if(res.status===200) {
       setIsLiked(res.data.isLiked);
       setIsDisliked(res.data.isDisliked);
@@ -75,7 +75,7 @@ const VideoPlayer = () => {
   
   const addToPlaylist = () => {
     setPopup(true);
-    console.log(location.state.props.id)
+    // console.log(location.state.props.id)
   }
   const like = () => {
     axios.post("http://localhost:9002/like", { id: location.state.props.id }, {

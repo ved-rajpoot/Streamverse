@@ -8,11 +8,11 @@ const PlaylistVideos = () => {
         const location = useLocation();
         
         const {playlistId} = useParams();
-        console.log(playlistId);
+        // console.log(playlistId);
         const [videos,setVideos] = useState(null);
         const getVideos = ()=>{
             const data = {playlistId:playlistId};
-            console.log('data: ',data);
+            // console.log('data: ',data);
             axios.post("http://localhost:9002/getvideos", data , {
                 headers: {
                     // "Content-Type": "multipart/form-data",
@@ -20,7 +20,7 @@ const PlaylistVideos = () => {
                 }
             })
             .then((res)=>{
-                console.log('videos:  ', res.data);
+                // console.log('videos:  ', res.data);
                 setVideos(res.data);  
             })
             .catch((err)=>{

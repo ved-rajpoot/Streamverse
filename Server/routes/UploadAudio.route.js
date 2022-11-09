@@ -12,7 +12,7 @@ router.post("/", upload.fields([{ name: 'avatar', maxCount: 1 }, { name: "thumbn
         const result = await cloudinary.uploader.upload(req.files.avatar[0].path, { "resource_type": "auto" });
         // const result2 = await cloudinary.uploader.upload(req.files.thumbnail[0].path, { "resource_type": "auto" });
 
-        console.log(result)
+        // console.log(result)
         const audio = new Audio({
             avatar: result.secure_url,
             cloudinary_id: result.public_id,
