@@ -1,8 +1,10 @@
 import axios from "axios"
 
 const userCard = (props) => {
-    const deleteUser = () => {
-        axios.post("http://localhost:9002/admin/deleteUser",{id:props.id, email:props.email})
+    // const [isSuspended,setIsSuspended] = useState(0);
+
+    const suspendUser = () => {
+        axios.post("http://localhost:9002/admin/suspendUser",{id:props.id, email:props.email})
             .then((res) => console.log(res.data))
             .catch((err) => console.log(err))
     }
@@ -18,7 +20,7 @@ const userCard = (props) => {
                 {props.email}
             </td>
             <td class="py-4 px-6">
-                <button onClick={deleteUser} class="m-1 font-medium text-blue-600 dark:text-blue-500 hover:underline">DELETE</button>
+                <button onClick={suspendUser} class="m-1 font-medium text-blue-600 dark:text-blue-500 hover:underline">SUSPEND ACCOUNT</button>
             </td>
         </tr>
     )
