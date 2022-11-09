@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import Loading from "../../Components/Loading/Loading";
 import VideoCard from "../../Components/VideoCard";
 
 const VideoDashboard = () => {
     const navigate = useNavigate()
     const [videoList, setVideoList] = useState(null);
-    const [status, setStatus] = useState(false);
+    const [loading,setLoading] = useState(true);
     useEffect(() => {
             const data = null;
             axios.post("http://localhost:9002/recommendations", data, {
@@ -19,19 +20,13 @@ const VideoDashboard = () => {
                 // console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {
-                setStatus(true)
+                setLoading(false);
             }).catch((err)=>{
                 console.log(err);
             })
     }, [])
 
-    if (!status) return (
-        <>
-            <div className="flex item-center">
-                Loading..
-            </div>
-        </>
-    )
+    if(loading) return <Loading/>;
     return (
         <>
             <div className="flex" >

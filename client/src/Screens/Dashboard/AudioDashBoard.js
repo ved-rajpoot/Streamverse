@@ -4,32 +4,26 @@ import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import AudioCard from '../../Components/AudioCard';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import Loading from '../../Components/Loading/Loading';
 
 const AudioDashboard = () => {
 
     const [audioList, setAudioList] = useState(null);
-    const [status, setStatus] = useState(false);
     const [source, setSource] = useState("");
+    const [loading,setLoading] = useState(true);
     useEffect(() => {
         axios.post("http://localhost:9002/audiolist")
             .then((res) => {
                 // console.log('audio found');
                 setAudioList(res.data)
             }).then(() => {
-                setStatus(true)
+                setLoading(true)
             }).catch((err) => {
                 console.log(err);
             })
     }, [])
 
-    if (!status) return (
-        <>
-            <div className="flex item-center">
-                Loading..
-            </div>
-        </>
-    )
-    
+    if(loading) return <Loading/>;
     return (
         <>
             {
