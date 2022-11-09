@@ -33,16 +33,18 @@ router.get("/image/:id", (req,res) => {
     const id=req.params.id;
     console.log("fetching image "+id)
 
-    const imagePath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
+    const imagePath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;
     
     // Checking if the path exists
     fs.exists(imagePath, (exists) => {
         if (!exists) {
             res.writeHead(404, {
-                "Content-Type": "text/plain" });
+                "Content-Type": "text/plain" 
+            });
             res.end("404 Not Found");
             return;
         }
+        
         
         // Reading the file
         fs.readFile(imagePath,
@@ -50,8 +52,9 @@ router.get("/image/:id", (req,res) => {
                 // Serving the image
                 res.end(content);
             }
-        );
+        )
     });
+
 })
 
 module.exports = router;

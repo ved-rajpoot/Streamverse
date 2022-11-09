@@ -29,10 +29,10 @@ const ViewerVideoPlayer = () => {
     // socket events
     socket.off("setVideo").on("setVideo", res => {
         const seconds = res.time;
-        const url = res.url;
+        const videoPath = res.videoPath;
         const videoTitle = res.title;
         const videoDescription = res.description;
-        setSource(url);
+        setSource(videoPath);
         setTitle(videoTitle);
         setDescription(videoDescription);
         setTimeout(() => {
@@ -59,7 +59,7 @@ const ViewerVideoPlayer = () => {
     return (
         <div>
             <div className="flex object-cover h-[40rem] w-full">
-                <Player ref={VideoElement} src={source} preload="auto" fluid={false} height="100%" width="100%" autoPlay >
+                <Player ref={VideoElement} src={`http://localhost:9002/file/video/${source}`} preload = "metadata" fluid={false} height="100%" width="100%" autoPlay >
                     <Shortcut clickable={false} shortcuts={shortCut} />
                     <BigPlayButton position="center" />
                     <LoadingSpinner />

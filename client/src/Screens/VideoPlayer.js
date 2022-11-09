@@ -136,7 +136,7 @@ const VideoPlayer = () => {
     setIsFavorite(false);
   }
   const stream = () => {
-    navigate("/streamroom", { state: { props: { url: location.state.props.avatar, title: location.state.props.title, description: location.state.props.description } } })
+    navigate("/streamroom", { state: { props: { videoPath: location.state.props.videoPath, title: location.state.props.title, description: location.state.props.description } } })
   }
   return (
     <div>
@@ -146,6 +146,7 @@ const VideoPlayer = () => {
       }
 
       <div className="flex object-cover h-[40rem] w-full">
+      
         <video src={`http://localhost:9002/file/video/${location.state.props.videoPath}`} controls preload='metadata'>
 
         </video>
