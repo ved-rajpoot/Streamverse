@@ -10,7 +10,7 @@ const SendMessage = (socket, io) => {
             .then((room) => {
                 const data = room.userArray;
                 const index = data.map(e => e.userId).indexOf(userID);
-                io.sockets.in(room_id.toString()).emit('recieve', { userName: room.userArray[index].userName , message:message})
+                socket.to(room_id.toString()).emit('recieve', { userName: room.userArray[index].userName , message:message})
             })
             .catch((err) => {
                 console.log(err)

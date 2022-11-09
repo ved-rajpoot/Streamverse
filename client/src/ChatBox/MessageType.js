@@ -16,7 +16,7 @@ const PinnedMessage = () => {
     const navigate = useNavigate();
     return (
         <>
-            <div className=" sticky flex flex-row top-0 bg-white px-1 py-1 text-sm justify-center items-center border b-4">
+            <div className=" sticky flex flex-row top-0 bg-white dark:bg-[#202c33] outline-none dark:text-white px-1 py-1 text-sm justify-center items-center ">
                 <div className="w-[70%]">CreatorName is streaming videoName/AudioName</div>
                 <button className="w-[20%] h-[80%] rounded-lg bg-[#2563eb]" onClick={() => { navigate("/viewer") }} >Join</button>
             </div>
@@ -24,13 +24,24 @@ const PinnedMessage = () => {
         </>
     )
 }
-const RegularMessage = (props) => {
+const RegularSenderMessage = (props) => {
     return (
         <>
-            <div className="flex w-[100%] py-1 justify-center items-center">
-                <div className="flex flex-col w-[95%] px-2 text-xs font-sans rounded-lg bg-[#bbf7d0] break-words">
-                    <p className="text-xs font-bold left-2 font-mono">{props.userName}</p>
-                    <p >{props.message}</p>
+            <div className="flex w-[98%] py-1 justify-end">
+                <div className="flex justify-center flex-col min-h-[40px] max-w-[65%] px-2 text-xs font-sans dark:text-white rounded-lg bg-[#d9fdd3] dark:bg-[#005c4b] break-words">
+                    <p className="p-1">{props.message}</p>
+                </div>
+            </div>
+        </>
+    )
+}
+const RegularRecieverMessage = (props) => {
+    return (
+        <>
+            <div className="flex w-[98%] px-1 py-1 justify-start">
+                <div className="flex flex-col justify-center min-h-[40px] max-w-[65%] px-2 text-xs font-sans  dark:text-white rounded-lg bg-[#ffffff] dark:bg-[#202c33] break-words">
+                    <p className="text-xs font-bold flex justify-start dark:text-[#08a058] font-mono">{props.userName}</p>
+                    <p className="p-1 font-sans">{props.message}</p>
                 </div>
             </div>
         </>
@@ -60,4 +71,4 @@ const RoomIdMessage = (props) => {
         </>
     )
 }
-export { JoinMessage, PinnedMessage, RegularMessage, CreateMessage, RoomIdMessage }
+export { JoinMessage, PinnedMessage, RegularSenderMessage,RegularRecieverMessage, CreateMessage, RoomIdMessage }

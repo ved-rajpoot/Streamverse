@@ -35,10 +35,11 @@ const VideoDashboard = () => {
     return (
         <>
             <div className="flex" >
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap justify-center ">
                     {
                         Array.isArray(videoList) ?
                             videoList.map((val, index) => {
+                                console.log(val)
                                 return (
                                     <>
                                         <VideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags}/>
@@ -47,6 +48,7 @@ const VideoDashboard = () => {
                             })
                             : null
                     }
+                    
                 </div>
             </div>
         </>

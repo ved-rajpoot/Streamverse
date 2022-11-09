@@ -1,28 +1,35 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 export default function VideoCard(props) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [userState, setUserState] = useContext(UserContext);
     const {id, videoPath,thumbnailPath,title,description, userName,tags} = props;
     return (
       <>
-        <div class="rounded overflow-hidden shadow-lg mx-4 my-4 cursor-pointer" style={{width:'21rem', height:'21rem'}} onClick={()=>{ navigate(`/dashboard/${id}`, {state: {props:{id, videoPath,thumbnailPath,description,title}}})}}>
-          <img class="h-48 w-full" src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="Sunset in the mountains"/>
-          <div class="px-6 py-4">
-            <div class="font-bold text-xl mb-1">{title}</div>
-            <p class="text-gray-700 text-base">
-              {userName}
-            </p>
+  <div class="w-64 m-4 cursor-pointer" onClick={() => { navigate(`/app/${userState.userId}/dashboard/video/${id}`, { state: { props: { id, videoPath, thumbnailPath, description, title } } }) }}>
+          <div class="h-36 w-full rounded-lg shadow-md">
+            <img class="w-64 h-36 object-cover" src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="" />
           </div>
-          <div class="px-6 pt-4 pb-2 overflow-x-auto">
-            {
-              tags.length!==1 && tags.map((tag,idx)=>{
-              return (
-                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{tag}</span>
-              )
-              })
-            }
+          <div class="mt-3 flex items-start space-x-2">
+            <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-white">
+              <img src="https://yt3.ggpht.com/ytc/AAUvwnhbzltKjEkb2tlCdRpx2-wjpvBYy_RRMQzNmpSmLQ=s68-c-k-c0x00ffffff-no-rj" alt="" />
+            </div>
+            <div class="flex flex-col text-md tracking-tighter leading-tight">
+              <div class="text-black dark:text-white font-semibold overflow-ellipsis">{title}</div>
+              <div class="mt-1 flex items-baseline space-x-1">
+                <div class="text-gray-400 text-xs">{userName}</div>
+                <div class="w-3 h-3 pt-0.5">
+                  <svg viewBox="0 0 24 24" class="text-gray-400" fill="currentColor">
+                    <g><path fill-rule="evenodd" clip-rule="evenodd" d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10 S17.52,2,12,2z M9.92,17.93l-4.95-4.95l2.05-2.05l2.9,2.9l7.35-7.35l2.05,2.05L9.92,17.93z"></path></g>
+                  </svg>
+                </div>
+              </div>
+              <div class="text-gray-400 text-xs">750 Views</div>
+            </div>
           </div>
-      </div>
+        </div>
     </>
     );
 }

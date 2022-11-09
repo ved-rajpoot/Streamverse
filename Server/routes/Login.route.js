@@ -6,8 +6,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User.model');
 
 router.post('/', async (req, res, next) => {
-
-    await User.find({ email: req.body.email })
+    console.log(req.body)
+    await User.find({ email: req.body.user.email })
         .exec()
         .then(user => {
             if (user.length < 1) {
@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
                     message: 'Auth failed'
                 });
             }
-            bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+            bcrypt.compare(req.body.user.password, user[0].password, (err, result) => {
                 if (err) {
                     console.log(err)
                     return res.status(401).json({

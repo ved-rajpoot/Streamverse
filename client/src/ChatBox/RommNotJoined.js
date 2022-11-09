@@ -1,26 +1,26 @@
 import { useContext, useEffect, useState } from "react";
-import SocketContext from '../SocketContext'
+import {SocketContext} from '../Context/SocketContext'
 import { getUserId } from "./HelperFunctions";
 import { JoinMessage } from "./MessageType";
 
 const RoomNotJoined = () => {
     const userID = getUserId()
     const socket = useContext(SocketContext)
-    const [showCreateRoom,setShowCreateRoom] = useState(false)
+    const [showCreateRoom, setShowCreateRoom] = useState(false)
     const [showJoinRoom, setShowJoinRoom] = useState(false)
 
     const [roomName, setRoomName] = useState("");
     const [createUserName, setCreateUserName] = useState("");
     const [roomID, setRoomID] = useState("");
     const [joinUserName, setJoinUserName] = useState("");
-    
+
     const Create = () => {
         socket.emit("createRoom", { roomName, createUserName, userID }, user => {
             localStorage.setItem("room", JSON.stringify(user))
             document.getElementById("hidden-btn").click();
         })
     }
-    
+
 
     const Join = () => {
         socket.emit("joinRoom", { roomID, joinUserName, userID }, room => {
@@ -28,7 +28,7 @@ const RoomNotJoined = () => {
                 userName: room.userArray[0].userName,
                 AdminID: room.AdminID,
                 roomID: room._id,
-                roomName : room.roomName
+                roomName: room.roomName
             }
             localStorage.setItem("room", JSON.stringify(user))
             document.getElementById("hidden-btn").click();
@@ -38,12 +38,12 @@ const RoomNotJoined = () => {
 
     return (
         <>
-            <div className='flex flex-col bg-[#FAFAFA] justify-center items-center h-[100%]'>
-                <p className='font-bold text-center'>You have not joined a room !!</p>
+            <div className='flex flex-col bg-[#F9FAFB] dark:bg-[#374151] justify-center items-center h-[550px]'>
+                <p className='font-bold text-center dark:text-white'>You have not joined a room !!</p>
                 <br />
-                <button className='underline decoration-sky-500 text-blue-600/100' onClick={()=>setShowCreateRoom(true)}>Create new Room</button>
-                <p>OR</p>
-                <button className='underline decoration-sky-500 text-blue-600/100' onClick={()=>setShowJoinRoom(true)}>Join a Room</button>
+                <button className='underline decoration-sky-500 text-blue-600/100' onClick={() => setShowCreateRoom(true)}>Create new Room</button>
+                <p className="dark:text-white">OR</p>
+                <button className='underline decoration-sky-500 text-blue-600/100' onClick={() => setShowJoinRoom(true)}>Join a Room</button>
             </div>
             {showCreateRoom ? (
                 <>
@@ -52,26 +52,26 @@ const RoomNotJoined = () => {
                     >
                         <div className="relative w-auto my-6 mx-auto max-w-sm">
                             {/*content*/}
-                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                            <div className="border-0 dark:bg-[#111827] rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
                                 <div className="flex items-center justify-center p-5 border-b border-solid border-slate-200 rounded-t">
-                                    <h3 className="text-3xl font-semibold">
+                                    <h3 className="text-3xl dark:text-white font-semibold">
                                         Create Room
                                     </h3>
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
-                                    <label  className="block mb-2 text-sm font-medium text-gray-900">Room Name</label>
+                                    <label className="block mb-2 text-sm font-medium dark:text-white text-gray-900">Room Name</label>
                                     <input
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        className="bg-gray-50 dark:bg-[#374151] focus:outline-none text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white"
                                         placeholder="Enter Your Room Name"
                                         value={roomName}
-                                        onChange = {(e)=>setRoomName(e.target.value)}
+                                        onChange={(e) => setRoomName(e.target.value)}
                                         required />
                                     <br />
-                                    <label className="block mb-2 text-sm font-medium text-gray-900">Username</label>
+                                    <label className="block mb-2 text-sm font-medium dark:text-white text-gray-900">Username</label>
                                     <input
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        className="bg-gray-50 dark:bg-[#374151] focus:outline-none text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-400 dark:text-white"
                                         placeholder="Enter your username for room"
                                         value={createUserName}
                                         onChange={(e) => setCreateUserName(e.target.value)}
@@ -111,27 +111,27 @@ const RoomNotJoined = () => {
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
                         <div className="relative w-auto my-6 mx-auto max-w-sm">
-                            
-                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                
+
+                            <div className="border-0 dark:bg-[#111827] rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+
                                 <div className="flex items-center justify-center p-5 border-b border-solid border-slate-200 rounded-t">
-                                    <h3 className="text-3xl font-semibold">
+                                    <h3 className="text-3xl dark:text-white font-semibold">
                                         Join Room
                                     </h3>
                                 </div>
-                                
+
                                 <div className="relative p-6 flex-auto">
-                                    <label  className="block mb-2 text-sm font-medium text-gray-900">Room ID</label>
+                                    <label className="block mb-2 dark:text-white text-sm font-medium text-gray-900">Room ID</label>
                                     <input
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        className="bg-gray-50 dark:bg-[#374151] focus:outline-none dark:placeholder-gray-400 dark:text-white text-gray-900 text-sm rounded-lg block w-full p-2.5"
                                         placeholder="Enter Room ID"
                                         value={roomID}
-                                        onChange={(e)=>setRoomID(e.target.value)}
+                                        onChange={(e) => setRoomID(e.target.value)}
                                         required />
                                     <br />
-                                    <label className="block mb-2 text-sm font-medium text-gray-900">Username</label>
+                                    <label className="block mb-2 dark:text-white text-sm font-medium text-gray-900">Username</label>
                                     <input
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        className="bg-gray-50 dark:bg-[#374151] focus:outline-none dark:placeholder-gray-400 dark:text-white text-gray-900 text-sm rounded-lg block w-full p-2.5"
                                         placeholder="Enter your username for room"
                                         value={joinUserName}
                                         onChange={(e) => setJoinUserName(e.target.value)}

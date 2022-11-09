@@ -1,6 +1,5 @@
-import { Player,ControlBar,LoadingSpinner,BigPlayButton,ReplayControl,ForwardControl,CurrentTimeDisplay,TimeDivider,PlaybackRateMenuButton,VolumeMenuButton } from 'video-react';
 import { useLocation } from "react-router-dom"
-import SocketContext from '../SocketContext';
+import {SocketContext} from '../Context/SocketContext';
 import { useContext, useEffect } from 'react';
 import { useRef } from 'react';
 
@@ -12,13 +11,13 @@ const AdminVideoPlayer = () => {
     const location = useLocation();
     const roomID = JSON.parse(localStorage.getItem("room")).roomID
     const callPlay = () => {
-        socket.emit("play",{roomID:roomID})
+        socket.emit("play", { roomID: roomID })
     }
     const callPause = () => {
         socket.emit("pause", { roomID: roomID })
     }
     const callSeek = () => {
-        socket.emit("changeTime",{roomID:roomID , currentTime: VideoElement.current.currentTime})
+        socket.emit("changeTime", { roomID: roomID, currentTime: VideoElement.current.currentTime })
     }
     const callRateChange = () => {
         socket.emit("playbackSpeed", { roomID: roomID, playbackSpeed: VideoElement.current.playbackRate })
@@ -30,12 +29,12 @@ const AdminVideoPlayer = () => {
         socket.emit("currentVideo", { time: VideoElement.current.currentTime, url: location.state.props.url, title: location.state.props.title, description: location.state.props.description, id: id });
     })
 
-   
+
 
     return (
         <div>
             <div className="flex h-[40rem] w-full bg-black">
-                <video ref={VideoElement} width={"100%"} preload = "auto" autoPlay = {true} controls onPlay={callPlay} onPause = {callPause} onSeeked ={callSeek} onRateChange = {callRateChange} controlsList = "nodownload">
+                <video ref={VideoElement} width={"100%"} preload="auto" autoPlay={true} controls onPlay={callPlay} onPause={callPause} onSeeked={callSeek} onRateChange={callRateChange} controlsList="nodownload">
                     <source src={location.state.props.url} type="video/webm" />
                 </video>
             </div>

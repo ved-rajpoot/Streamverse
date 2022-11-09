@@ -1,10 +1,7 @@
 import axios from "axios"
 import React from "react";
-import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useState } from "react";
 import { Progress } from 'reactstrap';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import { Switch } from "@mui/material";
 
 const UploadVideo = () => {
@@ -74,10 +71,10 @@ const UploadVideo = () => {
 
     function Todo({ todo, index, removeTodo }) {
         return (
-            <div className=" bg-[#002D99] w-fit text-white p-1 m-2 rounded-lg flex flex-row">
-                <div className="mr-2">#{todo.text}</div>
+            <div className=" bg-[#b8d7f7] px-1 py-1 text-black m-1 rounded-xl gap-1 flex flex-row">
+                <div className="flex items-center justify-center text-xs">#{todo.text}</div>
                 <div>
-                    <button onClick={() => removeTodo(index)} className="text-slate text-base">x</button>
+                    <button onClick={() => removeTodo(index)} className="flex items-center justify-center text-xs">x</button>
                 </div>
             </div>
         );
@@ -96,12 +93,14 @@ const UploadVideo = () => {
         return (
             <form onSubmit={handleSubmit}>
                 <input
+                    autoComplete={false}
                     type="text"
-                    className="input bg-gray-300 h-9 rounded-lg"
+                    className="input bg-[#f9fafb] dark:bg-[#374151] h-7 rounded-lg"
                     value={value}
+                    placeholder="Add tag"
                     onChange={e => setValue(e.target.value)}
                 />
-                <button className=" bg-[#002D99] w-fit text-white m-1 rounded-lg p-1">Enter</button>
+                <button className="bg-[#1d4ed8]  rounded-xl text-white hover:scale-105 duration-300 w-[90px] py-1 m-2 text-sm">Enter</button>
             </form>
         );
     }
@@ -110,6 +109,7 @@ const UploadVideo = () => {
     ]);
 
     const addTodo = text => {
+        if(text === "")return
         const newTodos = [...todos, { text }];
         setTodos(newTodos);
     };
@@ -122,29 +122,28 @@ const UploadVideo = () => {
 
     return (
         <>
-            <p className="text-4xl m-5">Video Upload</p>
-            <div className="flex flex-col m-5 shadow-2xl bg-slate-100">
-                <div className="text-2xl m-5">
+            <div className="flex flex-col dark:text-white ">
+                <div className="text-xl m-3">
                     Enter title: <br />
-                    <input type="text" className="text-lg" placeholder="Title" onChange={changeHandler} name="title" value={title} />
+                    <input autoComplete={false} type="text" className="input bg-[#f9fafb] dark:bg-[#374151] h-7 rounded-lg" placeholder="Title" onChange={changeHandler} name="title" value={title} />
                 </div>
 
-                <div className="m-5">
-                    <p className="text-2xl"> Upload thumbnail: </p>
+                <div className="m-3">
+                    <p className="text-xl"> Upload thumbnail: </p>
                     <input type="file" className="text-sm" name="thumbnail" onChange={changeHandler} />
                 </div>
 
-                <div className="m-5">
-                    <p className="text-2xl">Upload Video file: </p>
+                <div className="m-3">
+                    <p className="text-xl">Upload Video file: </p>
                     <input type="file" className="text-sm" name="video" onChange={changeHandler} />
                 </div>
 
-                <div className="text-2xl m-5">
+                <div className="text-xl m-3">
                     Add Description: <br />
-                    <input type="text" className="text-lg" placeholder="Description" onChange={changeHandler} name="description" value={description} />
+                    <input autoComplete={false} type="text" className="input bg-[#f9fafb] dark:bg-[#374151] h-7 rounded-lg" placeholder="Description" onChange={changeHandler} name="description" value={description} />
                 </div>
                 {isFilePicked ? (
-                    <div>
+                    <div className="m-3">
                         <p>Filename: {selectedFile.file.name}</p>
                         <p>Filetype: {selectedFile.file.type}</p>
                         <p>Size in bytes: {selectedFile.file.size}</p>
@@ -154,33 +153,35 @@ const UploadVideo = () => {
                         </p>
                     </div>
                 ) : (
-                    <p className="ml-5">Select a file to show details</p>
+                    <p className="ml-3">Select a file to show details</p>
                 )}
                 {console.log(selectedFile.loaded)}
                 <Progress max="100" color="success" value={selectedFile.loaded} className="m-5 mb-1">
                     {isNaN(Math.round(selectedFile.loaded, 2)) ? 0 : Math.round(selectedFile.loaded, 2)}%
                 </Progress>
-                <div className="text-2xl m-5">
+                <div className="text-xl m-3 ">
                     <Switch checked={isPrivate} onChange={()=>{setIsprivate(!isPrivate)}}/> <span>Private</span>
                 </div>
-                <div className="text-2xl m-5">
+                <div className="text-xl m-3">
                     Add tags:
-                    <div className="app ml-5 text-lg">
-                        <div className="todo-list">
-                            {todos.map((todo, index) => (
-                                <Todo
-                                    key={index}
-                                    index={index}
-                                    todo={todo}
-                                    removeTodo={removeTodo}
-                                />
-                            ))}
+                    <div className="app ml-3 text-lg">
+                        <div className="todo-list flex flex-col">
+                            <div className="flex flex-wrap max-w-[40%]">
+                                {todos.map((todo, index) => (
+                                    <Todo
+                                        key={index}
+                                        index={index}
+                                        todo={todo}
+                                        removeTodo={removeTodo}
+                                    />
+                                ))}
+                            </div>    
                             <TodoForm addTodo={addTodo} />
                         </div>
                     </div>
                 </div>
 
-                <button className="bg-[#002D74]  rounded-xl text-white py-2 hover:scale-105 duration-300 w-[10%] m-5 text-2xl" onClick={upload} >upload</button>
+                <button className="bg-[#1d4ed8] rounded-xl text-white hover:scale-105 duration-300 w-[90px] py-1 m-3 text-sm" onClick={upload} >upload</button>
             </div>
         </>
     )

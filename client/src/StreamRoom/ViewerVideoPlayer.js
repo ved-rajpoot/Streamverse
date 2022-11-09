@@ -1,16 +1,16 @@
-import { Player, ControlBar, LoadingSpinner, BigPlayButton ,VolumeMenuButton, Shortcut,TimeDivider, CurrentTimeDisplay  } from 'video-react';
+import { Player, ControlBar, LoadingSpinner, BigPlayButton, VolumeMenuButton, Shortcut, TimeDivider, CurrentTimeDisplay } from 'video-react';
 import { useLocation } from "react-router-dom"
 import { useRef, useEffect, useContext, useState } from 'react';
-import SocketContext from '../SocketContext';
+import {SocketContext} from '../Context/SocketContext';
 
 
 
 const ViewerVideoPlayer = () => {
     const socket = useContext(SocketContext)
     const VideoElement = useRef(null);
-    const [source,setSource] = useState("")
-    const [title,setTitle] = useState("")
-    const [description,setDescription] = useState("")
+    const [source, setSource] = useState("")
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
 
     //Disabling Keyboard Shortcuts
     const shortCut = [{ keyCode: 32, ctrl: false, handle: () => { } }, { keyCode: 75, ctrl: false, handle: () => { } }, { keyCode: 39, ctrl: false, handle: () => { } }, { keyCode: 37, ctrl: false, handle: () => { } }, { keyCode: 74, ctrl: false, handle: () => { } }, { keyCode: 76, ctrl: false, handle: () => { } }, { keyCode: 35, ctrl: false, handle: () => { } }, { keyCode: 36, ctrl: false, handle: () => { } },]
@@ -38,8 +38,8 @@ const ViewerVideoPlayer = () => {
         setTimeout(() => {
             moveToTimeStamp(seconds);
             play();
-        },1000)
-        
+        }, 1000)
+
     })
     socket.off('playPlayer').on('playPlayer', () => {
         play();
@@ -59,7 +59,7 @@ const ViewerVideoPlayer = () => {
     return (
         <div>
             <div className="flex object-cover h-[40rem] w-full">
-                <Player ref={VideoElement} src={source} preload = "auto" fluid={false} height="100%" width="100%" autoPlay >
+                <Player ref={VideoElement} src={source} preload="auto" fluid={false} height="100%" width="100%" autoPlay >
                     <Shortcut clickable={false} shortcuts={shortCut} />
                     <BigPlayButton position="center" />
                     <LoadingSpinner />

@@ -1,45 +1,65 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import { Navigate, useNavigate } from 'react-router-dom';
-
-
-
+import Switch from "../Switch/Switch";
+import { UserContext } from "../Context/UserContext";
+import jwtDecode from "jwt-decode";
 const Login = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState({
-        email: "",
-        password: "", 
-    })
-
+    const [userState, setUserState] = useContext(UserContext);
+    const [password, setPassword] = useState("");
     const [redirect, setRedirect] = useState(localStorage.getItem('userTokenTime') ? true : false)
     const [passwordType, setPasswordType] = useState("password");
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setUser({
-            ...user,
-            [name]: value
+    const updatEmail = (e) => {
+        setUserState({
+            ...userState,
+            email: e.target.value
         })
     }
-    useEffect(()=>{},[redirect])
+    const updatePassword = (e) => {
+        setPassword(e.target.value);
+    }
+    const [userId, setUserId] = useState(null);
+    useEffect(() => { 
+        console.log(redirect + " " + userId)
+        if (redirect && userId) {
+            navigate(`/app/${userId}/dashboard`)
+        }
+    }, [redirect,userId])
     const log = () => {
         // eslint-disable-next-line 
-        if ((user.email && user.password) && (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(user.email))) {
-            axios.post("http://localhost:9002/login", user)
-            .then((res) => {
-                const data = {
-                    token: res.data.token,
-                    time: new Date().getTime()
+        if ((userState.email && password) && (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(userState.email))) {
+            axios.post("http://localhost:9002/login", {
+                user: {
+                    email: userState.email,
+                    password: password
+                }
+            })
+                .then(async (res) => {
+                    const user = await jwtDecode(res.data.token);
+                    //Set User Details after logging in
+                    setUserState({
+                        ...userState,
+                        userId: user.userId
+                    })
+                    setUserId(user.userId);
+
+                    //Create a Token for authenticating user for future requests
+                    const data = {
+                        token: res.data.token,
+                        time: new Date().getTime()
                     }
-                    // console.log(data);
+                    //Save Token in localStorage
                     localStorage.setItem('userTokenTime', JSON.stringify(data));
+                    //Redirect to the dashboard
                     setRedirect(true)
                 })
                 .catch((err) => {
                     console.log(err);
-                    if(err.response.status===500) {
+                    if (err.response.status === 500) {
                         alert('Internal server error');
                     }
-                    else if(err.response.status===401) {
+                    else if (err.response.status === 401) {
                         alert('Auth failed');
                     }
                 })
@@ -48,72 +68,68 @@ const Login = () => {
         }
     }
 
-    const register = () => navigate("/signup")
-
-    if (redirect) return <Navigate to="/dashboard" />
+    const register = () => navigate("/signup");
+    
+    
 
     return (
         <>
-            <div>
-                <section className="bg-gray-50 min-h-screen flex items-center justify-center">
-
-                    <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-2 items-center">
-
-                        <div className="px-8 md:px-16">
-                            <h2 className="font-bold text-2xl text-[#002D74]">Login</h2>
-                            <p className="text-xs mt-4 text-[#002D74]">If you are already a member, easily log in</p>
-
-                            <form onSubmit={(e) => e.preventDefault()} action="" className="flex flex-col gap-4">
-                                <input className="p-2 mt-8 rounded-xl border" type="email" name="email" value={user.email} onChange={handleChange} placeholder="Email" />
-                                <div className="relative">
-                                    <input className="p-2 rounded-xl border w-full" type={passwordType} name="password" value={user.password} onChange={handleChange} placeholder="Password" />
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2" viewBox="0 0 16 16"
-                                        onClick={() => {
-                                            if (passwordType === "password") {
-                                                setPasswordType("text")
-                                            } else {
-                                                setPasswordType("password")
-                                            }
-                                        }}>
-                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                                    </svg>
-                                </div>
-                                <button className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300" onClick={log}>Login</button>
-                            </form>
-
-                            <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
-                                <hr className="border-gray-400" />
-                                <p className="text-center text-sm">OR</p>
-                                <hr className="border-gray-400" />
-                            </div>
-
-                            <button className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
-                                <svg className="mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="25px">
-                                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
-                                    <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
-                                    <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
-                                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
-                                </svg>
-                                Login with Google
-                            </button>
-
-                            <div className="mt-5 text-xs border-b border-[#002D74] py-4 text-[#002D74]">
-                                {/*add link tag here */}
-                                Forgot your password?
-                            </div>
-
-                            <div className="mt-3 text-xs flex justify-between items-center text-[#002D74]">
-                                <p>Don't have an account?</p>
-                                <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300" onClick={register}>Register</button>
-                            </div>
-                        </div>
-
-
+            <div className="flex h-[90%] flex-col justify-center items-center w-full">
+                <div className="relative flex flex-row gap-2 bottom-6 left-0">
+                    <p className="relative font-bold ">Light/Dark </p>
+                    <Switch />
+                </div>
+                <p className="font-bold text-3xl mb-10">Login</p>
+                <hr className="bg-black border w-[70%] mb-6 dark:bg-gray-700" />
+                <form onSubmit={(e) => e.preventDefault()} action="" className="w-[65%] flex flex-col gap-4" autoComplete={false}>
+                    <p className="font-bold text-xl">Email</p>
+                    <input className="p-4 mb-3 rounded-xl border border-gray-300" type="email" name="email" value={userState.email} onChange={updatEmail} placeholder="Email" />
+                    <div className="relative">
+                        <p className="font-bold text-xl">Password</p>
+                        <input className="p-4 mb-3 mt-3 rounded-xl border border-gray-300 w-full" type={passwordType} name="password" value={password} onChange={updatePassword} placeholder="Password" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="22" fill="gray" className="bi bi-eye absolute top-[63%] right-3 -translate-y-1/2" viewBox="-1 0 14 18"
+                            onClick={() => {
+                                if (passwordType === "password") {
+                                    setPasswordType("text")
+                                } else {
+                                    setPasswordType("password")
+                                }
+                            }}>
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                        </svg>
                     </div>
-                </section>
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="form-group form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                id="exampleCheck2"
+                            />
+                            <label class="form-check-label dark:text-white inline-block text-gray-800" >Remember me</label
+                            >
+                        </div>
+                        <button class="text-gray-800 dark:text-white">Forgot password?</button>
+                    </div>
+                    <div class="text-center lg:text-left">
+                        <button
+                            type="button"
+                            class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                            onClick={log}
+                        >
+                            Login
+                        </button>
+                        <p class="text-sm font-semibold mt-4 pt-1 mb-0">
+                            Don't have an account?
+                            <button
+                                href="#!"
+                                class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
+                                onClick={register}
+                            > Register</button>
+                        </p>
+                    </div>
+                </form>
             </div>
-
         </>
     )
 }
