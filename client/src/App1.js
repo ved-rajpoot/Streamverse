@@ -16,6 +16,7 @@ import PlaylistVideos from './Screens/Profile/PlaylistVideos';
 import PlaylistAudios from './Screens/Profile/PlaylistAudios';
 import Profile from "./Screens/Profile/Profile"
 import Logout from "./Components/Logout";
+import Admin from './Screens/Admin/admin';
 
 const App1 = () => {
     return (
@@ -30,7 +31,7 @@ const App1 = () => {
                         </Route>
 
                         {/* Admin route */}
-                        <Route exact path="/admin" />
+                        <Route exact path="/admin" element={<Admin />} />
 
                         {/* User routes */}
                         <Route path="app" element={<Home />}>

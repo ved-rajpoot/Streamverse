@@ -1,26 +1,19 @@
 
 const router = require("express").Router();
-const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer")
 const User = require("../models/User.model");
 const Video = require("../models/Video.model")
 
 
-router.post("/", upload.fields([{name:'avatar',maxCount:1},{name:"thumbnail",maxCount:1}]), async (req, res) => {
-    // console.log("recieved")
+router.post("/",upload.fields([{name:'video',maxCount:1},{name:"thumbnail",maxCount:1}]), async (req, res) => {
+    console.log(req.files);
+    
     try {
-        const result = await cloudinary.uploader.upload(req.files.avatar[0].path, { "resource_type": "auto" });
-        const result2 = await cloudinary.uploader.upload(req.files.thumbnail[0].path, { "resource_type": "auto" });
-        
-        console.log(result)
         const video = new Video({
-            avatar: result.secure_url,
-            cloudinary_id: result.public_id,
-            videoName: result.original_filename,
+            videoPath: req.files.video[0].originalname,
             title: req.body.title,
             description: req.body.description,
-            thumbnail_cloudinary_id: result2.public_id,
-            thumbnail_avatar: result2.secure_url,
+            thumbnailPath: req.files.thumbnail[0].originalname,
             userName: req.userData.userName,
             userId: req.userData.userId,
             tags: req.body.tags.split(","),

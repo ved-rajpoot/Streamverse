@@ -2,12 +2,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function VideoCard(props) {
     const navigate = useNavigate();
-    const {id, avatar,thumbnail_avatar,title,description, cloudinary_id, userName,tags} = props;
+    const {id, videoPath,thumbnailPath,title,description, userName,tags} = props;
     return (
       <>
-        <div class="w-64 m-4 cursor-pointer">
+  <div class="w-64 m-4 cursor-pointer" onClick={() => { navigate(`/dashboard/${id}`, { state: { props: { id, videoPath, thumbnailPath, description, title } } }) }}>
           <div class="h-36 w-full">
-            <img class="w-64 " src="https://i.ytimg.com/vi/l7TxwBhtTUY/hq720_live.jpg?sqp=CNjfsYAG-oaymwEZCNAFEJQDSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAmVNjMQzuOHHknmocydqjEQyedCg" alt="" />
+            <img class="w-64 " src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="" />
           </div>
           <div class="mt-3 flex items-start space-x-2">
             <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-white">

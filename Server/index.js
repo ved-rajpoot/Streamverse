@@ -54,6 +54,12 @@ app.use('/updateplaylists',require('./routes/Playlists.route'));
 app.use('/getvideos',require('./routes/GetVideos.route'));
 app.use('/getaudios',require('./routes/GetAudios.route'));
 app.use('/getmembers',require('./routes/GetMembers.route'));
+app.use('/recommendations',require('./routes/Recommendations.route'));
+app.use('/trendingvideos',require('./routes/TrendingVideos.route'));
+app.use('/likedvideos',require('./routes/LikedVideos.route'));
+app.use('/file',require('./routes/File.route'));
+
+app.use('/admin', require('./routes/Admin.route'));
 
 io.on("connection", socket => {
     JoinRoom(socket, io);

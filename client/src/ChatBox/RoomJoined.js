@@ -1,5 +1,5 @@
-import { CreateMessage, JoinMessage, PinnedMessage, RegularSenderMessage,RegularRecieverMessage, RoomIdMessage } from "./MessageType"
-import SocketContext from '../SocketContext';
+import { CreateMessage, JoinMessage, PinnedMessage, RegularSenderMessage, RegularRecieverMessage, RoomIdMessage } from "./MessageType"
+import SocketContext from '../Context/SocketContext';
 import React, { useContext, useEffect, useState } from 'react';
 import { getUserId } from './HelperFunctions';
 
@@ -12,23 +12,23 @@ const RommJoined = (props) => {
     const updateMessageArea = (res) => {
         let newArray = messageArray;
         let data;
-        if(res.messageType === "join") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName } }
-        else if(res.messageType === "regular") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName , message: res.message} }
-        else if(res.messageType === "send") data = { id: new Date(), messageType: res.messageType, content: { message: res.message } }
+        if (res.messageType === "join") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName } }
+        else if (res.messageType === "regular") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName, message: res.message } }
+        else if (res.messageType === "send") data = { id: new Date(), messageType: res.messageType, content: { message: res.message } }
         setMessageArray([...newArray, data]);
         const chatWindow = document.getElementById('MessageArea');
         chatWindow.scrollTop = chatWindow.scrollHeight;
     }
     const send = () => {
         if (textMessage === "") return;
-        updateMessageArea({messageType:"send",message:textMessage})
-        socket.emit("send", { roomID: roomID, message: textMessage, userID:userID })
+        updateMessageArea({ messageType: "send", message: textMessage })
+        socket.emit("send", { roomID: roomID, message: textMessage, userID: userID })
         setTextMessage("")
     }
 
     //Initial render
     useEffect(() => { if (localStorage.getItem("room")) socket.emit("refresh-check", { roomID: JSON.parse(localStorage.getItem("room")).roomID }) })
-    
+
     //Socket Events
     socket.off('userJoined').on('userJoined', res => {
         updateMessageArea({ messageType: "join", userName: res.userName })
@@ -36,7 +36,7 @@ const RommJoined = (props) => {
     socket.off('recieve').on('recieve', res => {
         updateMessageArea({ messageType: "regular", userName: res.userName, message: res.message })
     })
-    
+
     return (
         <>
             <div className='flex flex-col dark:bg-chat-dark bg-chat-light bg-cover bg-center h-full '>
@@ -94,9 +94,9 @@ const RommJoined = (props) => {
 
                     </div>
                 </div>
-                
+
             </div>
-            
+
         </>
     )
 }

@@ -19,6 +19,20 @@ const userSchema = new mongoose.Schema({
     }],
     videoFavorites: [{type:String}],
     audioFavorites: [{type:String}],
+
+    // whenever a user likes a video weight of all tags of that video increases by 2, when a user watches a video weight of its tags increase by 1.
+    favoriteTags: [
+        {
+            tag:String,
+            weight:Number
+        }
+    ],
+    likedVideos:[String],
+    dislikedVideos:[String],
+    likedAudios:[String],
+    dislikedAudios:[String],
+    watchedVideos:[String],
+    watchedAudios:[String],
     date: { type: Date, default: Date.now }
 })
 const User = new mongoose.model("User", userSchema);

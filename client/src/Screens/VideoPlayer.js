@@ -26,6 +26,7 @@ const VideoPlayer = () => {
   const [dislikes, setDislikes] = useState(0);
   const [popup, setPopup] = useState(false);
   const [inRoomAndAdmin,setInRoomAndAdmin] = useState(true)
+  const [loading,setLoading] = useState(true);
 
   const download = () => {
     var url = location.state.props.avatar
@@ -61,8 +62,9 @@ const VideoPlayer = () => {
   }
 
   useEffect(()=>{
-    getVideoData();
-    
+    // console.log('helllo');
+    if(loading) getVideoData();
+    setLoading(false);
     if (localStorage.getItem("room") === null) return;
     const admin = JSON.parse(localStorage.getItem("room")).AdminID;
     const user = getUserId();
@@ -155,9 +157,8 @@ const VideoPlayer = () => {
             <PlaybackRateMenuButton rates={[5, 2, 1, 0.5, 0.1]} order={7.1} />
             <VolumeMenuButton />
           </ControlBar>
-          <source src={location.state.props.avatar} type="video/webm" />
+          <source src={`http://localhost:9002/file/video/${location.state.props.videoPath}`} type="video/webm" />
         </Player>
-
       </div>
       <div className="flex justify-between m-5 scale-y-[1.2]">
 
