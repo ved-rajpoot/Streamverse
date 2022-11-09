@@ -26,7 +26,7 @@ const AdminVideoPlayer = () => {
     //socket events
     socket.off('getVideo').on('getVideo', (res) => {
         const id = res.id;
-        socket.emit("currentVideo", { time: VideoElement.current.currentTime, url: location.state.props.url, title: location.state.props.title, description: location.state.props.description, id: id });
+        socket.emit("currentVideo", { time: VideoElement.current.currentTime, videoPath: location.state.props.videoPath, title: location.state.props.title, description: location.state.props.description, id: id });
     })
 
 
@@ -34,8 +34,8 @@ const AdminVideoPlayer = () => {
     return (
         <div>
             <div className="flex h-[40rem] w-full bg-black">
-                <video ref={VideoElement} width={"100%"} preload="auto" autoPlay={true} controls onPlay={callPlay} onPause={callPause} onSeeked={callSeek} onRateChange={callRateChange} controlsList="nodownload">
-                    <source src={location.state.props.url} type="video/webm" />
+                <video ref={VideoElement} width={"100%"} preload = "auto" autoPlay = {true} controls onPlay={callPlay} onPause = {callPause} onSeeked ={callSeek} onRateChange = {callRateChange} controlsList = "nodownload">
+                    <source src={`http://localhost:9002/file/video/${location.state.props.videoPath}`} type="video/webm" />
                 </video>
             </div>
             <div className='m-3 text-2xl font-bold'>

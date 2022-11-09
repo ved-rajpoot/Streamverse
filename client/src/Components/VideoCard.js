@@ -5,10 +5,10 @@ import { UserContext } from "../Context/UserContext";
 export default function VideoCard(props) {
   const navigate = useNavigate();
   const [userState, setUserState] = useContext(UserContext);
-    const {id, videoPath,thumbnailPath,title,description, userName,tags} = props;
+    const {id, videoPath,thumbnailPath,title,description, userName,tags, views, userId} = props;
     return (
       <>
-  <div class="w-64 m-4 cursor-pointer" onClick={() => { navigate(`/app/${userState.userId}/dashboard/video/${id}`, { state: { props: { id, videoPath, thumbnailPath, description, title } } }) }}>
+  <div class="w-64 m-4 cursor-pointer" onClick={() => { navigate(`/app/${userState.userId}/dashboard/video/${id}`, { state: { props: { id, videoPath, thumbnailPath, description, title, tags, views,userName,userId} } }) }}>
           <div class="h-36 w-full rounded-lg shadow-md">
             <img class="w-64 h-36 object-cover" src={`http://localhost:9002/file/image/${thumbnailPath}`} alt="" />
           </div>
