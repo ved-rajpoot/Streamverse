@@ -1,17 +1,12 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios';
-import AudioCard from '../../Components/AudioCard.js'
-const Audios = () => {
-        
+import AudioCard from '../../Components/AudioCard.js';
+
+const Audios = (props) => {
     const [userAudios, setUserAudios] = useState();
+
     useEffect(()=>{
-        const data = null;
-        axios.post("http://localhost:9002/getuseraudios", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-            }
-        })
+        axios.post("http://localhost:9002/getuseraudios", {userId:props.userId})
         .then((res)=>{
             // console.log(res.data);
             setUserAudios(res.data);

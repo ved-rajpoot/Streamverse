@@ -10,7 +10,7 @@ import Logo from './Logo';
 import { Link } from 'react-router-dom';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Playlists' ,'Logout'];
-const settingsLink = ['/app/profile', '/app/account', '/app/dashboard', '/app/playlists', '/logout'];
+const settingsLink = ['/app/userId/profile', '/app/userId/account', '/app/userId/dashboard', '/app/userId/playlists', '/logout'];
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -69,7 +69,7 @@ const Header = () => {
           >
             {settings.map((setting, index) => (
               <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <div className='dark:bg-black dark:text-white content-center' component={Link} to={settingsLink[index]}>{setting}</div>
+                <Link className='dark:bg-black dark:text-white content-center' to={settingsLink[index]}>{setting}</Link>
               </MenuItem>
             ))}
           </Menu>

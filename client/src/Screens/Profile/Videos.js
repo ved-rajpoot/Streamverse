@@ -1,17 +1,13 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios';
 import VideoCard from '../../Components/VideoCard.js'
-const Videos = () => {
+
+const Videos = (props) => {
         
     const [userVideos, setUserVideos] = useState();
-    useEffect(()=>{
-        const data = null;
-        axios.post("http://localhost:9002/getuservideos", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-            }
-        })
+    useEffect(() => {
+        // console.log(props.userId)
+        axios.post("http://localhost:9002/getuservideos", {id:props.userId})
         .then((res)=>{
             // console.log(res.data);
             setUserVideos(res.data);
@@ -27,7 +23,7 @@ const Videos = () => {
                         {/* console.log(index); */}
                         return (
                             <>
-                                <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} tags={val.tags}/>
+                                <VideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags} views={val.views} userId={val.userId}/>
                             </>
                         )
                     })

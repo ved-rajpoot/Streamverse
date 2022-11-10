@@ -4,12 +4,17 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import Switch from "../Switch/Switch";
 import { UserContext } from "../Context/UserContext";
 import jwtDecode from "jwt-decode";
+import {SocketContext} from "../Context/SocketContext"
+import Loading from "./Loading/Loading";
 const Login = () => {
     const navigate = useNavigate()
     const [userState, setUserState] = useContext(UserContext);
+    const socket = useContext(SocketContext)
     const [password, setPassword] = useState("");
     const [redirect, setRedirect] = useState(localStorage.getItem('userTokenTime') ? true : false)
     const [passwordType, setPasswordType] = useState("password");
+    const [loading,setLoading] = useState(true);
+
     const updatEmail = (e) => {
         setUserState({
             ...userState,
@@ -25,7 +30,11 @@ const Login = () => {
         if (redirect && userId) {
             navigate(`/app/${userId}/dashboard`)
         }
-    }, [redirect,userId])
+    }, [redirect,userId]);
+
+    useEffect(()=>{
+        setLoading(false);
+    },[])
     const log = () => {
         // eslint-disable-next-line 
         if ((userState.email && password) && (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(userState.email))) {
@@ -51,6 +60,7 @@ const Login = () => {
                     }
                     //Save Token in localStorage
                     localStorage.setItem('userTokenTime', JSON.stringify(data));
+                    socket.emit('joinSelfRoom',{id:user.userId});
                     //Redirect to the dashboard
                     setRedirect(true)
                 })
@@ -62,6 +72,10 @@ const Login = () => {
                     else if (err.response.status === 401) {
                         alert('Auth failed');
                     }
+                    else if(err.response.status === 403) {
+                        alert("User Suspended")
+                    }
+                    
                 })
         } else {
             alert('Please enter valid details');
@@ -70,8 +84,7 @@ const Login = () => {
 
     const register = () => navigate("/signup");
     
-    
-
+    if(loading) return <Loading/>;
     return (
         <>
             <div className="flex h-[90%] flex-col justify-center items-center w-full">

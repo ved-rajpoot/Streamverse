@@ -14,7 +14,7 @@ export default function VideoCard(props) {
           </div>
           <div class="mt-3 flex items-start space-x-2">
             <div class="flex-shrink-0 w-9 h-9 rounded-full overflow-hidden bg-white">
-              <img src="https://yt3.ggpht.com/ytc/AAUvwnhbzltKjEkb2tlCdRpx2-wjpvBYy_RRMQzNmpSmLQ=s68-c-k-c0x00ffffff-no-rj" alt="" />
+              <img src="https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg" alt="" />
             </div>
             <div class="flex flex-col text-md tracking-tighter leading-tight">
               <div class="text-black dark:text-white font-semibold overflow-ellipsis">{title}</div>
@@ -26,7 +26,7 @@ export default function VideoCard(props) {
                   </svg>
                 </div>
               </div>
-              <div class="text-gray-400 text-xs">750 Views</div>
+              <div class="text-gray-400 text-xs">{views} Views</div>
             </div>
           </div>
         </div>
