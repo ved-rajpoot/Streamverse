@@ -11,6 +11,8 @@ import { UserContext } from "../Context/UserContext";
 import Members from "./Members";
 import { SocketContext } from "../Context/SocketContext";
 import { RoomContext } from "../Context/RoomContext";
+import AudioPlayer from "../Screens/player/AudioPlayer";
+
 
 const Home = () => {
     const [userState, setUserState] = useContext(UserContext)
@@ -56,6 +58,9 @@ const Home = () => {
     const ViewMembers = () => { setShowMembers(true) }
 
     /*Socket Events / Room Functions*/
+    socket.off('suspendUser').on('suspendUser',()=>{
+        navigate(`/logout`);
+    })
     const LeaveRoom = () => {
         socket.emit('leaveRoom', { roomID: roomState.roomId, userName: roomState.userName, userID: userState.userId, type: "leave" })
         localStorage.removeItem("room")
@@ -196,10 +201,7 @@ const Home = () => {
                             <Outlet />
                             {/* <div className="bg-black">
                                 {/* <BottomSheet
-                                    open={true}
-                                    blocking={false}
-                                    snapPoints={({ maxHeight }) => [maxHeight / 4, maxHeight * 0.6]}>
-
+                                    
                                     
 
                                 </BottomSheet> */}
@@ -207,6 +209,7 @@ const Home = () => {
 
                             {/* <div className="mt-auto"> */}
                             {/* // </div> */}
+                            <AudioPlayer />
                         </div>
                     </div>
                 </div>

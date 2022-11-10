@@ -4,9 +4,11 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import Switch from "../Switch/Switch";
 import { UserContext } from "../Context/UserContext";
 import jwtDecode from "jwt-decode";
+import {SocketContext} from "../Context/SocketContext"
 const Login = () => {
     const navigate = useNavigate()
     const [userState, setUserState] = useContext(UserContext);
+    const socket = useContext(SocketContext)
     const [password, setPassword] = useState("");
     const [redirect, setRedirect] = useState(localStorage.getItem('userTokenTime') ? true : false)
     const [passwordType, setPasswordType] = useState("password");
@@ -51,6 +53,7 @@ const Login = () => {
                     }
                     //Save Token in localStorage
                     localStorage.setItem('userTokenTime', JSON.stringify(data));
+                    socket.emit('joinSelfRoom',{id:user.userId});
                     //Redirect to the dashboard
                     setRedirect(true)
                 })
@@ -62,6 +65,10 @@ const Login = () => {
                     else if (err.response.status === 401) {
                         alert('Auth failed');
                     }
+                    else if(err.response.status === 403) {
+                        alert("User Suspended")
+                    }
+                    
                 })
         } else {
             alert('Please enter valid details');
