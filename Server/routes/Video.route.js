@@ -76,8 +76,8 @@ router.post("/removefavorite", checkAuth, (req, res) => {
         console.log(err);
     })
 })
-router.post("/getfavoritevideos", checkAuth, async (req,res)=>{
-    const userId = req.userData.userId;
+router.post("/getfavoritevideos", async (req,res)=>{
+    const userId = req.body.userId;
     const user = await User.find({_id:userId});
     
     Video.find({_id:{$in:user[0].videoFavorites}})
