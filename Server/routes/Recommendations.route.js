@@ -9,7 +9,7 @@ const checkAuth = require("../middleware/check-auth");
 router.post("/", checkAuth, async (req, res) => {
     // console.log(req);
     console.log(req.userData.userId);
-    const user = await User.find({id:req.userData.userId});
+    const user = await User.find({id:req.userData.userId,isPrivate:false});
 
     // getting favorite tags of a user and sorting them on the basis of their weights.
     let tags = user[0].favoriteTags;
@@ -23,9 +23,10 @@ router.post("/", checkAuth, async (req, res) => {
     let recommendedVideos = [];
 
     // getting video which have tags simliar to favorite tags of user (favorite tags are taken from liked and recently watched videos).
-    let result = await Video.find({$match:{"tags":{"$in":tags}}}).limit(100);
+    let result = await Video.find({$match:{"tags":{"$in":tags}},isPrivate:false}).limit(100);
+    console.log('result: ',result);
     recommendedVideos = [...recommendedVideos,...result];   
-    console.log('res ',recommendedVideos);
+
     // getting videos which have maximum number of views.
     result = await Video.find().sort({views:-1}).limit(100);
     recommendedVideos = [...recommendedVideos,...result];
