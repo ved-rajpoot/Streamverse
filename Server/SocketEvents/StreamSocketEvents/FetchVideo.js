@@ -9,10 +9,10 @@ const FetchVideo = (socket, io) => {
 
         const socketId = res.id;
         const currentTime = res.time;
-        const url = res.url;
+        const videoPath = res.videoPath;
         const description = res.description;
         const title = res.title;
-        io.to(socketId).emit("setVideo", { url: url, title: title, description: description, time: currentTime });
+        io.to(socketId).emit("setVideo", { videoPath: videoPath, title: title, description: description, time: currentTime });
     })
 }
 
