@@ -33,11 +33,7 @@ router.get("/image/:id", (req,res) => {
     const id=req.params.id;
     console.log("fetching image "+id)
 
-<<<<<<< HEAD
     const imagePath = `C:\\Users\\ved\\Desktop\\Streamverse\\Server\\Uploads\\${id}`;
-=======
-    const imagePath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
->>>>>>> upstream/main
     
     // Checking if the path exists
     fs.exists(imagePath, (exists) => {

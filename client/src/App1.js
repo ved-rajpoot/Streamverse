@@ -26,6 +26,7 @@ import { useContext } from "react";
 import { UserContext } from "./Context/UserContext";
 import VideoPlaylists from "./Screens/Profile/VideoPlaylists";
 import AudioPlaylists from "./Screens/Profile/AudioPlaylists";
+import SignUp from "./Components/SignUp";
 
 const App1 = () => {
     const [userState, setUserState] = useContext(UserContext)
@@ -40,6 +41,7 @@ const App1 = () => {
                             <Route path="/" element={<Main />}>
                                 <Route path="" element={<Navigate to='\login' />} />
                                 <Route path="login" element={<Login />} />
+                                <Route path="signup" element={<SignUp/>} />
                             </Route>
 
                             {/* Admin route */}

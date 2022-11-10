@@ -7,20 +7,24 @@ const PlaylistPopup = ({id,type,setPopup}) => {
     const [playlists, setPlaylists] = useState(null);
     const [userState, setUserState] = useContext(UserContext);
     
-    let obj
-    if (type === "video") obj = userState.videoPlaylists
-    else obj = userState.audioPlaylists
-
-    const newArr = obj.map((val, idx) => {
-        let isFilePresent = false;
-        if ((type === "video" && val.videos.indexOf(id) !== -1) || (type === "audio" && val.audios.indexOf(id) !== -1))
-            isFilePresent = true;
-        return { isFilePresent: isFilePresent, isEditing: false, ...val };
-    })
-    setPlaylists(newArr);
+    const getUserData = ()=>{
+        let obj
+        if (type === "video") obj = userState.videoPlaylists
+        else obj = userState.audioPlaylists
+    
+        const newArr = obj.map((val, idx) => {
+            let isFilePresent = false;
+            if ((type === "video" && val.videos.indexOf(id) !== -1) || (type === "audio" && val.audios.indexOf(id) !== -1))
+                isFilePresent = true;
+            return { isFilePresent: isFilePresent, isEditing: false, ...val };
+        })
+        setPlaylists(newArr);
+    
+    }
 
     useEffect(()=>{
         // console.log(playlists);
+        getUserData();
     },[playlists]);
 
     return (
