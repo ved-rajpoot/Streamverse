@@ -38,7 +38,8 @@ const AudioDashboard = () => {
                         return (
                             <div className='flex'>
                                 <button class='w-screen' onClick={()=>{
-                                    setSource(val.avatar)
+                                    // console.log(val)
+                                    setSource(val.audioPath)
                                 }}
                                 >
                                     <div className="mb-1 shadow-xl flex flex-row justify-center w-[100%] bg-white">
@@ -51,7 +52,7 @@ const AudioDashboard = () => {
                                     </div>
                                     
                                 </button>
-                                <AudioCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
+                                <AudioCard id={val._id} audioPath={val.audioPath} title={val.title} description={val.description} userName={val.userName} />
                             </div>
                         )
                     })
@@ -62,8 +63,8 @@ const AudioDashboard = () => {
                 source?
                 <div className= "fixed inset-x-0 bottom-5 h-16">
                     <AudioPlayer
+                        src={`http://localhost:9002/file/audio/${source}`} 
                         autoPlay
-                        src={source}
                         onPlay={e => console.log("Playing")}
                     />
                 </div>

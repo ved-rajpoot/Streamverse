@@ -24,6 +24,7 @@ import ViewerVideoPlayer from "./StreamRoom/ViewerVideoPlayer"
 import AppWrapper from "./AppWrapper";
 import { useContext } from "react";
 import { UserContext } from "./Context/UserContext";
+import VideoPlaylists from "./Screens/Profile/VideoPlaylists";
 
 const App1 = () => {
     const [userState,setUserState] = useContext(UserContext)
@@ -33,7 +34,7 @@ const App1 = () => {
                 <Router>
                     <AppWrapper>
                         <Routes>
-                            <Route path="*" element={<Navigate to='/login' />} />
+                            {/* <Route path="*" element={<Navigate to='/login' />} /> */}
                             {/* main routes */}
                             <Route path="/" element={<Main />}>
                                 <Route path="login" element={<Login />} />
@@ -61,6 +62,7 @@ const App1 = () => {
                                     </Route>
                                     <Route path="playlist">
                                         {/* <Route path="" element={<Navigate to='/app/:userId/playlist/video' />} /> */}
+                                        <Route path="video" element={<VideoPlaylists userId ={userState.userId} playlists = {userState.videoPlaylists}  />} />
                                         <Route path="video/:id" element={<PlaylistVideos />} />
                                         <Route path="audio/:id" element={<PlaylistAudios />} />
                                     </Route>

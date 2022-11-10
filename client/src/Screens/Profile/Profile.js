@@ -10,12 +10,16 @@ import FavoriteAudios from './FavoriteAudios.js';
 import FavoriteVideos from './FavoriteVideos.js';
 import EditIcon from '@mui/icons-material/Edit';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 
-const Profile = (props) => {
+const Profile = () => {
     const location=useLocation();
     const [status,setStatus] = useState(1);
+    const [userState,setUserState] = useContext(UserContext)
     const [userData, setUserData] = useState(null);
-    const [userId,setUserId] = useState(location.state.props.userId);
+    const [userId,setUserId] = useState(userState.userId);
+    
 
     
     // const token = localStorage.getItem('userTokenTime');
@@ -34,9 +38,12 @@ const Profile = (props) => {
     }
 
     useEffect(()=>{
+        console.log(userState)
+        setUserId(userState.userId)
+        if(location.state) setUserId(location.state.props.userId);
         console.log('user: ',userId);
         getUserData();
-    },[])
+    },[userState])
 
 
     const notSelected = "py-4 px-2 font-semibold text-gray-500  hover:text-green-500 transition duration-300"

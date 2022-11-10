@@ -84,7 +84,7 @@ const Home = () => {
     const navigateAudio = () => { navigate(`/app/${userState.userId}/dashboard/audio`) }
     const navigateUploadVideo = () => { navigate(`/app/${userState.userId}/upload/video`) }
     const navigateUploadAudio = () => { navigate(`/app/${userState.userId}/upload/audio`) }
-    const navigateVideoPlaylist = () => { navigate(`/app/${userState.userId}/playlist/video`) }
+    const navigateVideoPlaylist = () => { navigate(`/app/${userState.userId}/playlist/video` , {state:{props:{userId:userState.userId, playlists:userState.videoPlaylists}}}) }
     const navigateAudioPlaylist = () => { navigate(`/app/${userState.userId}/playlist/audio`) }
     const navigateProfile = () => { navigate(`/app/${userState.userId}/profile`) }
     const logOut = () => {

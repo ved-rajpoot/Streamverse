@@ -11,7 +11,7 @@ import PlaylistPopup from '../Components/Playlistpopup/PlaylistPopup';
 export default function AudioCard(props) {
 
   const navigate = useNavigate();
-  const {id, avatar,thumbnail_avatar,title,description, cloudinary_id, userName} = props;
+  const {id, audioPath,title,description, userName} = props;
   const [isFavorite, setIsFavorite] = useState(false);
   const [popup, setPopup] = useState(false);
 
@@ -36,19 +36,19 @@ export default function AudioCard(props) {
   }
 
   const download = () => {
-    var url = avatar
+  //   var url = avatar
 
-    var link = ""
-    for (var i = 0; i < url.length; i++) {
-      link += url[i]
-      if (url[i] === '/' && url[i + 1] === 'u') {
-        link += "upload/fl_attachment/"
-        i++;
-        while (url[i] !== '/') i++;
-      }
-    }
+  //   var link = ""
+  //   for (var i = 0; i < url.length; i++) {
+  //     link += url[i]
+  //     if (url[i] === '/' && url[i + 1] === 'u') {
+  //       link += "upload/fl_attachment/"
+  //       i++;
+  //       while (url[i] !== '/') i++;
+  //     }
+  //   }
 
-    window.location.href = link
+  //   window.location.href = link
   }
 
   const addToFavorites = () => {

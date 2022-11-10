@@ -16,10 +16,10 @@ router.post("/", (req, res) => {
         for(let idx = 0;idx<playlists.length;idx++) {
             if(playlists[idx]._id==playlistId) playlist = playlists[idx];
         }
-        console.log('playlist: ',playlist);
+        console.log('playlist: ',playlist.videos);
         
         // get all videos of a playlist.
-        Video.find({_id:{$in:playlist.videos}})
+        Video.find({_id: {$in : playlist.videos}})
         .then((result)=>{
             console.log(result);
             res.status(200).json(result);
