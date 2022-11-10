@@ -52,8 +52,8 @@ router.post("/getaudiodata", checkAuth, async (req,res)=>{
     }
 })
 
-router.post("/getfavoriteaudios", checkAuth, async (req,res)=>{
-    const userId = req.userData.userId;
+router.post("/getfavoriteaudios", async (req,res)=>{
+    const userId = req.body.userId;
     const user = await User.find({_id:userId});
     
     Audio.find({_id:{$in:user[0].audioFavorites}})

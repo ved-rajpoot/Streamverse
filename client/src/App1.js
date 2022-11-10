@@ -60,9 +60,9 @@ const App1 = () => {
                                         <Route path="audio" element={<UploadAudio />} />
                                     </Route>
                                     <Route path="playlist">
-                                        <Route path="" element={<Navigate to='/app/:userId/playlist/video' />} />
-                                        <Route path="video" element={<PlaylistVideos />} />
-                                        <Route path="audio" element={<PlaylistAudios />} />
+                                        {/* <Route path="" element={<Navigate to='/app/:userId/playlist/video' />} /> */}
+                                        <Route path="video/:id" element={<PlaylistVideos />} />
+                                        <Route path="audio/:id" element={<PlaylistAudios />} />
                                     </Route>
                                     <Route path="profile" element={<Profile />} />
                                 </Route>

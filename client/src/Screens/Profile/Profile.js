@@ -9,48 +9,47 @@ import axios from 'axios';
 import FavoriteAudios from './FavoriteAudios.js';
 import FavoriteVideos from './FavoriteVideos.js';
 import EditIcon from '@mui/icons-material/Edit';
+import { Navigate, useLocation } from 'react-router-dom';
 
-const Profile = () => {
+const Profile = (props) => {
+    const location=useLocation();
     const [status,setStatus] = useState(1);
     const [userData, setUserData] = useState(null);
+    const [userId,setUserId] = useState(location.state.props.userId);
 
     
-    const token = localStorage.getItem('userTokenTime');
-    const user = jwtDecode(token);
+    // const token = localStorage.getItem('userTokenTime');
+    // const user = jwtDecode(token);
     
     // To get whole user object of current user from database.
     const getUserData = ()=>{
-            const data = null;
-            axios.post("http://localhost:9002/getuserdata", data, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-                }
-            })
-            .then((res)=>{
-                // console.log('userData:  ', res.data);
-                setUserData(res.data);  
-            })
-            .catch((err)=>{
-                console.log(err);
-            })
+            axios.post("http://localhost:9002/getuserdata", {id:userId})
+                .then((res)=>{
+                    // console.log('userData:  ', res.data[0]);
+                    setUserData(res.data[0]);  
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
     }
 
     useEffect(()=>{
-        // console.log('user: ',user);
+        console.log('user: ',userId);
         getUserData();
     },[])
+
 
     const notSelected = "py-4 px-2 font-semibold text-gray-500  hover:text-green-500 transition duration-300"
     const selected = "py-4 px-2 font-semibold text-green-500 border-b-4 border-green-500"
 
+    if(userData)
     return (
         <div className='dark:text-white text-black'>
             <div className='border-b-4 border-gray-200'>
               <div className='flex  my-4 ml-5'>
                   <Avatar/>
                   <div className='ml-4 flex'>
-                      <h1 className='font-semibold text-3xl mb-2'>{user.userName}</h1>
+                      <h1 className='font-semibold text-3xl mb-2'>{userData.name}</h1>
                       {/* <EditIcon className='ml-2 mt-1'/> */}
                       {/* <h3 className='font-semibold text-black text-md'>Hii guys, welcome to my youtube channel</h3> */}
                   </div>
@@ -66,16 +65,17 @@ const Profile = () => {
                 <button id="audio" type="button" className= {(status === 6) ? selected : notSelected} onClick={() => setStatus(6)} >Favorite Audios</button>  
                 <button id="audio" type="button" className= {(status === 7) ? selected : notSelected} onClick={() => setStatus(7)} >About</button>  
             </div>
-            <div className={(status === 1) ? "relative top-5":"hidden"} ><Videos/></div>
-            <div className={(status === 2) ? "relative top-5":"hidden"} ><Audios/></div>
-            <div className={(status === 3) ? "relative top-5":"hidden"} ><VideoPlaylists playlists={userData && userData.videoPlaylists}/></div>
-            <div className={(status === 4) ? "relative top-5":"hidden"} ><AudioPlaylists playlists={userData && userData.audioPlaylists}/></div>
-            <div className={(status === 5) ? "relative top-5":"hidden"} ><FavoriteVideos/></div>
+            <div className={(status === 1) ? "relative top-5":"hidden"} ><Videos userId={userData._id}/></div>
+            <div className={(status === 2) ? "relative top-5":"hidden"} ><Audios userId={userData._id}/></div>
+            <div className={(status === 3) ? "relative top-5":"hidden"} ><VideoPlaylists userId={userData._id} playlists={userData.videoPlaylists}/></div>
+            <div className={(status === 4) ? "relative top-5":"hidden"} ><AudioPlaylists playlists={userData.audioPlaylists}/></div>
+            <div className={(status === 5) ? "relative top-5":"hidden"} ><FavoriteVideos userId={userData._id}/></div>
             <div className={(status === 6) ? "relative top-5":"hidden"} ><FavoriteAudios/></div>
             {/* <div className={(status === 6) ? "relative top-5":"hidden"} ><About/></div> */}
             {/* <div className={(status === 2) ? "hidden" : "relative top-5"} ><VideoDashboard/></div> */}
         </div>
-  )
+    )
+    else return <>Loading</>
 }
 
 export default Profile

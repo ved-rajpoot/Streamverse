@@ -5,10 +5,10 @@ const Video = require('../models/Video.model');
 const User = require('../models/User.model');
 const { default: mongoose } = require("mongoose");
 
-router.post("/", checkAuth, (req, res) => {
+router.post("/", (req, res) => {
     console.log('request body: ', req.body);
     const playlistId = req.body.playlistId;
-    User.find({_id:req.userData.userId})
+    User.find({_id:req.body.userId})
     .then((user)=>{
         const playlists = user[0].videoPlaylists;
         console.log(playlists);

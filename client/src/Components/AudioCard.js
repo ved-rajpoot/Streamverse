@@ -77,7 +77,7 @@ export default function AudioCard(props) {
       {
         popup && <PlaylistPopup id={id} type="audio" setPopup={setPopup}/>
       }
-      <div className="mr-[10%] mb-1 shadow-xl flex flex-row w-fit bg-white">
+      <div className="mr-[10%] mb-1 shadow-sm flex flex-row w-fit bg-white">
         <button className="m-1" onClick={addToPlaylist}><PlaylistAddIcon/></button>
         <button className="m-1" onClick={download}><DownloadIcon/></button>
 
