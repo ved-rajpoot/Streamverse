@@ -6,7 +6,7 @@ const Audio = require('../models/Audio.model');
 router.post("/", checkAuth, (req, res) => {
     // console.log(req);
     // console.log(req.userData);
-    Audio.find( { userId : req.userData.userId })
+    Audio.find( { userId : req.body.userId })
     .then((result)=>{
         // console.log(result.length);
         res.json(result);

@@ -2,18 +2,12 @@ import React, {useState,useEffect} from 'react'
 import axios from 'axios';
 import VideoCard from '../../Components/VideoCard';
 
-const FavoriteVideos = () => {
+const FavoriteVideos = (props) => {
   const [videoList, setVideoList] = useState(null);
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
-          const data = null;
-          axios.post("http://localhost:9002/getfavoritevideos", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-            }
-          })
+          axios.post("http://localhost:9002/getfavoritevideos", {userId:props.userId})
           .then((res) => {
             //   console.log(res);
               setVideoList(res.data)
@@ -32,7 +26,7 @@ const FavoriteVideos = () => {
                             videoList.map((val, index) => {
                                 return (
                                     <>
-                                        <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} tags={val.tags}/>
+                                        <VideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags} views={val.views} userId={val.userId}/>
                                     </>
                                 )
                             })

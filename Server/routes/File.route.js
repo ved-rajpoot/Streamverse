@@ -9,7 +9,7 @@ router.get("/video/:id",(req,res) => {
     console.log(id)
 
     const range = req.headers.range
-    const videoPath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
+    const videoPath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;
     const videoSize = fs.statSync(videoPath).size
     const chunkSize = 1 * 1e6;
     const start = Number(range.replace(/\D/g, ""))
@@ -33,7 +33,7 @@ router.get("/image/:id", (req,res) => {
     const id=req.params.id;
     console.log("fetching image "+id)
 
-    const imagePath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
+    const imagePath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;;
     
     // Checking if the path exists
     fs.exists(imagePath, (exists) => {
@@ -55,6 +55,32 @@ router.get("/image/:id", (req,res) => {
         )
     });
 
+})
+
+router.get("/audio/:id",(req,res) => {
+    const id=req.params.id
+    console.log('sending audio in chunks')
+    console.log(id)
+
+    const range = req.headers.range
+    const audioPath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;
+    const audioSize = fs.statSync(audioPath).size
+    const chunkSize = 1 * 1e6;
+    const start = Number(range.replace(/\D/g, ""))
+    const end = Math.min(start + chunkSize, audioSize - 1)
+    const contentLength = end - start + 1;
+    const headers = {
+        "Content-Range": `bytes ${start}-${end}/${audioSize}`,
+        "Accept-Ranges": "bytes",
+        "Content-Length": contentLength,
+        "Content-Type": "audio/mpeg"
+    }
+    res.writeHead(206, headers)
+    const stream = fs.createReadStream(audioPath, {
+        start,
+        end
+    })
+    stream.pipe(res)
 })
 
 module.exports = router;

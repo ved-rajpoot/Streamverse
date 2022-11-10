@@ -7,20 +7,15 @@ import {useLocation} from 'react-router-dom';
 const PlaylistVideos = () => {
         const location = useLocation();
         
-        const {playlistId} = useParams();
-        // console.log(playlistId);
+        const {id} = useParams();
+        console.log(id);
         const [videos,setVideos] = useState(null);
         const getVideos = ()=>{
-            const data = {playlistId:playlistId};
+            console.log(location.state.props.userId);
             // console.log('data: ',data);
-            axios.post("http://localhost:9002/getvideos", data , {
-                headers: {
-                    // "Content-Type": "multipart/form-data",
-                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-                }
-            })
+            axios.post("http://localhost:9002/getvideos", {userId: location.state.props.userId, playlistId:id})
             .then((res)=>{
-                // console.log('videos:  ', res.data);
+                console.log('videos:  ', res.data);
                 setVideos(res.data);  
             })
             .catch((err)=>{
@@ -44,7 +39,7 @@ const PlaylistVideos = () => {
             {
                 Array.isArray(videos) && videos.map((val,index)=>{
                     return (
-                        <VideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} tags={val.tags}/>
+                        <VideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags} views={val.views} userId={val.userId}/>
                     )
                 })
                 }

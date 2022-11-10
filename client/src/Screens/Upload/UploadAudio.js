@@ -39,7 +39,7 @@ const UploadAudio = () => {
         if (event.target.name === 'description') {
             return setDescription(event.target.value);
         }
-        if (event.target.name === 'avatar') {
+        if (event.target.name === 'audio') {
             setSelectedFile({ ...selectedFile, file: event.target.files[0] });
             setIsFilePicked(true);
             return;
@@ -48,7 +48,7 @@ const UploadAudio = () => {
     const upload = async (e) => {
 
         const data = new FormData();
-        data.append("avatar", selectedFile.file);
+        data.append("audio", selectedFile.file);
         data.append("title", title);
         data.append("description", description);
         data.append("isPrivate", isPrivate);
@@ -86,7 +86,7 @@ const UploadAudio = () => {
 
                 <div className="m-3">
                     <p className="text-xl">Upload Audio file: </p>
-                    <input type="file" className="text-sm" name="avatar" onChange={changeHandler} />
+                    <input type="file" className="text-sm" name="audio" onChange={changeHandler} />
                 </div>
 
                 <div className="text-xl m-3">

@@ -17,7 +17,7 @@ const LeaveRoom = (socket, io) => {
                 } else {
                     // socket.emit('validateRoom', true);
                     await socket.leave(room_id.toString())
-                    await socket.leave(userID.toString());
+                    // await socket.leave(userID.toString());
                     console.log(room)
                     io.sockets.in(room._id.toString()).emit('userLeft', { userName: userName, userId: userID.toString(), type:type })
                 }

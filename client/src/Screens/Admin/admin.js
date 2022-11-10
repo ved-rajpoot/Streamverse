@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Users from './users'
 import Videos from './videos'
 import Audios from './audios'
+import Switch from "../../Switch/Switch";
 
 const Admin = () => {
     const [status,setStatus] = useState(1)
@@ -42,6 +43,10 @@ const Admin = () => {
                         <span class="flex-1 ml-3 whitespace-nowrap">Exit</span>
                         </button>
                     </li>
+                    <div className="flex py-4 px-4">
+                        <p className="mx-2 text-md text-gray-500 font-bold dark:text-white">Light/dark</p>
+                        <Switch />
+                    </div>
                 </ul>
             </div>
             </aside>
