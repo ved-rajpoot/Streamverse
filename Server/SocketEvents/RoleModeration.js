@@ -1,4 +1,4 @@
 const RoleModeration = (socket,io) => {
-    socket.on("kick") 
+    socket.on("kick",) 
 }
 export default RoleModeration

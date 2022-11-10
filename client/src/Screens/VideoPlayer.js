@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Player, ControlBar, LoadingSpinner, BigPlayButton, ReplayControl, ForwardControl, CurrentTimeDisplay, TimeDivider, PlaybackRateMenuButton, VolumeMenuButton } from 'video-react';
 import { useLocation, useNavigate } from 'react-router-dom'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -13,6 +13,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import PlaylistPopup from '../Components/Playlistpopup/PlaylistPopup';
 import CastConnectedIcon from '@mui/icons-material/CastConnected';
 import { getUserId } from '../ChatBox/HelperFunctions';
+import { UserContext } from '../Context/UserContext';
+import { RoomContext } from '../Context/RoomContext';
 
 const VideoPlayer = () => {
   const navigate = useNavigate();
@@ -25,11 +27,12 @@ const VideoPlayer = () => {
   // eslint-disable-next-line
   const [dislikes, setDislikes] = useState(0);
   const [popup, setPopup] = useState(false);
-  const [inRoomAndAdmin,setInRoomAndAdmin] = useState(true);
+  const [disable,setdisable] = useState(true);
   const [loading,setLoading] = useState(true);
   const [tags,setTags] = useState(location.state.props.tags);
   const [userId,setUserId] = useState(location.state.props.userId);
-
+  const [userState, setUserState] = useContext(UserContext);
+  const [roomState, setRoomState] = useContext(RoomContext);
   const download = () => {
     // var url = location.state.props.avatar
 
@@ -67,10 +70,12 @@ const VideoPlayer = () => {
     if(loading) getVideoData();
     setLoading(false);
     if (localStorage.getItem("room") === null) return;
-    const admin = JSON.parse(localStorage.getItem("room")).AdminID;
-    const user = getUserId();
-    if (user === admin) setInRoomAndAdmin(false);
-    
+    if (roomState.role === "controller") setdisable(false);
+    else if (roomState.role === "Admin") {
+      const index = roomState.userArray.findIndex((user) => user.role == "controller");
+      if (index > -1) return;
+      setdisable(false);
+    }
     // eslint-disable-next-line
   },[])
   
@@ -137,7 +142,7 @@ const VideoPlayer = () => {
     setIsFavorite(false);
   }
   const stream = () => {
-    navigate("/streamroom", { state: { props: { videoPath: location.state.props.videoPath, title: location.state.props.title, description: location.state.props.description } } })
+    navigate(`/app/${userState.userId}/dashboard/video/${location.state.props.id}/stream/${roomState.roomId}/controller`, { state: { props: { videoPath: location.state.props.videoPath, title: location.state.props.title, description: location.state.props.description } } })
   }
   return (
     <div className='dark:text-white'>
@@ -207,7 +212,7 @@ const VideoPlayer = () => {
           </button>
         }
 
-        <button name="stream" className='disabled:opacity-25 hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black' disabled ={inRoomAndAdmin} onClick = {stream}><CastConnectedIcon/></button>
+        <button name="stream" className='disabled:opacity-25 hover:bg-[#FFFFFF] pl-1 pr-1 rounded-md hover:text-black' disabled ={disable} onClick = {stream}><CastConnectedIcon/></button>
       </div>
 
       <div className='m-3 text-2xl font-bold h-20 flex'>

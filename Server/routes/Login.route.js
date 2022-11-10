@@ -30,7 +30,7 @@ router.post('/', async (req, res, next) => {
                     },
                         process.env.ACCESS_SECRET_KEY,
                         {
-                            expiresIn: "1h"
+                            expiresIn: "1000h"
                         });
                     return res.status(200).json({
                         message: 'Auth successful',

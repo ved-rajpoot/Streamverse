@@ -11,6 +11,8 @@ import { UserContext } from "../Context/UserContext";
 import Members from "./Members";
 import { SocketContext } from "../Context/SocketContext";
 import { RoomContext } from "../Context/RoomContext";
+import RoomClosedModal from "./RoomClosedModal";
+import AudioPlayer from "../Screens/player/AudioPlayer";
 
 const Home = () => {
     const [userState, setUserState] = useContext(UserContext)
@@ -57,22 +59,28 @@ const Home = () => {
 
     /*Socket Events / Room Functions*/
     const LeaveRoom = () => {
-        socket.emit('leaveRoom', { roomID: roomState.roomId, userName: roomState.userName, userID: userState.userId, type: "leave" })
+        console.log(roomState)
+        socket.emit('leaveRoom', { roomID: roomState.roomId, userName: roomState.userName, userID: userState.userId, type: "leave", role:roomState.role })
         localStorage.removeItem("room")
+        document.getElementById("resetmessage-btn").click();
         document.getElementById("leaveroom-btn").click();
+        document.getElementById("room-btn").click();
         setTimeout(() => {
             setRoomState({
                 roomId: "",
                 roomName: "",
                 AdminID: "",
                 role: "",
-                userArray: [{userName:"",userID:""}]
+                userArray: [{userName:"",userID:"",role:""}]
             })
-        },500)
+        },200)
         
         setHideRoom(true);
-        document.getElementById("room-btn").click();
     }
+    socket.off('roomClosed').on('roomClosed', (res) => {
+        LeaveRoom();
+        return <RoomClosedModal userName = {res.userName} />
+    })
     // useEffect(() => { }, [hideRoom]);
     /*Navigation Routes */
     const navigateVideo = () => { navigate(`/app/${userState.userId}/dashboard/video`) }
@@ -192,23 +200,15 @@ const Home = () => {
 
                     </div>
                     <div className="flex flex-col ml-4 w-[98%] md:w-[85%] bottom-0 h-[97%] mt-2">
-                        <div className=" overflow-y-auto scrollbar-default py-4 px-3 bg-gray-50 rounded-lg shadow-lg dark:bg-[#1E1E1C] h-[100%] w-[98%]">
+                        <div className="flex flex-col overflow-y-auto scrollbar-default py-4 px-3 bg-gray-50 rounded-lg shadow-lg dark:bg-[#1E1E1C] h-[100%] w-[98%]">
                             <Outlet />
-                            {/* <div className="bg-black">
-                                {/* <BottomSheet
-                                    open={true}
-                                    blocking={false}
-                                    snapPoints={({ maxHeight }) => [maxHeight / 4, maxHeight * 0.6]}>
-
-                                    
-
-                                </BottomSheet> */}
-                            {/* </div> */}
-
-                            {/* <div className="mt-auto"> */}
-                            {/* // </div> */}
+                            <div className="mt-auto h-24 w-full bg-[#EBEDEF] shadow-lg rounded-lg opacity-80 dark:bg-[#121212]">
+                                <AudioPlayer />
+                            </div>
+                        
                         </div>
                     </div>
+                    
                 </div>
                 <ChatBox />
             </div>

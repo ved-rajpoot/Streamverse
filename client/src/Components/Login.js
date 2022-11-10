@@ -70,7 +70,7 @@ const Login = () => {
 
     const register = () => navigate("/signup");
     
-    
+    if (userState.userId) navigate(`/app/${userState.userId}/dashboard`)
 
     return (
         <>
