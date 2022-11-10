@@ -25,7 +25,7 @@ router.post("/", checkAuth, async (req, res) => {
     // getting video which have tags simliar to favorite tags of user (favorite tags are taken from liked and recently watched videos).
     let result = await Video.find({$match:{"tags":{"$in":tags}}}).limit(100);
     recommendedVideos = [...recommendedVideos,...result];   
-    
+    console.log('res ',recommendedVideos);
     // getting videos which have maximum number of views.
     result = await Video.find().sort({views:-1}).limit(100);
     recommendedVideos = [...recommendedVideos,...result];
