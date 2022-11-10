@@ -33,7 +33,11 @@ router.get("/image/:id", (req,res) => {
     const id=req.params.id;
     console.log("fetching image "+id)
 
+<<<<<<< HEAD
     const imagePath = `C:\\Users\\ved\\Desktop\\Streamverse\\Server\\Uploads\\${id}`;
+=======
+    const imagePath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
+>>>>>>> upstream/main
     
     // Checking if the path exists
     fs.exists(imagePath, (exists) => {
@@ -63,7 +67,7 @@ router.get("/audio/:id",(req,res) => {
     console.log(id)
 
     const range = req.headers.range
-    const audioPath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;
+    const audioPath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
     const audioSize = fs.statSync(audioPath).size
     const chunkSize = 1 * 1e6;
     const start = Number(range.replace(/\D/g, ""))

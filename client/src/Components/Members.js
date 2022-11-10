@@ -1,11 +1,13 @@
 import MemberCardAdmin from "./MemberCardAdmin"
 import MemberCardMod from "./MemberCardMod"
-import React from "react"
+import MemberCardRegular from "./MemberCardRegular"
+import React, { useContext, useState } from "react"
+import { RoomContext } from "../Context/RoomContext"
 
 
 const Members = (props) => {
-    
-    const members = [{id:1, name: "Aditya", role: "Admin" }, {id:2, name: "Saral", role: "Member" }, {id:3, name: "Saral", role: "Member" }, {id:4, name: "Saral", role: "Member" }, {id:5, name: "Saral", role: "Member" }, {id:6, name:"Ved",role:"Mod"},{id:7, name:"Aqib",role:"controller"}]
+    const [roomState, setRoomState] = useContext(RoomContext);
+    const [members, setMembers] = useState(roomState.userArray);
 
     return (
         <>
@@ -29,13 +31,16 @@ const Members = (props) => {
                                     members.map((val) => {
                                         return(
                                             <div className="flex w-full dark:bg-[#111b21] p-2 my-1 rounded-lg dark:text-white text-left ">
-                                                 <MemberCardAdmin id = {val.id} name={val.name} role={val.role} />
+                                                {
+                                                    (roomState.role === "Admin") ? <MemberCardAdmin id={val.userId} name={val.userName} role={val.role} setMembers={setMembers} />
+                                                        : (roomState.role === "Mod") ? <MemberCardMod id={val.userId} name={val.userName} role={val.role} setMembers={setMembers} />
+                                                            : <MemberCardRegular id={val.userId} name={val.userName} role={val.role} setMembers={setMembers} />
+                                                }
+                                                
                                              </div>      
                                         )
                                     })
                                 }
-                                             
-
                         </div>                      
                     </div>
                 </div>

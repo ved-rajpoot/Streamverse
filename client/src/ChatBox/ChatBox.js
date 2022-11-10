@@ -48,7 +48,7 @@ const ChatBox = () => {
         setNotJoined(JoinedClass)
         setJoined("hidden")
     }
-
+    
     return (
 
         <>

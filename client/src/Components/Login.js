@@ -84,7 +84,9 @@ const Login = () => {
 
     const register = () => navigate("/signup");
     
-    if(loading) return <Loading/>;
+    if (userState.userId) navigate(`/app/${userState.userId}/dashboard`)
+    
+    // if(loading) return <Loading/>;
     return (
         <>
             <div className="flex h-[90%] flex-col justify-center items-center w-full">

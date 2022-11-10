@@ -19,7 +19,7 @@ import Profile from "./Screens/Profile/Profile"
 import Logout from "./Components/Logout";
 import Admin from './Screens/Admin/admin';
 import VideoPlayer from './Screens/VideoPlayer'
-import AdminVideoPlayer from "./StreamRoom/AdminVideoPlayer";
+import ControllerVideoPlayer from "./StreamRoom/ControllerVideoPlayer";
 import ViewerVideoPlayer from "./StreamRoom/ViewerVideoPlayer"
 import AppWrapper from "./AppWrapper";
 import { useContext } from "react";
@@ -28,9 +28,9 @@ import VideoPlaylists from "./Screens/Profile/VideoPlaylists";
 import AudioPlaylists from "./Screens/Profile/AudioPlaylists";
 
 const App1 = () => {
-    const [userState,setUserState] = useContext(UserContext)
+    const [userState, setUserState] = useContext(UserContext)
     return (
-        <>    
+        <>
             <div id="app">
                 <Router>
                     <AppWrapper>
@@ -53,8 +53,8 @@ const App1 = () => {
                                         <Route path="" element={<Navigate to={`/app/${userState.userId}/dashboard/video`} />} />
                                         <Route path="video" element={<VideoDashboard />} />
                                         <Route path="video/:id" element={<VideoPlayer />} />
-                                        <Route path="video/:id/stream/admin" element={<AdminVideoPlayer />} />
-                                        <Route path="video/:id/stream/viewer" element={<ViewerVideoPlayer />} />
+                                        <Route path="video/:id/stream/:roomid/controller" element={<ControllerVideoPlayer />} />
+                                        <Route path="video/:id/stream/:roomid/viewer" element={<ViewerVideoPlayer />} />
                                         <Route path="audio" element={<AudioDashboard />} />
                                     </Route>
                                     <Route path="upload">
@@ -74,10 +74,10 @@ const App1 = () => {
                             </Route>
                             <Route path="logout" element={<Logout />} />
                         </Routes>
-                    </AppWrapper>                   
+                    </AppWrapper>
                 </Router>
 
-            </div> 
+            </div>
         </>
     )
 }

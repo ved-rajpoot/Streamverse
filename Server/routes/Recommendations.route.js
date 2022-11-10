@@ -13,7 +13,7 @@ router.post("/", checkAuth, async (req, res) => {
 
     // getting favorite tags of a user and sorting them on the basis of their weights.
     let tags = user[0].favoriteTags;
-    console.log(tags);
+    // console.log(tags);
     tags.sort((a,b)=>{
         return a.weight-b.weight;
     });

@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { RoomContext } from "../Context/RoomContext";
 import {SocketContext} from '../Context/SocketContext'
+import { UserContext } from "../Context/UserContext";
 import { getUserId } from "./HelperFunctions";
 
 
 const RoomNotJoined = () => {
-    const userID = getUserId()
+    const [userState, setUserState] = useContext(UserContext);
+    const userID = userState.userId
     const socket = useContext(SocketContext)
     const [roomState, setRoomState] = useContext(RoomContext);
     const [showCreateRoom, setShowCreateRoom] = useState(false)
@@ -27,6 +29,9 @@ const RoomNotJoined = () => {
                 role:"Admin",
                 userArray: res.room.userArray
             })
+            setShowCreateRoom(false)
+            setRoomName("");
+            setCreateUserName("");
             localStorage.setItem("room", JSON.stringify(res.room._id))
             document.getElementById("roomjoined-btn").click();
             document.getElementById("joinroom-btn").click();
@@ -40,11 +45,14 @@ const RoomNotJoined = () => {
             setRoomState({
                 roomName: res.roomName,
                 userName: joinUserName, 
-                roomID: res._id,
+                roomId: res._id,
                 AdminID: res.AdminID,
                 role:"Member",
                 userArray: res.userArray,
             })
+            setShowJoinRoom(false)
+            setRoomID("");
+            setJoinUserName("");
             localStorage.setItem("room", JSON.stringify(res._id))
             document.getElementById("joinroom-btn").click();
             document.getElementById("roomjoined-btn").click();

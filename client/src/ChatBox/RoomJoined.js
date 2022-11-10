@@ -30,8 +30,9 @@ const RommJoined = (props) => {
         socket.emit("send", { roomID: roomID, message: textMessage, userID: userID })
         setTextMessage("")
     }
+    const resetMessage = () =>setMessageArray([])
 
-    //Initial render
+    //Initial renderFragment
     useEffect(() => { if (localStorage.getItem("room")) socket.emit("refresh-check", { roomID: JSON.parse(localStorage.getItem("room")) }) })
 
     //Socket Events
@@ -45,7 +46,6 @@ const RommJoined = (props) => {
         })
     })
     socket.off('userLeft').on('userLeft', async res => {
-        console.log("i was here")
         updateMessageArea({ messageType: res.type, userName: res.userName })
         let newUserArray = roomState.userArray;
         const index = newUserArray.indexOf({ userId: res.userId, userName: res.userName });
@@ -60,13 +60,14 @@ const RommJoined = (props) => {
     socket.off('recieve').on('recieve', res => {
         updateMessageArea({ messageType: "regular", userName: res.userName, message: res.message })
     })
-
+    
     return (
         <>
             <div className='flex flex-col dark:bg-chat-dark bg-chat-light bg-cover bg-center h-full '>
                 <div className='flex flex-col h-[540px] '>
                     <div id="MessageArea" className="overflow-auto">
                         <button className="hidden" onClick={updateMessageArea}></button>
+                        <button id ="resetmessage-btn" className="hidden" onClick={resetMessage}></button>
                         <PinnedMessage />
                         <CreateMessage
                             creator={props.userName}

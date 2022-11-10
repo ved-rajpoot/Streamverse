@@ -6,6 +6,7 @@ const JoinRoom = (socket,io) => {
         const room_id = res.roomID
         const userName = res.joinUserName
         const userID = res.userID
+        console.log(userID);
         Room.findOneAndUpdate({ _id: room_id }, {
             $push:{ "userArray": { userId: userID, userName: userName , role:"Member"} }
         },{new : true})
@@ -14,6 +15,7 @@ const JoinRoom = (socket,io) => {
                     // socket.emit('validateRoom', false)
                 } else {
                     // socket.emit('validateRoom', true);
+                    console.log(room)
                     await socket.join(room_id.toString())
                     await socket.join(userID.toString());
                     io.sockets.in(room_id.toString()).emit('userJoined', { userName: userName , userId:userID.toString() })
