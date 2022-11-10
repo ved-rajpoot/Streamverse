@@ -42,7 +42,7 @@ const VideoDashboard = (props) => {
                             videoList.map((val, index) => {
                                 return (
                                 <>
-                                    <AdminVideoCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id}/> 
+                                    <AdminVideoCard id={val._id} videoPath={val.videoPath} thumbnailPath={val.thumbnailPath} title={val.title} description={val.description} userName={val.userName} tags={val.tags} views={val.views} userId={val.userId}/>
                                 </>
                                 )
                             })

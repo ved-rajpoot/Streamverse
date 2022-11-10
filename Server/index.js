@@ -16,6 +16,8 @@ const PlayVideo = require("./SocketEvents/StreamSocketEvents/PlayVideo")
 const ChangeTimeStamp = require("./SocketEvents/StreamSocketEvents/ChangeTimeStamp")
 const PlaybackSpeed = require("./SocketEvents/StreamSocketEvents/PlaybackSpeed")
 const LeaveRoom = require("./SocketEvents/LeaveRoom")
+const JoinSelfRoom = require("./SocketEvents/JoinSelfRoom")
+const SuspendUser = require("./SocketEvents/SuspendUser/SuspendUser")
 const io = require("socket.io")(8080,{
     cors :{
         origin: ["http://localhost:3000", "https://admin.socket.io"],
@@ -68,6 +70,8 @@ app.use('/admin', require('./routes/Admin.route'));
 io.on("connection", socket => {
     JoinRoom(socket, io);
     CreateRoom(socket);
+    JoinSelfRoom(socket)
+    SuspendUser(socket,io)
     LeaveRoom(socket, io);
     SendMessage(socket, io);
     RefreshCheck(socket);

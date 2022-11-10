@@ -1,9 +1,17 @@
 import axios from "axios"
+import {useContext, useState} from "react"
+import { SocketContext } from "../../Context/SocketContext";
 
-const userCard = (props) => {
-    const deleteUser = () => {
-        axios.post("http://localhost:9002/admin/deleteUser",{id:props.id, email:props.email})
-            .then((res) => console.log(res.data))
+const UserCard = (props) => {
+    const [isSuspended,setIsSuspended] = useState(0);
+    const socket = useContext(SocketContext)
+    const suspendUser = () => {
+        socket.emit('userSuspended',{id:props.id})
+        axios.post("http://localhost:9002/admin/suspendUser",{id:props.id, email:props.email})
+            .then((res) => {
+                console.log(res.data)
+                setIsSuspended(1);
+            })
             .catch((err) => console.log(err))
     }
     return (
@@ -18,10 +26,14 @@ const userCard = (props) => {
                 {props.email}
             </td>
             <td class="py-4 px-6">
-                <button onClick={deleteUser} class="m-1 font-medium text-blue-600 dark:text-blue-500 hover:underline">DELETE</button>
+                {
+                    isSuspended?
+                    <div>SUSPENDED</div>
+                    :<button onClick={suspendUser} class="m-1 font-medium text-blue-600 dark:text-blue-500 hover:underline">SUSPEND ACCOUNT</button>
+                }
             </td>
         </tr>
     )
 }
 
-export default userCard
+export default UserCard

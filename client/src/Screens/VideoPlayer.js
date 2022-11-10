@@ -219,7 +219,7 @@ const VideoPlayer = () => {
           <img class="w-16 h-16 rounded-[50%] mr-2" src={`http://localhost:9002/file/image/${location.state.props.thumbnailPath}`} alt="" />
           <div>
             {location.state.props.title}
-            <div className='font-light text-[75%] cursor-pointer' onClick={() => navigate(`/app/${userId}/profile/`, { state: { props: { userId}}})} >Uploaded by: {location.state.props.userName}</div>
+            <div className='font-light text-[75%] cursor-pointer' onClick={() => {navigate(`/app/${userId}/profile`, { state: { props: { userId} } }) }}>Uploaded by: {location.state.props.userName}</div>
           </div>
       </div>
 
