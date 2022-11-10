@@ -16,12 +16,7 @@ export default function AudioCard(props) {
   const [popup, setPopup] = useState(false);
 
   const getAudioData = async () => {
-    const res = await axios.post("http://localhost:9002/getaudiodata", { id: id }, {
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
-      }
-    })
+    const res = await axios.post("http://localhost:9002/getaudiodata", { id: id })
     setIsFavorite(res.data.isFavorite)
   }
 

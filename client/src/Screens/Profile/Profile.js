@@ -77,7 +77,7 @@ const Profile = () => {
             <div className={(status === 3) ? "relative top-5":"hidden"} ><VideoPlaylists userId={userData._id} playlists={userData.videoPlaylists}/></div>
             <div className={(status === 4) ? "relative top-5":"hidden"} ><AudioPlaylists playlists={userData.audioPlaylists}/></div>
             <div className={(status === 5) ? "relative top-5":"hidden"} ><FavoriteVideos userId={userData._id}/></div>
-            <div className={(status === 6) ? "relative top-5":"hidden"} ><FavoriteAudios/></div>
+            <div className={(status === 6) ? "relative top-5":"hidden"} ><FavoriteAudios userId={userData._id}/></div>
             {/* <div className={(status === 6) ? "relative top-5":"hidden"} ><About/></div> */}
             {/* <div className={(status === 2) ? "hidden" : "relative top-5"} ><VideoDashboard/></div> */}
         </div>
