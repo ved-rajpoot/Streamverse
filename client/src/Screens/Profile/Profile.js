@@ -26,11 +26,15 @@ const Profile = () => {
     // const user = jwtDecode(token);
     
     // To get whole user object of current user from database.
-    const getUserData = ()=>{
-            axios.post("http://localhost:9002/getuserdata", {id:userId})
+    const getUserData = (ID)=>{
+        axios.post("http://localhost:9002/getuserdata", { id: ID }, {
+                headers: {
+                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
+                }
+            })
                 .then((res)=>{
                     // console.log('userData:  ', res.data[0]);
-                    setUserData(res.data[0]);  
+                    setUserData(res.data);  
                 })
                 .catch((err)=>{
                     console.log(err);
@@ -40,9 +44,12 @@ const Profile = () => {
     useEffect(()=>{
         console.log(userState)
         setUserId(userState.userId)
-        if(location.state) setUserId(location.state.props.userId);
-        console.log('user: ',userId);
-        getUserData();
+        if (location.state) {
+            setUserId(location.state.props.userId);
+            getUserData(location.state.props.userId);
+        } else { 
+            getUserData(userState.userId);
+        }
     },[userState])
 
 

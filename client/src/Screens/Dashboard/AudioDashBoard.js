@@ -11,7 +11,12 @@ const AudioDashboard = () => {
   const [status, setStatus] = useState(false);
   const [source, setSource] = useState("");
   useEffect(() => {
-    axios.post("http://localhost:9002/audiolist")
+    axios.post("http://localhost:9002/audiolist", {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
+      }
+    })
       .then((res) => {
         console.log('audio found');
         setAudioList(res.data)
