@@ -35,18 +35,20 @@ const UploadVideo = () => {
             return;
         }
     }
-    const upload = async (e) => {
-        let tags=[]
-        for(var i=0;i<todos.length;i++) tags.push(todos[i].text)
+    const upload = async (e) => {   
+        // let tags=null;
+        // for(var i=0;i<todos.length;i++) tags.push(todos[i].text)
+        console.log('todos: ',todos);
 
         const data = new FormData();
         data.append("video", selectedFile.file);
         data.append("thumbnail", seletcedThumbnail.file);
         data.append("title", title);
         data.append("description", description);
-        data.append("tags",tags);
+        data.append("tags",todos);
         data.append("isPrivate", isPrivate);
 
+        // console.log('data: ',data);
         // console.log(data);
         axios.post("http://localhost:9002/uploadvideo", data, {
             headers: {
@@ -105,11 +107,10 @@ const UploadVideo = () => {
         );
     }
 
-    const [todos, setTodos] = React.useState([
-    ]);
+    const [todos, setTodos] = React.useState([]);
 
     const addTodo = text => {
-        if(text === "")return
+        if(text === "")return;
         const newTodos = [...todos, { text }];
         setTodos(newTodos);
     };
