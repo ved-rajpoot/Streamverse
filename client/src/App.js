@@ -16,7 +16,7 @@
 // import PlaylistVideos from '../src/Screens/Profile/PlaylistVideos';
 // import PlaylistAudios from '../src/Screens/Profile/PlaylistAudios';
 // import PlaylistPopup from './Components/Playlistpopup/PlaylistPopup';
-// import AdminVideoPlayer from './StreamRoom/AdminVideoPlayer';
+// import ControllerVideoPlayer from './StreamRoom/ControllerVideoPlayer';
 // import ViewerVideoPlayer from './StreamRoom/ViewerVideoPlayer';
 // const App = () =>{
   
@@ -32,7 +32,7 @@
 //               <Route element={<PrivateRoutes />}>
 //                 {/* <Route exact path="/" element={<Login />} /> */}
 //                 <Route exact path="/dashboard" element={<Dashboard />} />
-//                 <Route exact path="/streamroom" element={<AdminVideoPlayer />} />
+//                 <Route exact path="/streamroom" element={<ControllerVideoPlayer />} />
 //                 <Route exact path="/viewer" element={<ViewerVideoPlayer />} />
 //                 <Route exact path="/dashboard/:cloudinary_id" element={ <VideoPlayer />} />
 //                 {/* <Route exact path="/dashboard/:cloudinary_id" element={ <PlaylistPopup />} /> */}

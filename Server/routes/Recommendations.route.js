@@ -8,12 +8,12 @@ const checkAuth = require("../middleware/check-auth");
 
 router.post("/", checkAuth, async (req, res) => {
     // console.log(req);
-    console.log(req.userData.userId);
+    // console.log(req.userData.userId);
     const user = await User.find({id:req.userData.userId});
 
     // getting favorite tags of a user and sorting them on the basis of their weights.
     let tags = user[0].favoriteTags;
-    console.log(tags);
+    // console.log(tags);
     tags.sort((a,b)=>{
         return a.weight-b.weight;
     });
