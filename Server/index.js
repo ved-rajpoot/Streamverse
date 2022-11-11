@@ -18,6 +18,7 @@ const PlaybackSpeed = require("./SocketEvents/StreamSocketEvents/PlaybackSpeed")
 const LeaveRoom = require("./SocketEvents/LeaveRoom")
 const JoinSelfRoom = require("./SocketEvents/JoinSelfRoom")
 const SuspendUser = require("./SocketEvents/SuspendUser/SuspendUser")
+const RoleModeration = require("./SocketEvents/RoleModeration")
 const io = require("socket.io")(8080,{
     cors :{
         origin: ["http://localhost:3000", "https://admin.socket.io"],
@@ -80,6 +81,7 @@ io.on("connection", socket => {
     PlayVideo(socket, io);
     ChangeTimeStamp(socket, io);
     PlaybackSpeed(socket, io);
+    RoleModeration(socket,io)
     
 })
 instrument(io, {auth : false})

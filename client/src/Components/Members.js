@@ -1,14 +1,16 @@
 import MemberCardAdmin from "./MemberCardAdmin"
 import MemberCardMod from "./MemberCardMod"
 import MemberCardRegular from "./MemberCardRegular"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { RoomContext } from "../Context/RoomContext"
 
 
 const Members = (props) => {
     const [roomState, setRoomState] = useContext(RoomContext);
     const [members, setMembers] = useState(roomState.userArray);
-
+    useEffect(() => {
+        setMembers(roomState.userArray);
+    },[roomState,setRoomState])
     return (
         <>
             

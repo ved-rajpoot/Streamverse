@@ -148,7 +148,7 @@ const VideoPlayer = () => {
     setIsFavorite(false);
   }
   const stream = () => {
-    navigate(`/app/${userState.userId}/dashboard/video/${location.state.props.id}/stream/${roomState.roomId}/controller`, { state: { props: { videoPath: location.state.props.videoPath, title: location.state.props.title, description: location.state.props.description } } })
+    navigate(`/app/${userState.userId}/stream/${roomState.roomId}/controller`, { state: { props: { videoPath: location.state.props.videoPath, title: location.state.props.title, description: location.state.props.description } } })
   }
   return (
     <div className='dark:text-white'>
@@ -159,7 +159,7 @@ const VideoPlayer = () => {
 
       <div className="flex h-[40rem]">
       
-        <video className='w-[70%] object-cover' src={`http://localhost:9002/file/video/${location.state.props.videoPath}`} controls preload='metadata'>
+        <video className='w-[70%]' src={`http://localhost:9002/file/video/${location.state.props.videoPath}`} controls preload='metadata'>
 
         </video>
       </div>

@@ -28,7 +28,10 @@ const Home = () => {
         email: null,
     }
     const [showMembers, setShowMembers] = useState(false);
-    /* OnClick Functions*/
+    useEffect(() => {
+        console.log(roomState)
+    },[roomState,setRoomState])
+    /* OnClick Functions*/  
     const Click1 = () => {
         if (document.getElementById("dropdown1").classList.contains("hidden")) {
             document.getElementById("dropdown1").classList.remove("hidden");
@@ -63,9 +66,9 @@ const Home = () => {
     socket.off('suspendUser').on('suspendUser',()=>{
         navigate(`/logout`);
     })
-    const LeaveRoom = () => {
+    const LeaveRoom = (type) => {
         console.log(roomState)
-        socket.emit('leaveRoom', { roomID: roomState.roomId, userName: roomState.userName, userID: userState.userId, type: "leave", role:roomState.role })
+        socket.emit('leaveRoom', { roomID: roomState.roomId, userName: roomState.userName, userID: userState.userId, type: type, role:roomState.role })
         localStorage.removeItem("room")
         document.getElementById("resetmessage-btn").click();
         document.getElementById("leaveroom-btn").click();
@@ -79,12 +82,16 @@ const Home = () => {
                 userArray: [{userName:"",userID:"",role:""}]
             })
         },200)
-        
         setHideRoom(true);
+        navigate(`/app/${userState.userId}/dashboard/video`)
     }
     socket.off('roomClosed').on('roomClosed', (res) => {
-        LeaveRoom();
+        LeaveRoom("leave");
         return <RoomClosedModal userName = {res.userName} />
+    })
+    socket.off('requestKick').on('requestKick', () => {
+        console.log("res")
+        LeaveRoom("kick")
     })
     // useEffect(() => { }, [hideRoom]);
     /*Navigation Routes */
@@ -174,7 +181,7 @@ const Home = () => {
                                             </li>
                                             <li className="flex items-center w-full transition duration-75 group hover:bg-gray-100 rounded-lg dark:text-white dark:hover:bg-gray-700">
                                                 <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 ml-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd"></path></svg>
-                                                <button onClick={LeaveRoom} class="flex items-center p-2 text-base font-bold text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Leave Room</button>
+                                                <button onClick={()=>LeaveRoom("leave")} class="flex items-center p-2 text-base font-bold text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Leave Room</button>
                                             </li>
 
                                         </ul>
