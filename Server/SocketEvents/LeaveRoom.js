@@ -11,7 +11,7 @@ const LeaveRoom = (socket, io) => {
         const role = res.role
         
         if (role === "Admin") {
-            await socket.leave(userID.toString());
+            // await socket.leave(userID.toString());
             await socket.leave(room_id.toString());
             io.sockets.in(room_id.toString()).emit("roomClosed",{userName});
         } else {

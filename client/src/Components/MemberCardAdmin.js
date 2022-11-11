@@ -1,5 +1,15 @@
+import { useContext } from "react";
+import { Socket } from "socket.io-client";
+import { RoomContext } from "../Context/RoomContext";
+import { SocketContext } from "../Context/SocketContext";
+
 
 const MemberCardAdmin = (props) => {
+    const [roomState, setRoomState] = useContext(RoomContext);
+    const socket = useContext(SocketContext)
+    const Kick = () => {
+        socket.emit("kickFromRoom", { id: props.id ,roomId: roomState.roomId });
+    }
     return (
         <>
             
@@ -39,7 +49,7 @@ const MemberCardAdmin = (props) => {
                 <div id={props.id} class="dropdown hidden z-100 absolute w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                         <li>
-                            <button class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kick</button>
+                            <button onClick={Kick} class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kick</button>
                         </li>
                         {
                             (props.role === "Member") ? (

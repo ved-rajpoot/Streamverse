@@ -31,12 +31,13 @@ const KickMessage = (props) => {
         <>
             <div className="flex w-[100%] py-1 justify-center items-center">
                 <div className="flex w-fit px-2 justify-center items-center text-xs font-sans rounded-lg bg-[#67e8f9]">
-                    <p>{props.userName} was Kicked out of the chat</p>
+                    <p>{props.userName} was kicked out</p>
                 </div>
             </div>
         </>
     )
 }
+
 const PinnedMessage = () => {
     const navigate = useNavigate();
     const [userState, setUserState] = useContext(UserContext);

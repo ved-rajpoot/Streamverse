@@ -1,4 +1,9 @@
 const RoleModeration = (socket,io) => {
-    socket.on("kick",) 
+    socket.on("kickFromRoom", res => {
+        const userId = res.id;
+        const roomId = res.roomId;
+        
+        socket.to(userId.toString()).emit('requestKick');
+    }) 
 }
-export default RoleModeration
+module.exports =  RoleModeration

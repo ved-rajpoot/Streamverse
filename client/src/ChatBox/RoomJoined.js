@@ -20,6 +20,7 @@ const RommJoined = (props) => {
         else if (res.messageType === "regular") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName, message: res.message } }
         else if (res.messageType === "send") data = { id: new Date(), messageType: res.messageType, content: { message: res.message } }
         else if (res.messageType === "leave") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName } }
+        else if (res.messageType === "kick") data = { id: new Date(), messageType: res.messageType, content: { userName: res.userName } }
         setMessageArray([...newArray, data]);
         const chatWindow = document.getElementById('MessageArea');
         chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -108,11 +109,11 @@ const RommJoined = (props) => {
                                             userName={val.content.userName}
                                         />
                                     )
-                                } else if (val.messageType === "leave") {
+                                } else if (val.messageType === "kick") {
                                     return (
                                         <KickMessage
                                             key={val.id}
-                                            message={val.content.message}
+                                            userName={val.content.userName}
                                         />
                                     )
                                 }
