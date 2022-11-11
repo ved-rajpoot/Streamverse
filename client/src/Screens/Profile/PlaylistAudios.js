@@ -38,7 +38,7 @@ const PlaylistVideos = () => {
                 <div className='ml-5'>
                     <h3 className=''>PLAYLIST</h3>
                     <h1 className='text-5xl'>{location.state.props.name}</h1>
-                    <h3>{Array.isArray(audios) && audios.length} videos</h3>
+                    <h3>{Array.isArray(audios) && audios.length} audios</h3>
                 </div>
             </div>
             <div className='flex flex-wrap'>

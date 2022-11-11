@@ -25,7 +25,7 @@ const PlaylistPopup = ({id,type,setPopup}) => {
     useEffect(()=>{
         // console.log(playlists);
         getUserData();
-    },[playlists]);
+    },[]);
 
     return (
         <div
