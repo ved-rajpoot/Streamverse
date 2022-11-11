@@ -8,46 +8,26 @@ router.post("/like",checkAuth, (req, res) => {
     // console.log('like');
         const userId = req.userData.userId;
         const videoId = req.body.id;
-        // Video.findByIdAndUpdate(videoId,{
-        //     $addToSet:{likes:userId},
-        //     $pull:{dislikes:userId}
-        //   })
-        // .catch((err)=>{
-        //     console.log(err);
-        // })
 
         User.findByIdAndUpdate(userId,{
             $addToSet:{likedVideos:videoId},
             $pull:{dislikedVideos:videoId}
         },{new:true})
-        // .then((res)=>{console.log(res)})
+        .then((res)=>{console.log(res)})
 })
 router.post("/removelike",checkAuth, (req, res) => {
     const userId = req.userData.userId;
     const videoId = req.body.id;
-    // Video.findByIdAndUpdate(videoId,{
-    //     $pull:{likes:userId},
-    //   })
-    // .catch((err)=>{
-    //     console.log(err);
-    // })
 
     User.findByIdAndUpdate(userId,{
         $pull:{likedVideos:videoId}
-    });
+    },{new:true})
+    .then((res)=>console.log(res));
 })
 
 router.post("/dislike",checkAuth, (req, res) => {
     const userId = req.userData.userId;
     const videoId = req.body.id;
-
-    // Video.findByIdAndUpdate(videoId,{
-    //     $pull:{likes:userId},
-    //     $addToSet:{dislikes:userId},
-    //   })
-    // .catch((err)=>{
-    //     console.log(err);
-    // })
 
     User.findByIdAndUpdate(userId,{
         $pull:{likedVideos:videoId},
@@ -60,16 +40,10 @@ router.post("/dislike",checkAuth, (req, res) => {
 router.post("/removedislike",checkAuth, (req, res) => {
     const userId = req.userData.userId;
     const videoId = req.body.id;
-    // Video.findByIdAndUpdate(videoId,{
-    //     $pull:{dislikes:userId},
-    //   })
-    // .catch((err)=>{
-    //     console.log(err);
-    // })
-
     User.findByIdAndUpdate(userId,{
         $pull:{dislikedVideos:videoId},
-    });
+    },{new:true})
+    .then((res)=>console.log(res));
 })
 
 
@@ -140,11 +114,28 @@ router.post("/getvideodata", checkAuth, async (req,res)=>{
 
         let isFavorite = false, isLiked = false, isDisliked = false, totalLikes = video[0].likes, totalDislikes = video[0].dislikes;
         if(user[0].videoFavorites.includes(videoId)) isFavorite = true;
-        // if(video[0].likes.includes(userId)) isLiked = true;
-        // if(video[0].dislikes.includes(userId)) isDisliked = true;
         if(user[0].likedVideos.includes(videoId)) isLiked = true;
         if(user[0].dislikedVideos.includes(videoId)) isDisliked = true;
-    
+        
+        // adding tags of this video favorite tags of user.
+        const favoriteTags = user[0].favoriteTags;
+        const videoTags = video[0].tags;
+        console.log('fav: ',favoriteTags);
+        console.log('vidtag: ',videoTags);
+        for(let tag in videoTags)
+        {
+            let idx = favoriteTags.findIndex(userTag => {return userTag.tag===videoTags[tag]});
+            if(idx===-1) {
+                favoriteTags.push({tag:videoTags[tag],weight:1});
+            } else {
+                favoriteTags[idx].weight++;
+            }
+        }
+        User.findByIdAndUpdate({_id:userId},{favoriteTags})
+        .then((res)=>{
+            console.log(res);
+        })
+        console.log(favoriteTags);
         res.status(200).json({message:"Data retrieved successfully",isFavorite,isDisliked,isLiked,totalLikes,totalDislikes});
     }
     catch (err) {

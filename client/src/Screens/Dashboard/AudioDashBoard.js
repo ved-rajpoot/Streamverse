@@ -1,17 +1,24 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import AudioCard from '../../Components/AudioCard';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
+import { AudioPlayerContext } from '../../Context/AudioPlayerContext';
+
+import Loading from '../../Components/Loading/Loading';
+
 const AudioDashboard = () => {
 
   const [audioList, setAudioList] = useState(null);
+  const [audioState, setAudioState] = useContext(AudioPlayerContext);
   const [status, setStatus] = useState(false);
   const [source, setSource] = useState("");
   useEffect(() => {
-    axios.post("http://localhost:9002/audiolist", {
+    setAudioState({...audioState,hide:0})
+    const data=null
+    axios.post("http://localhost:9002/audiolist", data, {
       headers: {
         "Content-Type": "multipart/form-data",
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('userTokenTime')).token
@@ -43,7 +50,7 @@ const AudioDashboard = () => {
             return (
               <div className='flex'>
                 <button class='w-full' onClick={() => {
-                  setSource(val.avatar)
+                  setAudioState(val)
                 }}
                 >
                   <div className="mb-1 shadow-xl flex flex-row justify-center bg-white">
@@ -56,7 +63,7 @@ const AudioDashboard = () => {
                   </div>
 
                 </button>
-                <AudioCard id={val._id} avatar={val.avatar} thumbnail_avatar={val.thumbnail_avatar} title={val.title} description={val.description} userName={val.userName} cloudinary_id={val.cloudinary_id} />
+                <AudioCard id={val._id} audioPath={val.audioPath} title={val.title} description={val.description} userName={val.userName} />
               </div>
             )
           })

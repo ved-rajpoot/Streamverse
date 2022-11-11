@@ -3,10 +3,11 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom'
 import VideoCard from '../../Components/VideoCard';
 import {useLocation} from 'react-router-dom';
+import Loading from '../../Components/Loading/Loading';
 
 const PlaylistVideos = () => {
         const location = useLocation();
-        
+        const [loading,setLoading] = useState(true);
         const {id} = useParams();
         console.log(id);
         const [videos,setVideos] = useState(null);
@@ -24,8 +25,10 @@ const PlaylistVideos = () => {
     }
     useEffect(()=>{
         getVideos();
+        setLoading(false);
     },[])
 
+    if(loading) return <Loading/>;
     return (
         <>
             <div>

@@ -15,6 +15,7 @@ import CastConnectedIcon from '@mui/icons-material/CastConnected';
 import { getUserId } from '../ChatBox/HelperFunctions';
 import { UserContext } from '../Context/UserContext';
 import { RoomContext } from '../Context/RoomContext';
+import { AudioPlayerContext } from '../Context/AudioPlayerContext';
 
 const VideoPlayer = () => {
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ const VideoPlayer = () => {
   const [userId,setUserId] = useState(location.state.props.userId);
   const [userState, setUserState] = useContext(UserContext);
   const [roomState, setRoomState] = useContext(RoomContext);
+  const [audioState, setAudioState] = useContext(AudioPlayerContext);
+  
   const download = () => {
     // var url = location.state.props.avatar
 
@@ -67,6 +70,9 @@ const VideoPlayer = () => {
   }
 
   useEffect(()=>{
+    setAudioState({
+      hide:true
+    })
     if(loading) getVideoData();
     setLoading(false);
     if (localStorage.getItem("room") === null) return;

@@ -7,7 +7,7 @@ const Video = require("../models/Video.model")
 
 router.post("/",upload.fields([{name:'video',maxCount:1},{name:"thumbnail",maxCount:1}]), async (req, res) => {
     // console.log(req.files);
-    
+    // console.log(typeof(req.body.tags));
     try {
         const video = new Video({
             videoPath: req.files.video[0].originalname,
@@ -16,10 +16,12 @@ router.post("/",upload.fields([{name:'video',maxCount:1},{name:"thumbnail",maxCo
             thumbnailPath: req.files.thumbnail[0].originalname,
             userName: req.userData.userName,
             userId: req.userData.userId,
-            tags: req.body.tags.split(","),
+            tags: req.body.tags,
             isPrivate: req.body.isPrivate
         })
-        await video.save();
+        if(video.tags[0]==='') video.tags.splice(0,1);
+        console.log(video.tags);
+        await video.save().then((res)=>console.log(res));
         res.json({ message: "video saved in db successfully" , video});
     } catch (err) {
         console.log('video not saved in db');

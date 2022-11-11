@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
+import {AudioPlayerContext} from "../../Context/AudioPlayerContext";
 
 const Profile = () => {
     const location=useLocation();
@@ -19,8 +20,8 @@ const Profile = () => {
     const [userState,setUserState] = useContext(UserContext)
     const [userData, setUserData] = useState(null);
     const [userId,setUserId] = useState(userState.userId);
-    
-
+    const [audioState, setAudioState] = useContext(AudioPlayerContext);
+  
     
     // const token = localStorage.getItem('userTokenTime');
     // const user = jwtDecode(token);
@@ -42,6 +43,7 @@ const Profile = () => {
     }
 
     useEffect(()=>{
+        setAudioState({...audioState,hide:0})
         console.log(userState)
         setUserId(userState.userId)
         if (location.state) {
