@@ -103,7 +103,7 @@ const Home = () => {
     const navigateAudioPlaylist = () => { navigate(`/app/${userState.userId}/playlist/audio`) }
     const navigateProfile = () => { navigate(`/app/${userState.userId}/profile`) }
     const logOut = () => {
-        setUserState(defaultUserState);
+        // setUserState(defaultUserState);
         navigate(`/logout`)
     }
 
