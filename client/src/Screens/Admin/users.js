@@ -18,9 +18,9 @@ const Users = () => {
     return (
         <>
         <div class="m-5 w-screen overflow-x-auto relative shadow-md sm:rounded-lg">
-                <button class="float-right bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                {/* <button class="float-right bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 ADD USER
-                </button>
+                </button> */}
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-[#cbd5e1] dark:text-black-400">
                         <tr>

@@ -3,7 +3,7 @@ const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 const Audio = require('../models/Audio.model');
 
-router.post("/", checkAuth, (req, res) => {
+router.post("/", (req, res) => {
     // console.log(req);
     // console.log(req.userData);
     Audio.find( { userId : req.body.userId })
