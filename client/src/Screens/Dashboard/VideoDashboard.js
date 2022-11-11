@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
+import Loading from "../../Components/Loading/Loading";
 import VideoCard from "../../Components/VideoCard";
 import { AudioPlayerContext } from "../../Context/AudioPlayerContext";
 
@@ -10,6 +11,8 @@ const VideoDashboard = () => {
     const [status, setStatus] = useState(false);
     const [audioState, setAudioState] = useContext(AudioPlayerContext);
     
+    const [loading,setLoading] = useState(true);
+
     useEffect(() => {
         setAudioState({...audioState,hide:0})
             const data = null;
@@ -23,19 +26,13 @@ const VideoDashboard = () => {
                 // console.log(res.data);
                 setVideoList(res.data)
             }).then(() => {
-                setStatus(true)
+                setLoading(false);
             }).catch((err)=>{
                 console.log(err);
             })
     }, [])
 
-    if (!status) return (
-        <>
-            <div className="flex item-center">
-                Loading..
-            </div>
-        </>
-    )
+    if(loading) return <Loading/>;
     return (
         <>
             <div className="flex" >

@@ -5,6 +5,7 @@ import Switch from "../Switch/Switch";
 import { UserContext } from "../Context/UserContext";
 import jwtDecode from "jwt-decode";
 import {SocketContext} from "../Context/SocketContext"
+import Loading from "./Loading/Loading";
 const Login = () => {
     const navigate = useNavigate()
     const [userState, setUserState] = useContext(UserContext);
@@ -12,6 +13,8 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [redirect, setRedirect] = useState(localStorage.getItem('userTokenTime') ? true : false)
     const [passwordType, setPasswordType] = useState("password");
+    const [loading,setLoading] = useState(true);
+
     const updatEmail = (e) => {
         setUserState({
             ...userState,
@@ -27,7 +30,11 @@ const Login = () => {
         if (redirect && userId) {
             navigate(`/app/${userId}/dashboard`)
         }
-    }, [redirect,userId])
+    }, [redirect,userId]);
+
+    useEffect(()=>{
+        setLoading(false);
+    },[])
     const log = () => {
         // eslint-disable-next-line 
         if ((userState.email && password) && (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(userState.email))) {
@@ -78,7 +85,8 @@ const Login = () => {
     const register = () => navigate("/signup");
     
     if (userState.userId) navigate(`/app/${userState.userId}/dashboard`)
-
+    
+    // if(loading) return <Loading/>;
     return (
         <>
             <div className="flex h-[90%] flex-col justify-center items-center w-full">
