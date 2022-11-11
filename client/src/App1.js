@@ -51,10 +51,10 @@ const App1 = () => {
                                         <Route path="" element={<Navigate to={`/app/${userState.userId}/dashboard/video`} />} />
                                         <Route path="video" element={<VideoDashboard />} />
                                         <Route path="video/:id" element={<VideoPlayer />} />
-                                        <Route path="video/:id/stream/:roomid/controller" element={<ControllerVideoPlayer />} />
-                                        <Route path="video/:id/stream/:roomid/viewer" element={<ViewerVideoPlayer />} />
                                         <Route path="audio" element={<AudioDashboard />} />
                                     </Route>
+                                    <Route path="stream/:roomid/controller" element={<ControllerVideoPlayer />} />
+                                    <Route path="stream/:roomid/viewer" element={<ViewerVideoPlayer />} />
                                     <Route path="upload">
                                         <Route path="" element={<Navigate to='/app/:userId/upload/video' />} />
                                         <Route path="video" element={<UploadVideo />} />

@@ -77,8 +77,8 @@ const Home = () => {
                 userArray: [{userName:"",userID:"",role:""}]
             })
         },200)
-        
         setHideRoom(true);
+        navigate(`/app/${userState.userId}/dashboard/video`)
     }
     socket.off('roomClosed').on('roomClosed', (res) => {
         LeaveRoom();

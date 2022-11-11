@@ -1,4 +1,7 @@
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import { RoomContext } from "../Context/RoomContext"
+import { UserContext } from "../Context/UserContext"
 
 
 const JoinMessage = (props) => {
@@ -36,11 +39,13 @@ const KickMessage = (props) => {
 }
 const PinnedMessage = () => {
     const navigate = useNavigate();
+    const [userState, setUserState] = useContext(UserContext);
+    const [roomState, setRoomState] = useContext(RoomContext);
     return (
         <>
             <div className=" sticky flex flex-row top-0 bg-white dark:bg-[#202c33] outline-none dark:text-white px-1 py-1 text-sm justify-center items-center ">
                 <div className="w-[70%]">CreatorName is streaming videoName/AudioName</div>
-                <button className="w-[20%] h-[80%] rounded-lg bg-[#2563eb]" onClick={() => { navigate("/viewer") }} >Join</button>
+                <button className="w-[20%] h-[80%] rounded-lg bg-[#2563eb]" onClick={() => { navigate(`/app/${userState.userId}/stream/${roomState.roomId}/viewer`) }} >Join</button>
             </div>
 
         </>
