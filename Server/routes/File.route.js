@@ -63,7 +63,7 @@ router.get("/audio/:id",(req,res) => {
     console.log(id)
 
     const range = req.headers.range
-    const audioPath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
+    const audioPath = `C:\\Users\\ved\\Desktop\\Streamverse\\Server\\Uploads\\${id}`;
     const audioSize = fs.statSync(audioPath).size
     const chunkSize = 1 * 1e6;
     const start = Number(range.replace(/\D/g, ""))

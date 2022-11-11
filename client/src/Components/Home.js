@@ -11,11 +11,13 @@ import { UserContext } from "../Context/UserContext";
 import Members from "./Members";
 import { SocketContext } from "../Context/SocketContext";
 import { RoomContext } from "../Context/RoomContext";
+import { AudioPlayerContext } from "../Context/AudioPlayerContext";
 import RoomClosedModal from "./RoomClosedModal";
 import AudioPlayer from "../Screens/player/AudioPlayer";
 
 const Home = () => {
     const [userState, setUserState] = useContext(UserContext)
+    const [audioState, setAudioState] = useContext(AudioPlayerContext)
     const [roomState, setRoomState] = useContext(RoomContext)
     const [hideRoom, setHideRoom] = useState(localStorage.getItem("room") ? false : true);
     const navigate = useNavigate();
@@ -205,9 +207,14 @@ const Home = () => {
                     <div className="flex flex-col ml-4 w-[98%] md:w-[85%] bottom-0 h-[97%] mt-2">
                         <div className="flex flex-col overflow-y-auto scrollbar-default py-4 px-3 bg-gray-50 rounded-lg shadow-lg dark:bg-[#1E1E1C] h-[100%] w-[98%]">
                             <Outlet />
-                            <div className="mt-auto h-24 w-full bg-[#EBEDEF] shadow-lg rounded-lg opacity-80 dark:bg-[#121212]">
-                                <AudioPlayer />
-                            </div>
+                            {
+                                !audioState.hide && audioState.audioPath ?
+                                    <div className="mt-auto h-24 w-full bg-[#EBEDEF] shadow-lg rounded-lg opacity-80 dark:bg-[#121212]">
+                                        <AudioPlayer audio={audioState}/>
+                                    </div>
+                                :
+                                    <></>
+                            }
                         
                         </div>
                     </div>

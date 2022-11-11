@@ -12,6 +12,13 @@ import { Link } from 'react-router-dom';
 const settings = ['Profile', 'Account', 'Dashboard', 'Playlists' ,'Logout'];
 const settingsLink = ['/app/userId/profile', '/app/userId/account', '/app/userId/dashboard', '/app/userId/playlists', '/logout'];
 
+const Click = () => {
+  // if (document.getElementById("dropdown").classList.contains("hidden")) {
+    document.getElementById("dropdown").classList.remove("hidden");
+  // } else {
+  //     document.getElementById("dropdown").classList.add("hidden")
+  // }
+}
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -41,7 +48,27 @@ const Header = () => {
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             <span class="sr-only">Search</span>
           </button>
+
+          {/* dropdown */}
+          <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">All categories <svg aria-hidden="true" class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></button>
+        <div id="dropdown" class=" z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style={{"position": "absolute", "inset": "auto auto 0px 0px", "margin": "0px", "transform": "translate3d(897px, 5637px, 0px)"}}>
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
+            <li>
+                <button type="button" class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
+            </li>
+            <li>
+                <button type="button" class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
+            </li>
+            <li>
+                <button type="button" class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
+            </li>
+            <li>
+                <button type="button" class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
+            </li>
+            </ul>
+        </div>
         </form>
+        
       </div>
       <div className='fixed right-1 md:right-4 lg:right-20'>
         <Box sx={{ flexGrow: 0 }}>
