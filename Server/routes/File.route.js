@@ -3,13 +3,13 @@ const router = express.Router();
 const fs = require('fs');
 const exists = require('fs').exists
 
-router.get("/video/:id",(req,res) => {
-    const id=req.params.id
+router.get("/video/:id", (req, res) => {
+    const id = req.params.id
     console.log('sending video in chunks')
     console.log(id)
 
     const range = req.headers.range
-    const videoPath = `C:\\Users\\ved\\Desktop\\Streamverse\\Server\\Uploads\\${id}`;
+    const videoPath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
     const videoSize = fs.statSync(videoPath).size
     const chunkSize = 1 * 1e6;
     const start = Number(range.replace(/\D/g, ""))
@@ -29,25 +29,25 @@ router.get("/video/:id",(req,res) => {
     stream.pipe(res)
 })
 
-router.get("/image/:id", (req,res) => {
-    const id=req.params.id;
-    console.log("fetching image "+id)
+router.get("/image/:id", (req, res) => {
+    const id = req.params.id;
+    console.log("fetching image " + id)
 
 
     const imagePath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
 
-    
+
     // Checking if the path exists
     fs.exists(imagePath, (exists) => {
         if (!exists) {
             res.writeHead(404, {
-                "Content-Type": "text/plain" 
+                "Content-Type": "text/plain"
             });
             res.end("404 Not Found");
             return;
         }
-        
-        
+
+
         // Reading the file
         fs.readFile(imagePath,
             function (err, content) {
@@ -59,13 +59,13 @@ router.get("/image/:id", (req,res) => {
 
 })
 
-router.get("/audio/:id",(req,res) => {
-    const id=req.params.id
+router.get("/audio/:id", (req, res) => {
+    const id = req.params.id
     console.log('sending audio in chunks')
     console.log(id)
 
     const range = req.headers.range
-    const audioPath = `C:\\Users\\smart\\OneDrive\\Desktop\\Streamverse-AVISHKAR\\Streamverse\\Server\\Uploads\\${id}`;
+    const audioPath = `//home//adi//Desktop//Streamverse-Avishkar//Server//Uploads//${id}`;
     const audioSize = fs.statSync(audioPath).size
     const chunkSize = 1 * 1e6;
     const start = Number(range.replace(/\D/g, ""))
