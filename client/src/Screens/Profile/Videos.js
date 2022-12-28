@@ -10,7 +10,9 @@ const Videos = (props) => {
         axios.post("http://localhost:9002/getuservideos", {id:props.userId})
         .then((res)=>{
             // console.log(res.data);
-            setUserVideos(res.data);
+            const arr = res.data;
+            arr.splice(0,14);
+            setUserVideos(arr);
         })
     },[])
 

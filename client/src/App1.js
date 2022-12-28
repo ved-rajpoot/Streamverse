@@ -7,6 +7,7 @@ import 'video-react/dist/video-react.css';
 // Elements imports
 import Home from "./Components/Home";
 import Login from "./Components/Login";
+import SignUp from "./Components/SignUp";
 import Main from "./Components/Main";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import VideoDashboard from "./Screens/Dashboard/VideoDashboard";
@@ -40,6 +41,7 @@ const App1 = () => {
                             <Route path="/" element={<Main />}>
                                 <Route path="" element={<Navigate to='/login' />} />
                                 <Route path="login" element={<Login />} />
+                                <Route path="signup" element={<SignUp />} />
                             </Route>
 
                             {/* Admin route */}
@@ -64,8 +66,8 @@ const App1 = () => {
                                     </Route>
                                     <Route path="playlist">
                                         {/* <Route path="" element={<Navigate to='/app/:userId/playlist/video' />} /> */}
-                                        <Route path="video" element={<VideoPlaylists userId ={userState.userId} playlists = {userState.videoPlaylists}  />} />
-                                        <Route path="audio" element={<AudioPlaylists userId ={userState.userId} playlists = {userState.audioPlaylists}  />} />
+                                        <Route path="video" element={<VideoPlaylists userId={userState.userId} playlists={userState.videoPlaylists} />} />
+                                        <Route path="audio" element={<AudioPlaylists userId={userState.userId} playlists={userState.audioPlaylists} />} />
                                         <Route path="video/:id" element={<PlaylistVideos />} />
                                         <Route path="audio/:id" element={<PlaylistAudios />} />
                                     </Route>

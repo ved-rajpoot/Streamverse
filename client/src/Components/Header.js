@@ -12,13 +12,7 @@ import { Link } from 'react-router-dom';
 const settings = ['Profile', 'Account', 'Dashboard', 'Playlists' ,'Logout'];
 const settingsLink = ['/app/userId/profile', '/app/userId/account', '/app/userId/dashboard', '/app/userId/playlists', '/logout'];
 
-const Click = () => {
-  // if (document.getElementById("dropdown").classList.contains("hidden")) {
-    document.getElementById("dropdown").classList.remove("hidden");
-  // } else {
-  //     document.getElementById("dropdown").classList.add("hidden")
-  // }
-}
+
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -49,6 +43,8 @@ const Header = () => {
             <span class="sr-only">Search</span>
           </button>
 
+          {/* dropdown */}
+          
         </form>
         
       </div>

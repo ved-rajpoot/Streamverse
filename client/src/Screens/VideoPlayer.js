@@ -150,6 +150,7 @@ const VideoPlayer = () => {
   const stream = () => {
     navigate(`/app/${userState.userId}/stream/${roomState.roomId}/controller`, { state: { props: { videoPath: location.state.props.videoPath, title: location.state.props.title, description: location.state.props.description } } })
   }
+
   return (
     <div className='dark:text-white'>
 
